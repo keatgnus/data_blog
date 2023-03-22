@@ -1,21 +1,19 @@
 ---
-title: "About"
+title: "오류 심한 블로그"
 image: profile.jpg
 about:
   template: jolla
   links:
-    - icon: twitter
-      text: Twitter
-      href: https://twitter.com
-    - icon: linkedin
-      text: LinkedIn
-      href: https://linkedin.com
+    - icon: Instagram
+      text: Instagram
+      href: https://www.instagram.com/keatgnus/
     - icon: github
       text: Github
-      href: https://github.com
-
+      href: https://github.com/keatgnus
 ---
 
 About this blog  
 성공입니다.
 두번째 수정
+되라
+123
