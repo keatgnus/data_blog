@@ -7,3 +7,7 @@ image: "Tokyo.jpg"
 ---
 
 첫 게시글
+
+![](Tokyo.jpg)
+
+first posting
