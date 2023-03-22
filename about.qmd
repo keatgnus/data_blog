@@ -1,5 +1,5 @@
 ---
-title: "오류 심한 블로그"
+title: "데이터 마이닝 블로그"
 image: profile.jpg
 about:
   template: jolla
@@ -13,9 +13,5 @@ about:
 ---
 
 About this blog  
-성공입니다.
-두번째 수정
-되라
-123
 
-dfsfdfs
+열심히 해보자
