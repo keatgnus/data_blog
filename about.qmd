@@ -4,7 +4,7 @@ image: profile.jpg
 about:
   template: jolla
   links:
-    - icon: Instagram
+    - icon: instagram
       text: Instagram
       href: https://www.instagram.com/keatgnus/
     - icon: github
