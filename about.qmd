@@ -12,6 +12,4 @@ about:
       href: https://github.com/keatgnus
 ---
 
-About this blog  
-
 열심히 해보자
