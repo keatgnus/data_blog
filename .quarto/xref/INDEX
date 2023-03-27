@@ -13,5 +13,8 @@
   },
   "posts/first_posting/index.qmd": {
     "index.html": "b839b892"
+  },
+  "posts/Advanced_Python_ch2/ch2.qmd": {
+    "ch2.html": "40b851dc"
   }
 }

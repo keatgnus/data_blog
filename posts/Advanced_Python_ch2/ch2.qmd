@@ -1,0 +1,7 @@
+---
+title: "파이썬 심화 챕터2"
+author: "SeongTaek"
+date: "2023-03-27"
+categories: [Code,Advanced_Python,Jupyter]
+image: "jup_image.jpg"
+---
