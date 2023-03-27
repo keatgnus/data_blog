@@ -8,7 +8,7 @@ image: "numpy.jpg"
 
 
 
-Numpy 기본
+python - Numpy 
 
 
 
