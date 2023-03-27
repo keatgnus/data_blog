@@ -1,5 +1,5 @@
 {
-  "hash": "460ba802aa9c6a8933f7be0aa798dc55",
+  "hash": "160e111291d5f98463ce9115d5acc4b9",
   "result": {
     "markdown": "---\ntitle: \"파이썬 심화 챕터2\"\nauthor: \"SeongTaek\"\ndate: \"2023-03-27\"\ncategories: [Code,Advanced_Python,Jupyter]\nimage: \"jup_image.jpg\"\n---\n\n::: {.cell execution_count=1}\n``` {.python .cell-code}\nimport numpy as np\na = 5; b = 6; c = 7\nc\n\n# append() : 값 추가\na = [1,2,3]\nb=a\na.append(4)\nb\n```\n\n::: {.cell-output .cell-output-display execution_count=1}\n```\n[1, 2, 3, 4]\n```\n:::\n:::\n\n\n",
     "supporting": [
