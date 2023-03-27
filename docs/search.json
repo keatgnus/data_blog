@@ -16,8 +16,15 @@
   {
     "objectID": "about.html",
     "href": "about.html",
-    "title": "Data Mining Blog",
+    "title": "Seong Taek Jo",
     "section": "",
     "text": "열심히 해보자"
+  },
+  {
+    "objectID": "posts/Advanced_Python_ch2/ch2.html",
+    "href": "posts/Advanced_Python_ch2/ch2.html",
+    "title": "파이썬 심화 챕터2",
+    "section": "",
+    "text": "import numpy as np\na = 5; b = 6; c = 7\nc\n\n# append() : 값 추가\na = [1,2,3]\nb=a\na.append(4)\nb\n\n[1, 2, 3, 4]"
   }
 ]

@@ -1,5 +1,5 @@
 ---
-title: "Data Mining Blog"
+title: "Seong Taek Jo"
 image: profile.jpg
 about:
   template: jolla
