@@ -25,7 +25,7 @@ Python - Numpy
   </td>
 </table>
 
-<table align="right">
+<table align="left">
   <td>
     <a target="_blank" href="https://colab.research.google.com/github/rickiepark/handson-ml2/blob/master/tools_numpy.ipynb"><img src="https://www.tensorflow.org/images/colab_logo_32px.png" />구글 코랩에서 실행하기</a>
   </td>
