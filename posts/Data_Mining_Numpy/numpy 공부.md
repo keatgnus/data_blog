@@ -20,7 +20,7 @@ Python - Numpy
 
 <table align="left">
   <td>
-    <a target="_blank" href="http://localhost:8888/notebooks/3-1%20Data_Mining/numpy%20%EA%B3%B5%EB%B6%80.ipynb"><img src="image.png" />Jupyter에서 실행하기</a>
+    <a target="_blank" href="http://localhost:8888/notebooks/3-1%20Data_Mining/numpy%20%EA%B3%B5%EB%B6%80.ipynb"><img ="jup_image.jpg" />Jupyter에서 실행하기</a>
   </td>
 </table>
 <table align="left">
