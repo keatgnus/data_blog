@@ -20,10 +20,14 @@ Python - Numpy
 
 <table align="left">
   <td>
-    <a target="_blank" href="http://localhost:8888/notebooks/3-1%20Data_Mining/numpy%20%EA%B3%B5%EB%B6%80.ipynb"><img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjExMjVfNzIg%2FMDAxNjY5Mzc0MDI0OTY4.ZwawcF6_St1wPVkqzFWxXZ59TR5ZcFQE1rdA6ygcspAg.D-cFm3IlZ6EeDXPgUXQwx90HT332bpCaCeRn1Ek8rzIg.PNG.ljh10093%2Fimage.png&type=sc960_832" />Jupyter에서 실행하기</a>
+    <a target="_blank" href="http://localhost:8888/notebooks/3-1%20Data_Mining/numpy%20%EA%B3%B5%EB%B6%80.ipynb"><img src="image.png" />Jupyter에서 실행하기</a>
   </td>
 </table>
-
+<table align="left">
+  <td>
+    <a target="_blank" href="https://colab.research.google.com/github/rickiepark/handson-ml2/blob/master/tools_numpy.ipynb"><img src="https://www.tensorflow.org/images/colab_logo_32px.png" />구글 코랩에서 실행하기</a>
+  </td>
+</table>
 
 
 ## 배열 생성
