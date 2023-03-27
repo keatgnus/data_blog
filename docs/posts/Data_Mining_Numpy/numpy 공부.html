@@ -129,7 +129,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -202,13 +202,111 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#numpy-기본" id="toc-numpy-기본" class="nav-link active" data-scroll-target="#numpy-기본">Numpy 기본</a></li>
+  <li><a href="#배열-생성" id="toc-배열-생성" class="nav-link" data-scroll-target="#배열-생성">배열 생성</a>
+  <ul class="collapse">
+  <li><a href="#np.zeros" id="toc-np.zeros" class="nav-link" data-scroll-target="#np.zeros"><code>np.zeros</code></a></li>
+  <li><a href="#용어" id="toc-용어" class="nav-link" data-scroll-target="#용어">용어</a></li>
+  <li><a href="#n-차원-배열" id="toc-n-차원-배열" class="nav-link" data-scroll-target="#n-차원-배열">N-차원 배열</a></li>
+  <li><a href="#배열-타입" id="toc-배열-타입" class="nav-link" data-scroll-target="#배열-타입">배열 타입</a></li>
+  <li><a href="#np.ones" id="toc-np.ones" class="nav-link" data-scroll-target="#np.ones"><code>np.ones</code></a></li>
+  <li><a href="#np.full" id="toc-np.full" class="nav-link" data-scroll-target="#np.full"><code>np.full</code></a></li>
+  <li><a href="#np.empty" id="toc-np.empty" class="nav-link" data-scroll-target="#np.empty"><code>np.empty</code></a></li>
+  <li><a href="#np.array" id="toc-np.array" class="nav-link" data-scroll-target="#np.array">np.array</a></li>
+  <li><a href="#np.arange" id="toc-np.arange" class="nav-link" data-scroll-target="#np.arange"><code>np.arange</code></a></li>
+  <li><a href="#np.linspace" id="toc-np.linspace" class="nav-link" data-scroll-target="#np.linspace"><code>np.linspace</code></a></li>
+  <li><a href="#np.rand와-np.randn" id="toc-np.rand와-np.randn" class="nav-link" data-scroll-target="#np.rand와-np.randn"><code>np.rand</code>와 <code>np.randn</code></a></li>
+  <li><a href="#np.fromfunction" id="toc-np.fromfunction" class="nav-link" data-scroll-target="#np.fromfunction">np.fromfunction</a></li>
+  </ul></li>
+  <li><a href="#배열-데이터" id="toc-배열-데이터" class="nav-link" data-scroll-target="#배열-데이터">배열 데이터</a>
+  <ul class="collapse">
+  <li><a href="#dtype" id="toc-dtype" class="nav-link" data-scroll-target="#dtype"><code>dtype</code></a></li>
+  <li><a href="#itemsize" id="toc-itemsize" class="nav-link" data-scroll-target="#itemsize"><code>itemsize</code></a></li>
+  <li><a href="#data-버퍼" id="toc-data-버퍼" class="nav-link" data-scroll-target="#data-버퍼"><code>data</code> 버퍼</a></li>
+  </ul></li>
+  <li><a href="#배열-크기-변경" id="toc-배열-크기-변경" class="nav-link" data-scroll-target="#배열-크기-변경">배열 크기 변경</a>
+  <ul class="collapse">
+  <li><a href="#자신을-변경" id="toc-자신을-변경" class="nav-link" data-scroll-target="#자신을-변경">자신을 변경</a></li>
+  <li><a href="#reshape" id="toc-reshape" class="nav-link" data-scroll-target="#reshape"><code>reshape</code></a></li>
+  <li><a href="#ravel" id="toc-ravel" class="nav-link" data-scroll-target="#ravel"><code>ravel</code></a></li>
+  </ul></li>
+  <li><a href="#산술-연산" id="toc-산술-연산" class="nav-link" data-scroll-target="#산술-연산">산술 연산</a></li>
+  <li><a href="#브로드캐스팅" id="toc-브로드캐스팅" class="nav-link" data-scroll-target="#브로드캐스팅">브로드캐스팅</a>
+  <ul class="collapse">
+  <li><a href="#규칙-1" id="toc-규칙-1" class="nav-link" data-scroll-target="#규칙-1">규칙 1</a></li>
+  <li><a href="#규칙-2" id="toc-규칙-2" class="nav-link" data-scroll-target="#규칙-2">규칙 2</a></li>
+  <li><a href="#규칙-3" id="toc-규칙-3" class="nav-link" data-scroll-target="#규칙-3">규칙 3</a></li>
+  <li><a href="#업캐스팅" id="toc-업캐스팅" class="nav-link" data-scroll-target="#업캐스팅">업캐스팅</a></li>
+  </ul></li>
+  <li><a href="#스킵" id="toc-스킵" class="nav-link" data-scroll-target="#스킵">스킵</a></li>
+  <li><a href="#조건-연산자" id="toc-조건-연산자" class="nav-link" data-scroll-target="#조건-연산자">조건 연산자</a></li>
+  <li><a href="#수학-함수와-통계-함수" id="toc-수학-함수와-통계-함수" class="nav-link" data-scroll-target="#수학-함수와-통계-함수">수학 함수와 통계 함수</a>
+  <ul class="collapse">
+  <li><a href="#ndarray-메서드" id="toc-ndarray-메서드" class="nav-link" data-scroll-target="#ndarray-메서드"><code>ndarray</code> 메서드</a></li>
+  <li><a href="#일반-함수" id="toc-일반-함수" class="nav-link" data-scroll-target="#일반-함수">일반 함수</a></li>
+  <li><a href="#이항-일반-함수" id="toc-이항-일반-함수" class="nav-link" data-scroll-target="#이항-일반-함수">이항 일반 함수</a></li>
+  </ul></li>
+  <li><a href="#배열-인덱싱" id="toc-배열-인덱싱" class="nav-link" data-scroll-target="#배열-인덱싱">배열 인덱싱</a>
+  <ul class="collapse">
+  <li><a href="#차원-배열" id="toc-차원-배열" class="nav-link" data-scroll-target="#차원-배열">1차원 배열</a></li>
+  <li><a href="#보통의-파이썬-배열과-차이점" id="toc-보통의-파이썬-배열과-차이점" class="nav-link" data-scroll-target="#보통의-파이썬-배열과-차이점">보통의 파이썬 배열과 차이점</a></li>
+  <li><a href="#다차원-배열" id="toc-다차원-배열" class="nav-link" data-scroll-target="#다차원-배열">다차원 배열</a></li>
+  <li><a href="#팬시-인덱싱fancy-indexing" id="toc-팬시-인덱싱fancy-indexing" class="nav-link" data-scroll-target="#팬시-인덱싱fancy-indexing">팬시 인덱싱(Fancy indexing)</a>
+  <ul class="collapse">
+  <li><a href="#quiz" id="toc-quiz" class="nav-link" data-scroll-target="#quiz">Quiz</a></li>
+  <li><a href="#quiz-1" id="toc-quiz-1" class="nav-link" data-scroll-target="#quiz-1">Quiz</a></li>
+  </ul></li>
+  <li><a href="#고차원" id="toc-고차원" class="nav-link" data-scroll-target="#고차원">고차원</a></li>
+  <li><a href="#생략-부호-..." id="toc-생략-부호-..." class="nav-link" data-scroll-target="#생략-부호-...">생략 부호 (<code>...</code>)</a></li>
+  <li><a href="#불리언-인덱싱" id="toc-불리언-인덱싱" class="nav-link" data-scroll-target="#불리언-인덱싱">불리언 인덱싱</a></li>
+  <li><a href="#np.ix_" id="toc-np.ix_" class="nav-link" data-scroll-target="#np.ix_"><code>np.ix_</code></a></li>
+  </ul></li>
+  <li><a href="#반복" id="toc-반복" class="nav-link" data-scroll-target="#반복">반복</a></li>
+  <li><a href="#배열-쌓기" id="toc-배열-쌓기" class="nav-link" data-scroll-target="#배열-쌓기">배열 쌓기</a>
+  <ul class="collapse">
+  <li><a href="#vstack" id="toc-vstack" class="nav-link" data-scroll-target="#vstack"><code>vstack</code></a></li>
+  <li><a href="#hstack" id="toc-hstack" class="nav-link" data-scroll-target="#hstack"><code>hstack</code></a></li>
+  <li><a href="#concatenate" id="toc-concatenate" class="nav-link" data-scroll-target="#concatenate"><code>concatenate</code></a></li>
+  <li><a href="#stack" id="toc-stack" class="nav-link" data-scroll-target="#stack"><code>stack</code></a></li>
+  </ul></li>
+  <li><a href="#배열-분할" id="toc-배열-분할" class="nav-link" data-scroll-target="#배열-분할">배열 분할</a></li>
+  <li><a href="#배열-전치" id="toc-배열-전치" class="nav-link" data-scroll-target="#배열-전치">배열 전치</a></li>
+  <li><a href="#선형-대수학" id="toc-선형-대수학" class="nav-link" data-scroll-target="#선형-대수학">선형 대수학</a>
+  <ul class="collapse">
+  <li><a href="#행렬-전치" id="toc-행렬-전치" class="nav-link" data-scroll-target="#행렬-전치">행렬 전치</a></li>
+  <li><a href="#행렬-곱셈" id="toc-행렬-곱셈" class="nav-link" data-scroll-target="#행렬-곱셈">행렬 곱셈</a></li>
+  <li><a href="#역행렬과-유사-역행렬" id="toc-역행렬과-유사-역행렬" class="nav-link" data-scroll-target="#역행렬과-유사-역행렬">역행렬과 유사 역행렬</a></li>
+  <li><a href="#단위-행렬" id="toc-단위-행렬" class="nav-link" data-scroll-target="#단위-행렬">단위 행렬</a></li>
+  <li><a href="#qr-분해" id="toc-qr-분해" class="nav-link" data-scroll-target="#qr-분해">QR 분해</a></li>
+  <li><a href="#행렬식" id="toc-행렬식" class="nav-link" data-scroll-target="#행렬식">행렬식</a></li>
+  <li><a href="#고윳값과-고유벡터" id="toc-고윳값과-고유벡터" class="nav-link" data-scroll-target="#고윳값과-고유벡터">고윳값과 고유벡터</a></li>
+  <li><a href="#특잇값-분해" id="toc-특잇값-분해" class="nav-link" data-scroll-target="#특잇값-분해">특잇값 분해</a></li>
+  <li><a href="#대각원소와-대각합" id="toc-대각원소와-대각합" class="nav-link" data-scroll-target="#대각원소와-대각합">대각원소와 대각합</a></li>
+  <li><a href="#선형-방정식-풀기" id="toc-선형-방정식-풀기" class="nav-link" data-scroll-target="#선형-방정식-풀기">선형 방정식 풀기</a></li>
+  </ul></li>
+  <li><a href="#벡터화" id="toc-벡터화" class="nav-link" data-scroll-target="#벡터화">벡터화</a></li>
+  <li><a href="#저장과-로딩" id="toc-저장과-로딩" class="nav-link" data-scroll-target="#저장과-로딩">저장과 로딩</a>
+  <ul class="collapse">
+  <li><a href="#바이너리-.npy-포맷" id="toc-바이너리-.npy-포맷" class="nav-link" data-scroll-target="#바이너리-.npy-포맷">바이너리 <code>.npy</code> 포맷</a></li>
+  <li><a href="#텍스트-포맷" id="toc-텍스트-포맷" class="nav-link" data-scroll-target="#텍스트-포맷">텍스트 포맷</a></li>
+  <li><a href="#압축된-.npz-포맷" id="toc-압축된-.npz-포맷" class="nav-link" data-scroll-target="#압축된-.npz-포맷">압축된 <code>.npz</code> 포맷</a></li>
+  </ul></li>
+  <li><a href="#그-다음은" id="toc-그-다음은" class="nav-link" data-scroll-target="#그-다음은">그 다음은?</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
+<p>Numpy 기본</p>
 <section id="numpy-기본" class="level1">
 <h1>Numpy 기본</h1>
 <p><strong>도구 - 넘파이(NumPy)</strong></p>
