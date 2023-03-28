@@ -1,5 +1,5 @@
 ---
-title: "Introduction"
+title: "Profile"
 listing:
   contents: posts
   sort: "date desc"

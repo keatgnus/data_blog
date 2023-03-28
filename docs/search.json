@@ -2,7 +2,7 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Introduction",
+    "title": "Profile",
     "section": "",
     "text": "advanced_python CH2\n\n\n\n\n\n\n\ncode\n\n\nadvanced_python\n\n\njupyter\n\n\n\n\n\n\n\n\n\n\n\nMar 28, 2023\n\n\nSeongTaek\n\n\n\n\n\n\n  \n\n\n\n\nNumpy Basic\n\n\n\n\n\n\n\ncode\n\n\ndata_mining\n\n\njupyter\n\n\n\n\n\n\n\n\n\n\n\nMar 28, 2023\n\n\nSeongTaek\n\n\n\n\n\n\nNo matching items"
   },
@@ -16,9 +16,9 @@
   {
     "objectID": "about.html",
     "href": "about.html",
-    "title": "Introduction",
+    "title": "Profile",
     "section": "",
-    "text": "열심히 해보자"
+    "text": "Seongtaek Jo"
   },
   {
     "objectID": "posts/Advanced_Python_ch2/ch2.html",
@@ -397,5 +397,12 @@
     "title": "Numpy Basic",
     "section": "배열 생성",
     "text": "배열 생성\nnumpy를 임포트해 보죠. 대부분의 사람들이 np로 알리아싱하여 임포트합니다:\nimport numpy as np"
+  },
+  {
+    "objectID": "about.html#started-from-the-gwangju",
+    "href": "about.html#started-from-the-gwangju",
+    "title": "Profile",
+    "section": "started from the Gwangju",
+    "text": "started from the Gwangju"
   }
 ]

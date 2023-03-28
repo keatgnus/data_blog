@@ -1,8 +1,22 @@
 ---
-title: "Introduction"
+title: "Profile"
 image: profile.jpg
 about:
   template: jolla
 ---
+##### Name            
+Seongtaek Jo
 
+##### Birth
+1999.01.15
 
+##### Phone
++82 10-9823-3115
+
+##### Email
+- tjdxor3115@naver.com
+
+##### certificate
+- ADsP (데이터분석 준전문가)
+
+## started from the Gwangju
