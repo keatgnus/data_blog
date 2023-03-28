@@ -1,5 +1,5 @@
 ---
-title: "Seong Taek Jo"
+title: "SeongTaek Jo"
 image: profile.jpg
 about:
   template: jolla
