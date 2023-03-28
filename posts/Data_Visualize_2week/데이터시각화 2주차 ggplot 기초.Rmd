@@ -6,8 +6,6 @@ categories: [data_visualize, rstudio]
 image: "ggplot.jpg"
 ---
 
-Rstudio - ggplot2
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   echo = TRUE,
@@ -15,6 +13,8 @@ knitr::opts_chunk$set(
   collapse = TRUE # Code와 Output을 분리시키지 않고 하나로 출력시켜 줌
   )
 ```
+
+Rstudio - ggplot2
 
 # 그래프 패키지(Packages)
 ##### [ggplot2] package : R에서 사용할 수 있는 대표적인 그래픽 도구
