@@ -17,6 +17,8 @@ website:
           - text: github
             icon: github
             href: https://github.com/keatgnus
+  page-footer: 
+    left: "Copyright 2023, Seongtaek"
 format:
   html:
     theme: lux
