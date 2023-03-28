@@ -1,5 +1,5 @@
 ---
-title: "taek_blog"
+title: "seongtaek Jo"
 listing:
   contents: posts
   sort: "date desc"
