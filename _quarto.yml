@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "Introduction"
+  title: "seongtaek Jo"
   navbar:
     right:
       - about.qmd

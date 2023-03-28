@@ -1,5 +1,5 @@
 ---
-title: "Introduction"
+title: "seongtaek Jo"
 image: profile.jpg
 about:
   template: jolla

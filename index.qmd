@@ -1,5 +1,5 @@
 ---
-title: "seongtaek Jo"
+title: "Introduction"
 listing:
   contents: posts
   sort: "date desc"
