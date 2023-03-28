@@ -9,7 +9,7 @@ website:
       - about.qmd
     tools:
       - text: contact
-        icon: instagram 
+        icon: envelope 
         menu:
           - text: instagram
             icon: instagram
