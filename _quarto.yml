@@ -9,7 +9,7 @@ website:
       - text: coding
         menu: 
           - text: Data_Mining
-          - G:\내 드라이브\taek_blog\posts\Data_Mining_Numpy
+            file: G:\내 드라이브\taek_blog\posts\Data_Mining_Numpy\numpy 공부.md
     
     right:
       - about.qmd
