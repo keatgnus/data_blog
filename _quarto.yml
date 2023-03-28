@@ -5,6 +5,9 @@ project:
 website:
   title: "Taek_Blog"
   navbar:
+    left:
+      - text: "Home"
+        file: profile2.qmd
     right:
       - about.qmd
     tools:
