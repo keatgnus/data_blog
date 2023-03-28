@@ -18,7 +18,7 @@ Python - Numpy
 
 *넘파이(NumPy)는 파이썬의 과학 컴퓨팅을 위한 기본 라이브러리입니다. 넘파이의 핵심은 강력한 N-차원 배열 객체입니다. 또한 선형 대수, 푸리에(Fourier) 변환, 유사 난수 생성과 같은 유용한 함수들도 제공합니다."
 
-<table align="left">
+<table align="bottom">
   <td>
     <a target="_blank" href="http://localhost:8888/notebooks/3-1%20Data_Mining/numpy%20%EA%B3%B5%EB%B6%80.ipynb"><img
     src = small_jup_image.jpg />Jupyter에서 실행하기</a>
