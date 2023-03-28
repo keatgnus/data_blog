@@ -1,0 +1,14 @@
+{
+  "hash": "7b702eb3002fe30c47abbcd604b80a61",
+  "result": {
+    "markdown": "---\ntitle: \"데이터시각화 그래프 패키지 설명\"\nauthor: \"Seongtaek\"\ndate: \"2023-03-28\"\noutput:\n  prettydoc::html_pretty:\n    theme: cayman\n    highlight: github\n---\n\n\n\n\n# 그래프 패키지(Packages)\n##### [ggplot2] package : R에서 사용할 수 있는 대표적인 그래픽 도구\n- 그래프 결과를 그림 파일로 출력(정적)\n- Top 50 ggplot2 Visualizations\n  - 참고 http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html\n \n##### [plotly] package - 대화형 그래프 라이브러리로 Python, R, JavaScript 라이브러리를 제공\n- 그래프 결과를 HTML 파일로 출력(동적) \n  - 값 확인, 확대/축소, 이동, 필터 등의 기능을 제공하여 자료 탐색 가능\n- Plotly R Open Source Graphing Library\n  - 참고 https://plotly.com/r/ - Plotly 패키지에 ggplot2 패키지가 포함되어 있음\n  \n# [ggplot2] package\n##### 기본 3요소\n- data: 시각화 자료 - 데이터프레임\n- geom: 시각화 종류\n  - 점: geom_point()\n  - 선: geom_line()\n  - 막대: eom_bar()\n  \n- aesthetics: 시각화 특성 aes()\n  - 위치: x, y\n  - 크기: size\n  - 색상: col, fill\n  - 농도: alpha\n  \n##### 레이어 추가\n- ‘+’ 연산자를 사용하여 레이어를 추가하는 형식으로 그래프를 추가하거나 수정함\n\n##### ggplot() 함수\n- 그래프를 그리는 기본 함수로 다양한 함수를 추가(+)하여 정교한 그래프를 생성\n\n##### 제목과 축의 이름 설정\n- ggtitle(), xlab(), ylab() 함수\n- labs() 함수\n\n##### qplot() 함수\n- Quick plot: 기본 plot() 함수에 익숙한 사용자를 위한 빠른 그래프 생성",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

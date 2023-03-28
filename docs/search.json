@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Home",
     "section": "",
-    "text": "advanced_python CH2\n\n\n\n\n\n\n\ncode\n\n\nadvanced_python\n\n\njupyter\n\n\n\n\n\n\n\n\n\n\n\nMar 28, 2023\n\n\nSeongtaek\n\n\n\n\n\n\n  \n\n\n\n\nNumpy Basic\n\n\n\n\n\n\n\ncode\n\n\ndata_mining\n\n\njupyter\n\n\n\n\n\n\n\n\n\n\n\nMar 28, 2023\n\n\nSeongtaek\n\n\n\n\n\n\nNo matching items"
+    "text": "advanced_python CH2\n\n\n\n\n\n\n\ncode\n\n\nadvanced_python\n\n\njupyter\n\n\n\n\n\n\n\n\n\n\n\nMar 28, 2023\n\n\nSeongtaek\n\n\n\n\n\n\n  \n\n\n\n\nNumpy Basic\n\n\n\n\n\n\n\ncode\n\n\ndata_mining\n\n\njupyter\n\n\n\n\n\n\n\n\n\n\n\nMar 28, 2023\n\n\nSeongtaek\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n데이터시각화 그래프 패키지 설명\n\n\n\n\n\n\n\n\n\n\n\n\nMar 28, 2023\n\n\nSeongtaek\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/first_posting/index.html",
@@ -404,5 +404,12 @@
     "title": "Profile",
     "section": "started from the Gwangju",
     "text": "started from the Gwangju"
+  },
+  {
+    "objectID": "posts/Data_Visualize_2week/데이터시각화 2주차 ggplot 기초.html",
+    "href": "posts/Data_Visualize_2week/데이터시각화 2주차 ggplot 기초.html",
+    "title": "데이터시각화 그래프 패키지 설명",
+    "section": "",
+    "text": "그래프 패키지(Packages)\n\n[ggplot2] package : R에서 사용할 수 있는 대표적인 그래픽 도구\n\n그래프 결과를 그림 파일로 출력(정적)\nTop 50 ggplot2 Visualizations\n\n참고 http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html\n\n\n\n\n[plotly] package - 대화형 그래프 라이브러리로 Python, R, JavaScript 라이브러리를 제공\n\n그래프 결과를 HTML 파일로 출력(동적)\n\n값 확인, 확대/축소, 이동, 필터 등의 기능을 제공하여 자료 탐색 가능\n\nPlotly R Open Source Graphing Library\n\n참고 https://plotly.com/r/ - Plotly 패키지에 ggplot2 패키지가 포함되어 있음\n\n\n\n\n\n[ggplot2] package\n\n기본 3요소\n\ndata: 시각화 자료 - 데이터프레임\ngeom: 시각화 종류\n\n점: geom_point()\n선: geom_line()\n막대: eom_bar()\n\naesthetics: 시각화 특성 aes()\n\n위치: x, y\n크기: size\n색상: col, fill\n농도: alpha\n\n\n\n\n레이어 추가\n\n‘+’ 연산자를 사용하여 레이어를 추가하는 형식으로 그래프를 추가하거나 수정함\n\n\n\nggplot() 함수\n\n그래프를 그리는 기본 함수로 다양한 함수를 추가(+)하여 정교한 그래프를 생성\n\n\n\n제목과 축의 이름 설정\n\nggtitle(), xlab(), ylab() 함수\nlabs() 함수\n\n\n\nqplot() 함수\n\nQuick plot: 기본 plot() 함수에 익숙한 사용자를 위한 빠른 그래프 생성"
   }
 ]
