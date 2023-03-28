@@ -6,8 +6,11 @@ website:
   title: "Taek_Blog"
   navbar:
     left:
-      - text: "Home"
-        file: profile2.qmd
+      - text: coding
+        menu: 
+          - text: Data_Mining
+            file: numpy 공부.md
+    
     right:
       - about.qmd
     tools:
