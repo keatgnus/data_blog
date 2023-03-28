@@ -8,8 +8,8 @@ website:
     right:
       - about.qmd
     tools:
-      - icon: envelope
-        text: contact
+      - text: contact
+        icon: instagram 
         menu:
           - text: instagram
             icon: instagram
