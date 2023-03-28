@@ -7,10 +7,15 @@ website:
   navbar:
     right:
       - about.qmd
-      - icon: github
-        href: https://github.com/keatgnus
-      - icon: instagram
-        href: https://www.instagram.com/keatgnus/
+    tools:
+      - icon: envelop
+        menu:
+          - text: instagram
+            icon: instagram
+            href: https://www.instagram.com/keatgnus/
+          - text: github
+            icon: github
+            href: https://github.com/keatgnus
 format:
   html:
     theme: lux
