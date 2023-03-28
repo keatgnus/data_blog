@@ -11,6 +11,17 @@ website:
         href: https://github.com/keatgnus
       - icon: instagram
         href: https://www.instagram.com/keatgnus/
+  sidebar:
+    - title: "Contact"
+      style: "docked"
+      background: light
+      contents:
+        - icon: github
+          href: https://github.com/keatgnus
+        - icon: instagram
+          href: https://www.instagram.com/keatgnus/
+
+
 format:
   html:
     theme: lux
