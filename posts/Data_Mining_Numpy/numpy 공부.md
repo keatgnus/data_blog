@@ -1,5 +1,5 @@
 ---
-title: "Numpy Basic"
+title: "Data_Mining CH2"
 author: "Seongtaek"
 date: "2023-03-28"
 categories: [code, data_mining, jupyter]
@@ -8,7 +8,7 @@ image: "numpy.jpg"
 
 
 
-Python - Numpy 
+Numpy Basic 
 
 
 
