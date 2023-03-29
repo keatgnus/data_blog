@@ -1,6 +1,5 @@
 ---
 title: "Home"
-title-block-banner-color: white
 listing:
   contents: posts
   sort: "date desc"
