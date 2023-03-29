@@ -22,7 +22,7 @@ website:
 format:
   html:
     theme: lux
-    css: dark.css
+    css: styles.css
 
 
 
