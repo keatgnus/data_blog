@@ -8,7 +8,7 @@ image: "ggplot.jpg"
 
 <table align="bottom">
   <td>
-    <a target="_blank" file="C:\Users\seong taek\Desktop\3-1 DataVisualize/데이터시각화-2주차-ggplot-기초.html"><img
+    <a target="_blank" href="file:///C:/Users/seong%20taek/Desktop/3-1%20DataVisualize/%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%8B%9C%EA%B0%81%ED%99%94-2%EC%A3%BC%EC%B0%A8-ggplot-%EA%B8%B0%EC%B4%88.html"><img
     src = r_logo.png />Rstudio에서 실행하기</a>
   </td>
 </table>
