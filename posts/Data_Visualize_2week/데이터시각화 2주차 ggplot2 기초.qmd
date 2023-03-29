@@ -9,7 +9,7 @@ image: "ggplot.jpg"
 <table align="bottom">
   <td>
     <a target="_blank" href="C:/Users/seong taek/Desktop/데이터시각화 2주차 ggplot2 기초.Rmd"><img
-    src = r_logo.jpg />Rstudio에서 실행하기</a>
+    src = r_logo.png />Rstudio에서 실행하기</a>
   </td>
 </table>
 
