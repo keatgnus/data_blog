@@ -6,7 +6,7 @@ categories: [code, data_visualize, rstudio]
 image: "ggplot.jpg"
 ---
 
-ggplot2
+Figure 2.3, Figure 2.4
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
@@ -16,20 +16,20 @@ knitr::opts_chunk$set(
   )
 ```
 
-# 지도 데이터 시각화
+# 데이터 시각화 실습 : 계절성 그래프 Figure 2.3, Figure 2.4
 
-### 패키지 불러오기
+### - 패키지 불러오기
 ```{r,warning=FALSE}
 library(ggplot2)
 library(dplyr)
 ```
-### 파일 불러오기
-- ncdc_normals.csv
+### - 파일 불러오기
+- ncdc_normals.csv (날짜별 온도 등 데이터셋)
 ```{r}
 ncdc_normals <- read.csv('C:/Users/seong taek/Desktop/3-1 DataVisualize/ncdc_normals.csv')
 ```
 
-### 불러온 데이터셋 파악
+### - 불러온 데이터셋 파악
 
 ```{r}
 # 차원 파악
@@ -48,7 +48,7 @@ ncdc_normals %>% sapply(class)
 ncdc_normals %>% sapply(typeof)
 ```
 
-### character → date 형식 변환
+### - character → date 형식 변환
 
 ```{r}
 ncdc_normals$date <- ncdc_normals$date%>% as.Date("%Y-%m-%d")
@@ -58,12 +58,12 @@ ncdc_normals %>% sapply(class)
 ncdc_normals %>% sapply(typeof)
 ```
 
-### station_id 종류 개수
+### - station_id 종류 개수
 
 ```{r}
 ncdc_normals$station_id %>% unique() %>% length()
 ```
-### station_id 선정 후, location 지정한 data.frame 생성
+### - station_id 선정 후, location(컬럼 이름) 지정한 data.frame 생성
 
 ```{r}
 station_loc <- data.frame(station_id = c("USW00014819","USC00042319","USW00093107","USW00012918"),
@@ -71,11 +71,205 @@ station_loc <- data.frame(station_id = c("USW00014819","USC00042319","USW0009310
 station_loc
 ```
 
-### `station_id`로 `ncdc_normals`와 `station_loc` inner_join 
+### - station_id로 ncdc_normals와 station_loc 두 컬럼을 `inner_join`
 
 ```{r}
 temps_long <- ncdc_normals %>% inner_join(station_loc, by="station_id")
+
 temps_long %>% head()
+
 temps_long %>% dim()
+
+temps_long$date %>% class()
+```
+### - x축에 표시할 눈금 생성
+
+```{r}
+# x축 범위 설정을 위해 date 범위 파악
+temps_long$date %>% head()
+temps_long$date %>% tail()
+
+# 범위 설정
+date_s <- '0000-01-01' %>% as.Date('%Y-%m-%d')
+date_e <- '0001-01-01' %>% as.Date('%Y-%m-%d')
+
+# data_s ~ date_e까지 3개월 단위로 나누기
+break_date <- seq(date_s, date_e, by = '3 month')
+
+break_date
+```
+### - Fiqure 2.3 ggplot + 축 설정
+- 사용 데이터셋 : temps_long
+- x=date, y=temperature
+- color : location별
+- scale_x_date
+  - 이름 : month
+  - 간격 : break_date (3개월)
+  - 간격 라벨 (Jan ~ Jan)
+- scale_y_continuous
+  - 이름 : temp
+  - 범위 : 0 ~ 110
+- labs : 제목, 부제목
+- 테마 : 밝게
+```{r}
+ggplot(temps_long, aes(x=date, y=temperature, color=location)) +
+  geom_line() +
+  scale_x_date(name = 'month',
+               breaks = break_date,
+               labels = c('Jan','Apr','Jul','Oct','Jan')) +
+  scale_y_continuous(name = 'temp', limits = c(0,110)) + # continuous 연속형 (온도)
+  #ylab('Temp') +
+  labs(title = 'Fig. 2.3', subtitle = 'Daily temperature normals') +
+  theme_light()
+```
+
+### - Figure 2.4 그래프 데이터셋 전처리
+
+```{r}
+temps_long %>% head()
+
+temps_long %>% names()
+
+mean_temps <- temps_long %>%              
+  group_by(location, month) %>%           # location, month로 그룹화 
+  summarise(mean = mean(temperature)) %>% # 그룹화된 데이터의 집계값 요약
+  ungroup() %>%                           # 그룹화를 해제하여 일반적인 데이터 프레임 형태로 사용
+  mutate(month = factor(month %>%         # month값을 factor 형태로 수정해서 원하는 levels 지정가능
+                          paste(), levels = 1:12 %>% paste())) 
+
+mean_temps
+```
+
+### - Figure 2.4 ggplot + geom_tile + fill color
+- 사용 데이터셋 : mean_temps
+- x=month, y=location
+- fill : mean
+- geom_tile : 넓이, 높이 지정
+- scale_fill_viridis_c
+  - 이름 : temperature
+  - 옵션 : B (밝기)
+  - begin, end : 색상의 시작,끝
+- coord_fixed
+  - expand = F : 공백 제거
+- ylab(NULL) : y축 이름 제거
+```{r}
+ggplot(mean_temps, aes(x = month, y = location, fill = mean)) +
+  geom_tile(width = .95, height = 0.95) +
+  scale_fill_viridis_c(option = 'B', begin = 0.15, end =  0.98,
+                       name = 'temperature') +
+  coord_fixed(expand = FALSE) +
+  ylab(NULL) #ylab('')
+```
+
+
+
+
+
+# 예제 : 2021년 기상청 자료 Figure 2.3, Figure 2.4
+
+### - csv파일 불러오기, 데이터 파악
+
+```{r}
+data_2021 <- read.csv('C:/Users/seong taek/Desktop/3-1 DataVisualize/OBS_ASOS_DD_20230322080932.csv', fileEncoding = 'cp949')
+
+data_2021 %>% dim()
+
+data_2021 %>% head()
+
+data_2021 %>% sapply(class)
+```
+### - `일시`를 character → date형식으로 변환
+
+```{r}
+data_2021$일시 <- data_2021$일시 %>% as.Date('%Y-%m-%d')
+
+data_2021 %>% sapply(class)
+```
+### - 기초통계량 파악
+
+```{r}
+data_2021 %>% summary()
+```
+### - x축에 표시할 눈금
+
+```{r}
+data_2021$일시 %>% head()
+
+data_2021$일시 %>% tail()
+
+date_s <- '2021-01-01' %>% as.Date('%Y-%m-%d')
+date_e <- '2022-01-01' %>% as.Date('%Y-%m-%d')
+
+break_date <- seq.Date(date_s, date_e, by='3 month')
+break_date
+
+# 월만 문자 값으로 뽑아내기
+date_lab <- format(break_date, '%B')
+date_lab
+```
+### - Figure 2.3 ggplot + 축 설정
+- 사용 데이터셋 : data_2021
+- x=일시, y=평균기온..C.
+- color : 지점명 별
+- scale_x_date
+  - 이름 : 월
+  - 간격 : break_date (3개월)
+  - 간격 라벨 (1월 ~ 1월)
+- scale_y_continuous
+  - 이름 : 평균기온
+- labs : 제목, 부제목
+- 테마 : 밝게
+
+```{r}
+# 축 값 지정하기 전 컬럼이름 파악
+data_2021 %>% names()
+
+ggplot(data_2021, aes(x=일시, y=평균기온..C., color=지점명)) +
+  geom_smooth(linewidth = 0.9,se=F,span=0.1) + # linewidth (선 두께), geom_line → smooth 가능
+  scale_x_date(name = '월',                  # se : 테두리, span : 스무스 정도
+               breaks = break_date,
+               labels = date_lab) +
+  scale_y_continuous(name = '평균기온') +
+  labs(title = '2021년 평균온도', subtitle = '4개의 주요 도시') +
+  theme_light()
+```
+
+### - Figure 2.4 그래프 데이터셋 전처리
+
+```{r}
+data_2021 %>% names()
+
+data_2021 %>% head()
+
+data_2021_month <- data_2021 %>%
+  mutate(month = format(일시, '%B')) %>%   # 일시에서 월만 뽑아낸 month 컬럼 생성
+  group_by(지점명, month) %>%              # 지점명, month로 그룹화
+  summarise(mean = mean(평균기온..C.)) %>% # 그룹화된 데이터의 집계값 요약
+  ungroup() %>%                            # 그룹화를 해제하여 일반적인 데이터 프레임 형태로 사용
+  mutate(month = factor(month,             # month값을 factor 형태로 수정해서 원하는 levels 지정가능
+                        levels = paste(1:12, '월',sep = ''))) # sep='' : 간격없이 붙이기
+
+data_2021_month
+```
+
+### - Figure 2.4 ggplot + geom_tile + fill color
+- 사용 데이터셋 : data_2021_month
+- x=month, y=지점명
+- fill : mean(평균온도)
+- geom_tile : 넓이, 높이 지정
+- scale_fill_viridis_c
+  - 이름 : temperature
+  - 옵션 : B (밝기)
+  - begin, end : 색상의 시작,끝
+- coord_fixed
+  - expand = F : 공백 제거
+- ylab(NULL) : y축 이름 제거
+```{r}
+ggplot(data_2021_month, aes(x = month, y = 지점명, fill = mean)) +
+  geom_tile(width = 0.95, height = 0.95) +
+  scale_fill_viridis_c(option = 'B', begin = 0.15, end =  0.98,
+                       name = 'temperature') +
+  coord_fixed(expand = FALSE) +
+  ylab(NULL) #ylab('')
 ```
 

@@ -6,7 +6,7 @@ categories: [code, data_visualize, rstudio]
 image: "ggplot.jpg"
 ---
 
-ggplot2
+ggplot2 Basic
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
