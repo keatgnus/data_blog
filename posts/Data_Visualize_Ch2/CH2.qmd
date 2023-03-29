@@ -1,9 +1,12 @@
 ---
-title: "CH2"
+title: "Data_Visualize CH2"
 author: "Seongtaek"
-date: "2023-03-29"
-output: html_document
+date: "2023-03-30"
+categories: [code, data_visualize, rstudio]
+image: "ggplot.jpg"
 ---
+
+ggplot2
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
