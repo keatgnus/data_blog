@@ -1,14 +1,12 @@
 ---
-title: "ggplot2 기초"
+title: "Data_Visualize CH1"
 author: "Seongtaek"
 date: "2023-03-29"
-output:
-  prettydoc::html_pretty:
-    theme: cayman
-    highlight: github
 categories: [code, data_visualize, rstudio]
 image: "ggplot.jpg"
 ---
+
+ggplot2
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
