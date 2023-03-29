@@ -1,5 +1,5 @@
 ---
-title: "Data_Mining CH2"
+title: "Data_Mining CH1"
 author: "Seongtaek"
 date: "2023-03-28"
 categories: [code, data_mining, jupyter]
