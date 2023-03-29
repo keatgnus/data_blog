@@ -5,14 +5,10 @@ project:
 website:
   title: "Taek_Blog"
   navbar:
-    left:
-      - text: "Data_Mining"
-        file: G:\내 드라이브\taek_blog\posts\Data_Mining_Numpy\numpy 공부.md
     right:
       - about.qmd
     tools:
-      - text: 'contact'
-        icon: envelope 
+      - icon: envelope 
         menu:
           - text: instagram
             icon: instagram
