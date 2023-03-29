@@ -1,0 +1,78 @@
+---
+title: "CH2"
+author: "Seongtaek"
+date: "2023-03-29"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  comment = "#>",
+  collapse = TRUE # Code와 Output을 분리시키지 않고 하나로 출력시켜 줌
+  )
+```
+
+# 지도 데이터 시각화
+
+### 패키지 불러오기
+```{r,warning=FALSE}
+library(ggplot2)
+library(dplyr)
+```
+### 파일 불러오기
+- ncdc_normals.csv
+```{r}
+ncdc_normals <- read.csv('C:/Users/seong taek/Desktop/3-1 DataVisualize/ncdc_normals.csv')
+```
+
+### 불러온 데이터셋 파악
+
+```{r}
+# 차원 파악
+ncdc_normals %>% dim()
+
+# 앞부분 훑어보기
+ncdc_normals %>% head()
+
+# 통계 요약 정보
+ncdc_normals %>% summary()
+
+# 각 컬럼 클래스(타입) 확인
+ncdc_normals %>% sapply(class)
+
+# 각 컬럼 자료형 확인
+ncdc_normals %>% sapply(typeof)
+```
+
+### character → date 형식 변환
+
+```{r}
+ncdc_normals$date <- ncdc_normals$date%>% as.Date("%Y-%m-%d")
+
+ncdc_normals %>% sapply(class)
+
+ncdc_normals %>% sapply(typeof)
+```
+
+### station_id 종류 개수
+
+```{r}
+ncdc_normals$station_id %>% unique() %>% length()
+```
+### station_id 선정 후, location 지정한 data.frame 생성
+
+```{r}
+station_loc <- data.frame(station_id = c("USW00014819","USC00042319","USW00093107","USW00012918"),
+                          location = c("Chicago","Death Valley","San Diego","Houston"))
+station_loc
+```
+
+### `station_id`로 `ncdc_normals`와 `station_loc` inner_join 
+
+```{r}
+temps_long <- ncdc_normals %>% inner_join(station_loc, by="station_id")
+temps_long %>% head()
+temps_long %>% dim()
+```
+
