@@ -665,6 +665,205 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="CH2_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+</section>
+</section>
+<section id="과제-2022년-기상청-자료-figure-2.3-figure-2.4" class="level1">
+<h1>과제 : 2022년 기상청 자료 Figure 2.3, Figure 2.4</h1>
+<section id="csv파일-불러오기-데이터-파악-1" class="level3">
+<h3 class="anchored" data-anchor-id="csv파일-불러오기-데이터-파악-1">- csv파일 불러오기, 데이터 파악</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>data_2022 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'C:/Users/seong taek/Desktop/3-1 DataVisualize/OBS_ASOS_DD_20230322080932.csv'</span>, <span class="at">fileEncoding =</span> <span class="st">'cp949'</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>data_2022 <span class="sc">%&gt;%</span> <span class="fu">dim</span>()</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2555    6</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>data_2022 <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   지점 지점명       일시 평균기온..C. 최저기온..C. 최고기온..C.</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1  108   서울 2022-01-01         -4.3        -10.2          2.3</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2  108   서울 2022-01-02         -1.3         -5.2          3.0</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3  108   서울 2022-01-03         -1.9         -8.0          2.5</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4  108   서울 2022-01-04         -2.5         -5.6          1.0</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5  108   서울 2022-01-05         -2.8         -7.8          1.9</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6  108   서울 2022-01-06         -2.2         -5.9          3.3</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>data_2022 <span class="sc">%&gt;%</span> <span class="fu">sapply</span>(class)</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         지점       지점명         일시 평균기온..C. 최저기온..C. 최고기온..C. </span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    "integer"  "character"  "character"    "numeric"    "numeric"    "numeric"</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 결측값 있는지 확인</span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(data_2022))</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 4</span></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a><span class="co"># 결측값 제거</span></span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>data_2022 <span class="ot">&lt;-</span> data_2022 <span class="sc">%&gt;%</span> <span class="fu">na.omit</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="일시를-character-date형식으로-변환-1" class="level3">
+<h3 class="anchored" data-anchor-id="일시를-character-date형식으로-변환-1">- <code>일시</code>를 character → date형식으로 변환</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>data_2022<span class="sc">$</span>일시 <span class="ot">&lt;-</span> data_2022<span class="sc">$</span>일시 <span class="sc">%&gt;%</span> <span class="fu">as.Date</span>(<span class="st">'%Y-%m-%d'</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>data_2022 <span class="sc">%&gt;%</span> <span class="fu">sapply</span>(class)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         지점       지점명         일시 평균기온..C. 최저기온..C. 최고기온..C. </span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    "integer"  "character"       "Date"    "numeric"    "numeric"    "numeric"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="기초통계량-파악-1" class="level3">
+<h3 class="anchored" data-anchor-id="기초통계량-파악-1">- 기초통계량 파악</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>data_2022 <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       지점          지점명               일시             평균기온..C.   </span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Min.   :108.0   Length:2552        Min.   :2022-01-01   Min.   :-11.80  </span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1st Qu.:133.0   Class :character   1st Qu.:2022-04-02   1st Qu.:  8.20  </span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Median :185.0   Mode  :character   Median :2022-07-02   Median : 16.40  </span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Mean   :175.1                      Mean   :2022-07-01   Mean   : 15.26  </span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.:189.0                      3rd Qu.:2022-10-01   3rd Qu.: 23.00  </span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Max.   :239.0                      Max.   :2022-12-31   Max.   : 32.20  </span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   최저기온..C.     최고기온..C.  </span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Min.   :-13.80   Min.   :-8.60  </span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1st Qu.:  4.20   1st Qu.:12.30  </span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Median : 12.60   Median :20.70  </span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Mean   : 11.62   Mean   :19.49  </span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.: 19.80   3rd Qu.:27.20  </span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Max.   : 28.90   Max.   :37.50</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="x축에-표시할-눈금-1" class="level3">
+<h3 class="anchored" data-anchor-id="x축에-표시할-눈금-1">- x축에 표시할 눈금</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>data_2022<span class="sc">$</span>일시 <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "2022-01-01" "2022-01-02" "2022-01-03" "2022-01-04" "2022-01-05"</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [6] "2022-01-06"</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>data_2022<span class="sc">$</span>일시 <span class="sc">%&gt;%</span> <span class="fu">tail</span>()</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "2022-12-26" "2022-12-27" "2022-12-28" "2022-12-29" "2022-12-30"</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [6] "2022-12-31"</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>date_s <span class="ot">&lt;-</span> <span class="st">'2022-01-01'</span> <span class="sc">%&gt;%</span> <span class="fu">as.Date</span>(<span class="st">'%Y-%m-%d'</span>)</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>date_e <span class="ot">&lt;-</span> <span class="st">'2023-01-01'</span> <span class="sc">%&gt;%</span> <span class="fu">as.Date</span>(<span class="st">'%Y-%m-%d'</span>)</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>break_date <span class="ot">&lt;-</span> <span class="fu">seq.Date</span>(date_s, date_e, <span class="at">by=</span><span class="st">'3 month'</span>)</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>break_date</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "2022-01-01" "2022-04-01" "2022-07-01" "2022-10-01" "2023-01-01"</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 월만 문자 값으로 뽑아내기</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>date_lab <span class="ot">&lt;-</span> <span class="fu">format</span>(break_date, <span class="st">'%B'</span>)</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>date_lab</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "1월"  "4월"  "7월"  "10월" "1월"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="figure-2.3-ggplot-축-설정-1" class="level3">
+<h3 class="anchored" data-anchor-id="figure-2.3-ggplot-축-설정-1">- Figure 2.3 ggplot + 축 설정</h3>
+<ul>
+<li>사용 데이터셋 : data_2022</li>
+<li>x=일시, y=평균기온..C.</li>
+<li>color : 지점명 별</li>
+<li>scale_x_date
+<ul>
+<li>이름 : 월</li>
+<li>간격 : break_date (3개월)</li>
+<li>간격 라벨 (1월 ~ 1월)</li>
+</ul></li>
+<li>scale_y_continuous
+<ul>
+<li>이름 : 평균기온</li>
+</ul></li>
+<li>labs : 제목, 부제목</li>
+<li>테마 : 밝게</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 축 값 지정하기 전 컬럼이름 파악</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>data_2022 <span class="sc">%&gt;%</span> <span class="fu">names</span>()</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "지점"         "지점명"       "일시"         "평균기온..C." "최저기온..C."</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [6] "최고기온..C."</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_2022, <span class="fu">aes</span>(<span class="at">x=</span>일시, <span class="at">y=</span>평균기온..C., <span class="at">color=</span>지점명)) <span class="sc">+</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">linewidth =</span> <span class="fl">1.1</span>,<span class="at">se=</span>F,<span class="at">span=</span><span class="fl">0.08</span>) <span class="sc">+</span> <span class="co"># linewidth (선 두께), geom_line → smooth 가능</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_date</span>(<span class="at">name =</span> <span class="st">'월'</span>,                  <span class="co"># se : 테두리, span : 스무스 정도</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">breaks =</span> break_date,</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">labels =</span> date_lab) <span class="sc">+</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">'평균기온'</span>) <span class="sc">+</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'2022년 평균온도'</span>, <span class="at">subtitle =</span> <span class="st">'7개 지점 관측'</span>) <span class="sc">+</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula = 'y ~ x'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="CH2_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="figure-2.4-그래프-데이터셋-전처리-2" class="level3">
+<h3 class="anchored" data-anchor-id="figure-2.4-그래프-데이터셋-전처리-2">- Figure 2.4 그래프 데이터셋 전처리</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>data_2022 <span class="sc">%&gt;%</span> <span class="fu">names</span>()</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "지점"         "지점명"       "일시"         "평균기온..C." "최저기온..C."</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [6] "최고기온..C."</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>data_2022 <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   지점 지점명       일시 평균기온..C. 최저기온..C. 최고기온..C.</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1  108   서울 2022-01-01         -4.3        -10.2          2.3</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2  108   서울 2022-01-02         -1.3         -5.2          3.0</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3  108   서울 2022-01-03         -1.9         -8.0          2.5</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4  108   서울 2022-01-04         -2.5         -5.6          1.0</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5  108   서울 2022-01-05         -2.8         -7.8          1.9</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6  108   서울 2022-01-06         -2.2         -5.9          3.3</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>data_2022_month <span class="ot">&lt;-</span> data_2022 <span class="sc">%&gt;%</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="fu">format</span>(일시, <span class="st">'%B'</span>)) <span class="sc">%&gt;%</span>   <span class="co"># 일시에서 월만 뽑아낸 month 컬럼 생성</span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(지점명, month) <span class="sc">%&gt;%</span>              <span class="co"># 지점명, month로 그룹화</span></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(평균기온..C.)) <span class="sc">%&gt;%</span> <span class="co"># 그룹화된 데이터의 집계값 요약</span></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span>                            <span class="co"># 그룹화를 해제하여 일반적인 데이터 프레임 형태로 사용</span></span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="fu">factor</span>(month,             <span class="co"># month값을 factor 형태로 수정해서 원하는 levels 지정가능</span></span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>                        <span class="at">levels =</span> <span class="fu">paste</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="st">'월'</span>,<span class="at">sep =</span> <span class="st">''</span>))) <span class="co"># sep='' : 간격없이 붙이기</span></span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by '지점명'. You can override using the</span></span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `.groups` argument.</span></span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>data_2022_month</span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 84 × 3</span></span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    지점명 month  mean</span></span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;  &lt;fct&gt; &lt;dbl&gt;</span></span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 고산   10월  18.0 </span></span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 고산   11월  15.5 </span></span>
+<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 고산   12월   7.28</span></span>
+<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 고산   1월    6.08</span></span>
+<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 고산   2월    5.24</span></span>
+<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 고산   3월   10.8 </span></span>
+<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 고산   4월   14.8 </span></span>
+<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 고산   5월   18.1 </span></span>
+<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 고산   6월   22.1 </span></span>
+<span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 고산   7월   27.0 </span></span>
+<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 74 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="figure-2.4-ggplot-geom_tile-fill-color-2" class="level3">
+<h3 class="anchored" data-anchor-id="figure-2.4-ggplot-geom_tile-fill-color-2">- Figure 2.4 ggplot + geom_tile + fill color</h3>
+<ul>
+<li>사용 데이터셋 : data_2022_month</li>
+<li>x=month, y=지점명</li>
+<li>fill : mean(평균온도)</li>
+<li>geom_tile : 넓이, 높이 지정</li>
+<li>scale_fill_viridis_c
+<ul>
+<li>이름 : temperature</li>
+<li>옵션 : B (밝기)</li>
+<li>begin, end : 색상의 시작,끝</li>
+</ul></li>
+<li>coord_fixed
+<ul>
+<li>expand = F : 공백 제거</li>
+</ul></li>
+<li>ylab(NULL) : y축 이름 제거</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_2022_month, <span class="fu">aes</span>(<span class="at">x =</span> month, <span class="at">y =</span> 지점명, <span class="at">fill =</span> mean)) <span class="sc">+</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">width =</span> <span class="fl">0.95</span>, <span class="at">height =</span> <span class="fl">0.95</span>) <span class="sc">+</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">option =</span> <span class="st">'B'</span>, <span class="at">begin =</span> <span class="fl">0.15</span>, <span class="at">end =</span>  <span class="fl">0.98</span>,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">name =</span> <span class="st">'temperature'</span>) <span class="sc">+</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>(<span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="cn">NULL</span>) <span class="co">#ylab('')</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="CH2_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 
 
 </section>
