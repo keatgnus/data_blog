@@ -170,7 +170,7 @@ ggplot(mean_temps, aes(x = month, y = location, fill = mean)) +
 ### - csv파일 불러오기, 데이터 파악
 
 ```{r}
-data_2021 <- read.csv('C:/Users/seong taek/Desktop/3-1 DataVisualize/OBS_ASOS_DD_20230322080932.csv', fileEncoding = 'cp949')
+data_2021 <- read.csv('C:/Users/seong taek/Desktop/3-1 DataVisualize/OBS_ASOS_DD_20220308125952.csv', fileEncoding = 'cp949')
 
 data_2021 %>% dim()
 
