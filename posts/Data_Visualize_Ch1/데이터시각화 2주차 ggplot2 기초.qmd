@@ -8,7 +8,7 @@ image: "ggplot.jpg"
 
 <table align="bottom">
   <td>
-    <a target="_blank" href="C:\Users\seong taek\Desktop\3-1 DataVisualize\data_visualize\데이터시각화-ggplot2기초.html"><img
+    <a target="_blank" href="데이터시각화-ggplot2기초.html"><img
     src = r_logo.png />HTML파일로 보기</a>
   </td>
 </table>
