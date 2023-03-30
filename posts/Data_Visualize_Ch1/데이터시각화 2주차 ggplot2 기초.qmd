@@ -13,7 +13,6 @@ image: "ggplot.jpg"
   </td>
 </table>
 
-
 ggplot2 Basic
 
 ```{r setup, include=FALSE}
