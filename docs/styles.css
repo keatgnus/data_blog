@@ -2,4 +2,38 @@
 h1 {
     color: #ffffffcf;
   }
+
+  body {
+    background-color: white;
+    color: black;
+  }
   
+  .mode-switch {
+    margin-left: auto;
+  }
+  
+  button {
+    background-color: transparent;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 10px;
+  }
+  
+  button:focus {
+    outline: none;
+  }
+  
+  .dark-mode {
+    background-color: black;
+    color: white;
+  }
+  
+  .dark-mode button#dark-mode-btn {
+    display: none;
+  }
+  
+  .light-mode button#light-mode-btn {
+    display: none;
+  }
