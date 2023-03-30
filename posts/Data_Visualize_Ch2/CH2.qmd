@@ -8,7 +8,7 @@ image: "ggplot.jpg"
 
 <table align="bottom">
   <td>
-    <a target="_blank" href="C:\Users\seong taek\Desktop\3-1 DataVisualize\data_visualize\CH2.html"><img
+    <a target="_blank" href="CH2.html"><img
     src = r_logo.png />HTML파일로 보기</a>
   </td>
 </table>
@@ -34,7 +34,7 @@ library(dplyr)
 ### - 파일 불러오기
 - ncdc_normals.csv (날짜별 온도 등 데이터셋)
 ```{r}
-ncdc_normals <- read.csv('C:/Users/seong taek/Desktop/3-1 DataVisualize/ncdc_normals.csv')
+ncdc_normals <- read.csv('C:/Users/seong taek/Desktop/3-1 DataVisualize/data_visualize/ncdc_normals.csv')
 ```
 
 ### - 불러온 데이터셋 파악
@@ -178,7 +178,7 @@ ggplot(mean_temps, aes(x = month, y = location, fill = mean)) +
 ### - csv파일 불러오기, 데이터 파악
 
 ```{r}
-data_2021 <- read.csv('C:/Users/seong taek/Desktop/3-1 DataVisualize/OBS_ASOS_DD_20220308125952.csv', fileEncoding = 'cp949')
+data_2021 <- read.csv('C:/Users/seong taek/Desktop/3-1 DataVisualize/data_visualize/OBS_ASOS_DD_20220308125952.csv', fileEncoding = 'cp949')
 
 data_2021 %>% dim()
 
@@ -286,7 +286,7 @@ ggplot(data_2021_month, aes(x = month, y = 지점명, fill = mean)) +
 ### - csv파일 불러오기, 데이터 파악
 
 ```{r}
-data_2022 <- read.csv('C:/Users/seong taek/Desktop/3-1 DataVisualize/OBS_ASOS_DD_20230322080932.csv', fileEncoding = 'cp949')
+data_2022 <- read.csv('C:/Users/seong taek/Desktop/3-1 DataVisualize/data_visualize/OBS_ASOS_DD_20230322080932.csv', fileEncoding = 'cp949')
 
 data_2022 %>% dim()
 
