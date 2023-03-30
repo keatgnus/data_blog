@@ -13,14 +13,6 @@ image: "ggplot.jpg"
   </td>
 </table>
 
-<table align="bottom">
-  <td>
-    <a target="_blank" href="CH2rmd.Rmd"><img
-    src = r_logo.png />Rmarkdown으로 실행하기 </a>
-  </td>
-</table>
-
-
 Figure 2.3, Figure 2.4
 
 ```{r setup, include=FALSE}
