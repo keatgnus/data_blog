@@ -15,7 +15,7 @@ image: "ggplot.jpg"
 
 <table align="bottom">
   <td>
-    <a target="_blank" href="CH2rmd.Rmd"><img
+    <a target="_blank" file="CH2rmd.Rmd"><img
     src = r_logo.png />Rmarkdown으로 실행하기 </a>
   </td>
 </table>
