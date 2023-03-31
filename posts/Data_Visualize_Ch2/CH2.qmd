@@ -23,7 +23,8 @@ knitr::opts_chunk$set(
   )
 ```
 
-# 데이터 시각화 실습 : 계절성 그래프 Figure 2.3, Figure 2.4
+
+##  데이터 시각화 실습 : 계절성 그래프 Figure 2.3, Figure 2.4
 
 ### - 패키지 불러오기
 ```{r,warning=FALSE}
@@ -172,7 +173,7 @@ ggplot(mean_temps, aes(x = month, y = location, fill = mean)) +
 
 
 
-# 예제 : 2021년 기상청 자료 Figure 2.3, Figure 2.4
+## 예제 : 2021년 기상청 자료 Figure 2.3, Figure 2.4
 
 ### - csv파일 불러오기, 데이터 파악
 
@@ -280,7 +281,7 @@ ggplot(data_2021_month, aes(x = month, y = 지점명, fill = mean)) +
   ylab(NULL) #ylab('')
 ```
 
-# 과제 : 2022년 기상청 자료 Figure 2.3, Figure 2.4
+## 과제 : 2022년 기상청 자료 Figure 2.3, Figure 2.4
 
 ### - csv파일 불러오기, 데이터 파악
 

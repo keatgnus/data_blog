@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
   )
 ```
 
-# 그래프 패키지(Packages)
+## 그래프 패키지(Packages)
 ##### [ggplot2] package : R에서 사용할 수 있는 대표적인 그래픽 도구
 - 그래프 결과를 그림 파일로 출력(정적)
 - Top 50 ggplot2 Visualizations
@@ -35,7 +35,7 @@ knitr::opts_chunk$set(
 - Plotly R Open Source Graphing Library
   - 참고 https://plotly.com/r/ - Plotly 패키지에 ggplot2 패키지가 포함되어 있음
   
-# [ggplot2] package
+## [ggplot2] package
 ##### 기본 3요소
 - data: 시각화 자료 - 데이터프레임
 - geom: 시각화 종류
@@ -62,7 +62,7 @@ knitr::opts_chunk$set(
 ##### qplot() 함수
 - Quick plot: 기본 plot() 함수에 익숙한 사용자를 위한 빠른 그래프 생성
 
-# ggplot2 실습
+## ggplot2 실습
 
 ```{r, warning=FALSE}
 ### 패키지 설치, 라이브러리 실행
