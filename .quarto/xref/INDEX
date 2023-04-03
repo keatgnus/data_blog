@@ -46,5 +46,8 @@
   },
   "posts/Data_Visualize_Ch2/CH2rmd.Rmd": {
     "CH2rmd.html": "b83f4d7c"
+  },
+  "posts/Data_Mining_Pandas/pandas.md": {
+    "pandas.html": "4ff62752"
   }
 }
