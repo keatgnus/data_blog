@@ -1,9 +1,0 @@
-sort_ui_labels:
-  - title: "최신순"
-    sort: "date desc"
-  - title: "과거순"
-    sort: "date asc"
-  - title: "제목순"
-    sort: "title asc"
-  - title: "작성자 순"
-    sort: "author asc"
