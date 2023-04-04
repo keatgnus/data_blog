@@ -74,7 +74,7 @@ temps_long <- ncdc_normals %>% inner_join(station_loc, by="station_id")
 temps_long %>% head()
 temps_long %>% sapply(class)
 
-# temps_long의 `date`의 타입을 Cha → Date로 변환
+### temps_long의 `date`의 타입을 Cha → Date로 변환
 temps_long$date <- temps_long$date %>% as.Date('%Y-%m-%d')
 temps_long %>% sapply(class)
 ```
@@ -125,7 +125,6 @@ plot_ab <- plot_grid(temp_plot,
                      labels= c('a','b')) # 라벨 a,b
 
 plot_ab
-
 ### plot_ab 그래프 + templong 그래프
 plot_abc <- plot_grid(plot_ab,
                       temp_plot,
