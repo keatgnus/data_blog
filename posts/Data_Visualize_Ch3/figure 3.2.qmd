@@ -1,0 +1,138 @@
+---
+title: "Data_Visualize CH3"
+author: "Seongtaek"
+date: "2023-04-04"
+categories: [code, data_visualize, rstudio]
+image: "ggplot.jpg"
+toc: true
+toc-depth: 3
+number-sections: true
+---
+
+<table align="bottom">
+  <td>
+    <a target="_blank" href="figure-3.2.html"><img
+    src = r_logo.png />HTML파일로 보기</a>
+  </td>
+</table>
+
+Figure 3.2
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  comment = "#>",
+  collapse = TRUE # Code와 Output을 분리시키지 않고 하나로 출력시켜 줌
+  )
+```
+
+## 데이터 시각화 실습 : Figure 3.2
+
+### 패키지 불러오기
+
+```{r,warning=FALSE}
+library(ggplot2)
+library(dplyr)
+library(ggrepel)
+library(cowplot) # plot_grid
+```
+
+### 데이터 불러오기, 파악
+- ncdc_normals.csv (날짜별 온도 등 데이터셋)
+
+```{r}
+ncdc_normals <- read.csv('C:/Users/seong taek/Desktop/3-1 DataVisualize/data_visualize/ncdc_normals.csv')
+
+### 차원 파악
+ncdc_normals %>% dim()
+
+### 앞부분 훑어보기
+ncdc_normals %>% head()
+
+### 통계 요약 정보
+ncdc_normals %>% summary()
+
+### 각 컬럼 클래스(타입) 확인
+ncdc_normals %>% sapply(class)
+
+### 각 컬럼 자료형 확인
+ncdc_normals %>% sapply(typeof)
+```
+### 전처리
+
+```{r}
+### staion id와 location 지정 선택한 d.f 만들기
+station_loc <- data.frame(station_id = c("USW00014819","USC00042319","USW00093107","USW00012918"),
+                          location = c("Chicago","Death Valley","San Diego","Houston"))
+
+station_loc %>% head()
+```
+
+```{r}
+### station_id로 ncdc_normals와 station_loc 두 컬럼을 `inner_join`
+temps_long <- ncdc_normals %>% inner_join(station_loc, by="station_id")
+temps_long %>% head()
+temps_long %>% sapply(class)
+
+# temps_long의 `date`의 타입을 Cha → Date로 변환
+temps_long$date <- temps_long$date %>% as.Date('%Y-%m-%d')
+temps_long %>% sapply(class)
+```
+```{r}
+### Houston 필터 
+data_Houston <- temps_long %>% filter(location=='Houston')
+data_Houston %>% head()
+data_Houston %>% tail()
+```
+
+### x축 눈금 설정
+```{r}
+date_s <- '0000-01-01' %>% as.Date('%Y-%m-%d')
+date_e <- '0001-01-01' %>% as.Date('%Y-%m-%d')
+break_date <- seq(date_s, date_e, by = '3 month')
+```
+
+## ggplot + 축 설정
+- 사용 데이터셋 : data_Houston
+- x=date, y=temperature
+- scale_x_date
+  - 이름 : month
+  - 간격 : break_date (3개월)
+  - 간격 라벨 (Jan ~ Jan)
+- scale_y_continuous
+  - 이름 : temp
+- 테마 : 밝게
+
+```{r}
+temp_plot <- ggplot(data_Houston, aes(x=date, y=temperature)) +
+  geom_line(linewidth=1, color='royalblue') +
+  scale_x_date(name= 'month',
+               breaks= break_date,
+               labels= c('Jan','Apr','Jul','Oct','Jan')) +
+  scale_y_continuous(name= 'temp') +
+  theme_light()
+
+temp_plot
+```
+### plot_grid
+- 여러 개의 그래프를 그리드로 결합하여 하나의 그래프로 만들어주는 함수
+```{r}
+### 2개의 temp_long 그래프
+plot_ab <- plot_grid(temp_plot,
+                     temp_plot,
+                     nrow= 1,            # 행의 개수
+                     rel_widths= c(1,2), # 각각의 너비
+                     labels= c('a','b')) # 라벨 a,b
+
+plot_ab
+
+### plot_ab 그래프 + templong 그래프
+plot_abc <- plot_grid(plot_ab,
+                      temp_plot,
+                      ncol= 1,               # 열의 개수
+                      rel_heights= c(1.5, 1),# 각각의 높이
+                      labels= c('','c'))     # 라벨 '그대로', 'c'
+
+plot_abc
+```
+
