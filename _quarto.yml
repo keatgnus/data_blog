@@ -25,7 +25,6 @@ format:
     theme: lux
     css: styles.css
     toc: true
-    toc-title: "as"
     toc-depth: 3
     number-sections: true
     highlight-style: breezedark
