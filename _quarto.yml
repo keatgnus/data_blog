@@ -6,7 +6,6 @@ website:
   title: "Taek_Blog"
   navbar:
     left:
-      - text: test 
       - index2.qmd
     right:
       - about.qmd
