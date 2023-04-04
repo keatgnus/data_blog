@@ -6,6 +6,7 @@ categories: [code, data_visualize, rstudio]
 image: "ggplot.jpg"
 toc: true
 toc-depth: 3
+number-sections: true
 ---
 
 <table align="bottom">
