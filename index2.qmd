@@ -2,5 +2,5 @@
 title: "test"
 image: giphy2.gif
 about:
-  template: marquee
+  template: trestles
 ---
