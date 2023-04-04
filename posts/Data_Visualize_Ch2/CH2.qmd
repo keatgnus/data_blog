@@ -7,7 +7,7 @@ image: "ggplot.jpg"
 toc: true
 toc-depth: 3
 number-sections: true
-highlight-style: solarized
+highlight-style: breezedark
 ---
 
 <table align="bottom">
