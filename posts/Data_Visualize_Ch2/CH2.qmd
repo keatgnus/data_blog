@@ -27,19 +27,19 @@ knitr::opts_chunk$set(
 
 
 ##  데이터 시각화 실습 : 계절성 그래프 Figure 2.3, Figure 2.4
-#### dd
-### - 패키지 불러오기
+
+### 패키지 불러오기
 ```{r,warning=FALSE}
 library(ggplot2)
 library(dplyr)
 ```
-### - 파일 불러오기
+### 파일 불러오기
 - ncdc_normals.csv (날짜별 온도 등 데이터셋)
 ```{r}
 ncdc_normals <- read.csv('C:/Users/seong taek/Desktop/3-1 DataVisualize/data_visualize/ncdc_normals.csv')
 ```
 
-### - 불러온 데이터셋 파악
+### 불러온 데이터셋 파악
 
 ```{r}
 # 차원 파악
@@ -58,7 +58,7 @@ ncdc_normals %>% sapply(class)
 ncdc_normals %>% sapply(typeof)
 ```
 
-### - 전처리
+### 전처리
 
 ```{r}
 ### character → date 형식 변환
@@ -96,7 +96,7 @@ temps_long %>% dim()
 
 temps_long$date %>% class()
 ```
-### - x축에 표시할 눈금 생성
+### x축에 표시할 눈금 생성
 
 ```{r}
 # x축 범위 설정을 위해 date 범위 파악
@@ -112,7 +112,7 @@ break_date <- seq(date_s, date_e, by = '3 month')
 
 break_date
 ```
-### - Fiqure 2.3 ggplot + 축 설정
+### Fiqure 2.3 ggplot + 축 설정
 - 사용 데이터셋 : temps_long
 - x=date, y=temperature
 - color : location별
@@ -137,7 +137,7 @@ ggplot(temps_long, aes(x=date, y=temperature, color=location)) +
   theme_light()
 ```
 
-### - Figure 2.4 그래프 데이터셋 전처리
+### Figure 2.4 그래프 데이터셋 전처리
 
 ```{r}
 temps_long %>% head()
@@ -154,7 +154,7 @@ mean_temps <- temps_long %>%
 mean_temps
 ```
 
-### - Figure 2.4 ggplot + geom_tile + fill color
+### Figure 2.4 ggplot + geom_tile + fill color
 - 사용 데이터셋 : mean_temps
 - x=month, y=location
 - fill : mean
@@ -181,7 +181,7 @@ ggplot(mean_temps, aes(x = month, y = location, fill = mean)) +
 
 ## 예제 : 2021년 기상청 자료 Figure 2.3, Figure 2.4
 
-### - csv파일 불러오기, 데이터 파악
+### csv파일 불러오기, 데이터 파악
 
 ```{r}
 data_2021 <- read.csv('C:/Users/seong taek/Desktop/3-1 DataVisualize/data_visualize/OBS_ASOS_DD_20220308125952.csv', fileEncoding = 'cp949')
@@ -192,19 +192,19 @@ data_2021 %>% head()
 
 data_2021 %>% sapply(class)
 ```
-### - `일시`를 character → date형식으로 변환
+### `일시`를 character → date형식으로 변환
 
 ```{r}
 data_2021$일시 <- data_2021$일시 %>% as.Date('%Y-%m-%d')
 
 data_2021 %>% sapply(class)
 ```
-### - 기초통계량 파악
+### 기초통계량 파악
 
 ```{r}
 data_2021 %>% summary()
 ```
-### - x축에 표시할 눈금
+### x축에 표시할 눈금
 
 ```{r}
 data_2021$일시 %>% head()
@@ -221,7 +221,7 @@ break_date
 date_lab <- format(break_date, '%B')
 date_lab
 ```
-### - Figure 2.3 ggplot + 축 설정
+### Figure 2.3 ggplot + 축 설정
 - 사용 데이터셋 : data_2021
 - x=일시, y=평균기온..C.
 - color : 지점명 별
@@ -248,7 +248,7 @@ ggplot(data_2021, aes(x=일시, y=평균기온..C., color=지점명)) +
   theme_light()
 ```
 
-### - Figure 2.4 그래프 데이터셋 전처리
+### Figure 2.4 그래프 데이터셋 전처리
 
 ```{r}
 data_2021 %>% names()
@@ -266,7 +266,7 @@ data_2021_month <- data_2021 %>%
 data_2021_month
 ```
 
-### - Figure 2.4 ggplot + geom_tile + fill color
+### Figure 2.4 ggplot + geom_tile + fill color
 - 사용 데이터셋 : data_2021_month
 - x=month, y=지점명
 - fill : mean(평균온도)
@@ -289,7 +289,7 @@ ggplot(data_2021_month, aes(x = month, y = 지점명, fill = mean)) +
 
 ## 과제 : 2022년 기상청 자료 Figure 2.3, Figure 2.4
 
-### - csv파일 불러오기, 데이터 파악
+### csv파일 불러오기, 데이터 파악
 
 ```{r}
 data_2022 <- read.csv('C:/Users/seong taek/Desktop/3-1 DataVisualize/data_visualize/OBS_ASOS_DD_20230322080932.csv', fileEncoding = 'cp949')
@@ -306,7 +306,7 @@ sum(is.na(data_2022))
 # 결측값 제거
 data_2022 <- data_2022 %>% na.omit()
 ```
-### - `일시`를 character → date형식으로 변환
+### `일시`를 character → date형식으로 변환
 
 ```{r}
 data_2022$일시 <- data_2022$일시 %>% as.Date('%Y-%m-%d')
@@ -314,13 +314,13 @@ data_2022$일시 <- data_2022$일시 %>% as.Date('%Y-%m-%d')
 data_2022 %>% sapply(class)
 ```
 
-### - 기초통계량 파악
+### 기초통계량 파악
 
 ```{r}
 data_2022 %>% summary()
 ```
 
-### - x축에 표시할 눈금
+### x축에 표시할 눈금
 
 ```{r}
 data_2022$일시 %>% head()
@@ -338,7 +338,7 @@ date_lab <- format(break_date, '%B')
 date_lab
 ```
 
-### - Figure 2.3 ggplot + 축 설정
+### Figure 2.3 ggplot + 축 설정
 - 사용 데이터셋 : data_2022
 - x=일시, y=평균기온..C.
 - color : 지점명 별
@@ -364,7 +364,7 @@ ggplot(data_2022, aes(x=일시, y=평균기온..C., color=지점명)) +
   labs(title = '2022년 평균온도', subtitle = '7개 지점 관측') +
   theme_light()
 ```
-### - Figure 2.4 그래프 데이터셋 전처리
+### Figure 2.4 그래프 데이터셋 전처리
 
 ```{r}
 data_2022 %>% names()
@@ -382,7 +382,7 @@ data_2022_month <- data_2022 %>%
 data_2022_month
 ```
 
-### - Figure 2.4 ggplot + geom_tile + fill color
+### Figure 2.4 ggplot + geom_tile + fill color
 - 사용 데이터셋 : data_2022_month
 - x=month, y=지점명
 - fill : mean(평균온도)
