@@ -1,0 +1,228 @@
+---
+title: "Data_Visualize CH4"
+author: "Seongtaek"
+date: "2023-04-05"
+categories: [code, data_visualize, rstudio]
+image: "ggplot.jpg"
+toc: true
+toc-depth: 3
+number-sections: true
+---
+
+<table align="bottom">
+  <td>
+    <a target="_blank" href="figure-3.5-~-3.6.html"><img
+    src = r_logo.png />HTML파일로 보기</a>
+  </td>
+</table>
+
+Figure 3.5, Figure 3.6
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  comment = "#>",
+  collapse = TRUE # Code와 Output을 분리시키지 않고 하나로 출력시켜 줌
+  )
+```
+
+## 데이터 시각화 실습 : Figure 3.5, Figure 3.6
+
+### 패키지 불러오기
+
+```{r,warning=FALSE}
+library(ggplot2)
+library(dplyr)
+library(ggrepel) # geom_text_repel()
+```
+
+### 데이터 불러오기, 파악
+- US_census.csv (미국 인구 통계정보 데이터셋)
+
+```{r}
+US_census <- read.csv('C:/Users/seong taek/Desktop/3-1 DataVisualize/data_visualize/US_census.csv')
+
+### 차원 파악
+US_census %>% dim()
+
+### 앞부분 훑어보기
+US_census %>% head(2)
+
+### 일부 통계 요약 정보
+US_census %>% summary() %>% head(2)
+
+### 일부 컬럼 클래스(타입) 확인
+US_census %>% sapply(class) %>% head()
+
+### 일부 컬럼 자료형 확인
+US_census %>% sapply(typeof) %>% head()
+```
+
+### 전처리
+
+```{r}
+### Texas주의 인구 밀도가 높은 상위3개, 하위3개, 나머지의 랜덤한 지역 d.f 만들기
+tx_counties <- US_census %>%
+  filter(state == 'Texas') %>%             # Texas지역만 필터
+  select(name, pop2010) %>%                # name,pop2010 열만 선택
+  mutate(county = gsub(' County','',name), # name 열에서 County문자열을 공백으로 대체하고 county열 생성
+         popratio = pop2010/median(pop2010)) %>% # pop2010 값에서 pop2010의 중앙값을 나눈 비율을 popratio열로 생성
+  arrange(desc(popratio)) %>%              # popratio 열을 내림차순 정렬
+  mutate(index = 1:n(),
+         label = ifelse(index<=3 | index > n()-3 | runif(n()) < .04, county,'')) 
+# index값이 3이하, 행의 수에서 3을 뺀 값보다 크거나, 0,1사이의 값을 뽑아 0.04보다 작으면 'county'값을 가지고 그렇지 않으면 ''(빈문자열) 값 가짐
+
+tx_counties %>% head()
+```
+
+## Figure 3.5
+- 사용 데이터셋 : tx_counties
+- x = index, y = popratio
+- geom_hline
+  - 수평선 위치 : 0
+  - 라인 종류 : 2 (눈금)
+  - 색상 'grey40'
+- geom_point
+  - 점 크기 : 1
+  - 점 색상 : 'royalblue'
+- geom_text_repel
+  - 라벨 : 'label'
+  - 라벨과 지점 사이 선의 최소 길이 : 0
+  - 겹치는 라벨 제어의 최대 수  : 100
+- 테마 : 밝게
+- 플롯 영역의 테두리(border) 제거
+
+```{r}
+ggplot(tx_counties, aes(x=index, y=popratio)) +
+  geom_hline(yintercept = 0,linetype=2, color = 'grey40') +
+  geom_point(size=1, color='royalblue')  +
+  geom_text_repel(aes(label=label),
+                  min.segment.length = 0,
+                  max.overlaps = 100) +
+  theme_light() +
+  theme(panel.border = element_blank())
+```
+
+## Fugiure 3.6
+- 사용 데이터셋 : tx_counties
+- x = index, y = popratio
+- geom_hline
+  - 수평선 위치 : 1
+  - 라인 종류 : 2 (눈금)
+  - 색상 'grey40'
+- geom_point
+  - 점 크기 : 1
+  - 점 색상 : 'royalblue'
+- geom_text_repel
+  - 라벨 : 'label'
+  - 라벨과 지점 사이 선의 최소 길이 : 0
+  - 겹치는 라벨 제어의 최대 수  : 100
+- scale_y_log10
+  - y축 이름
+  - y축 간격
+  - y축 간격 라벨 : label_log10
+- scale_x_continuous
+  - x축 이름
+  - x축 간격 : NULL (자동)
+- 테마 : 밝게
+- 플롯 영역의 테두리(border) 제거
+```{r}
+### -2부터 2까지의 지수값을 포함하는 문자열을 표현식으로 생성
+label_log10 <- sapply(-2:2,function(i) as.expression(bquote(10^ .(i))))
+label_log10
+
+ggplot(tx_counties, aes(x = index, y = popratio)) +
+  geom_hline(yintercept = 1,linetype = 2, color = 'grey40') +
+  geom_point(size = 1, color = 'royalblue')  +
+  geom_text_repel(aes(label=label),
+                  min.segment.length = 0,
+                  max.overlaps = 100) +
+  scale_y_log10(name='population number / median',
+                breaks = 10^(-2:2),
+                labels= label_log10) +
+  scale_x_continuous(name = 'Texas counties , from most to least populous',
+                     breaks = NULL) +
+  theme_light() +
+  theme(panel.border = element_blank())
+```
+## 예제
+- 2023년 시군구 인구수 Figure 3.6
+
+### 데이터 불러오기, 파악
+- 행정구역 시군구 별 주민등록세대수.csv (2022.11 ~ 2023.02)
+
+```{r}
+data_202302 <- read.csv('C:/Users/seong taek/Desktop/3-1 DataVisualize/data_visualize/행정구역_시군구_별_주민등록세대수_202302.csv')
+
+### 차원 파악
+data_202302 %>% dim()
+
+### 앞부분 훑어보기
+data_202302 %>% head()
+
+### 통계 요약 정보
+data_202302 %>% summary()
+
+### 컬럼 클래스(타입) 확인
+data_202302 %>% sapply(class) 
+
+### 컬럼 자료형 확인
+data_202302 %>% sapply(typeof)
+```
+### 전처리
+
+```{r}
+data_202302_second <- data_202302 %>%
+  filter(X2023.02 != 0) %>%                        # 0값이 아닌것만 필터링
+  select(행정구역.시군구.별, X2023.02) %>%         # 열 지정 선택        
+  mutate(popratio = X2023.02/median(X2023.02)) %>% # 새로운 컬럼 'popratio' 
+  arrange(desc(popratio)) %>%                      # 내림차순 정렬
+  mutate(index = 1:n(),
+         label = ifelse(index<=5 | index > n()-5 | index==median(index), 행정구역.시군구.별,''))
+# index값이 5이하, 행의 수에서 5를 뺀 값보다 크거나, index가 중위수인 index이면 '행정구역.시군구.별' 값을 가지고 그렇지 않으면 ''(빈문자열) 값 가짐
+
+data_202302_second %>% head()
+```
+
+### Fugiure 3.6
+- 사용 데이터셋 : data_202302_second
+- x = index, y = popratio
+- geom_hline
+  - 수평선 위치 : 1
+  - 라인 종류 : 2 (눈금)
+  - 색상 'grey40'
+- geom_point
+  - 점 크기 : 1
+  - 점 색상 : 'royalblue'
+- geom_text_repel
+  - 라벨 : 'label'
+  - 라벨과 지점 사이 선의 최소 길이 : 0
+  - 겹치는 라벨 제어의 최대 수  : 100
+- scale_y_log10
+  - y축 이름
+  - y축 간격
+  - y축 간격 라벨 : label_log10
+- scale_x_continuous
+  - x축 이름
+  - x축 간격 : NULL (자동)
+- 테마 : 밝게
+- 플롯 영역의 테두리(border) 제거
+```{r}
+### -1부터 1까지의 지수값을 포함하는 문자열을 표현식으로 생성
+label_log10 <- sapply(-1:1,function(i) as.expression(bquote(10^ .(i))))
+label_log10
+
+ggplot(data_202302_second, aes(x = index, y = popratio)) +
+  geom_hline(yintercept = 1,linetype = 2, color = 'grey40') +
+  geom_point(size = 1, color = 'royalblue')  +
+  geom_text_repel(aes(label=label),
+                  min.segment.length = 0,
+                  max.overlaps = 100) +
+  scale_y_log10(name='인구 수/중위수',
+                breaks = 10^(-1:1),
+                labels= label_log10) +
+  scale_x_discrete(name = '행정구역(시군구)별 주민등록세대수',
+                     breaks = NULL) +
+  theme_light() +
+  theme(panel.border = element_blank())
+```
