@@ -3,11 +3,6 @@ project:
   output-dir: docs
 
 website:
-  sidebar:
-    contents:
-      - section: "파이썬심화"
-        contents:
-          - file: G:/내 드라이브/taek_blog/posts/Data_Visualize_Ch2/CH2.qmd
   title: "Taek_Blog"
   navbar:
     left:
