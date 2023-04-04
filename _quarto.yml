@@ -25,5 +25,6 @@ format:
     theme: lux
     css: styles.css
     toc: true
+    highlight-style: zenburn
 
 
