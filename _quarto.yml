@@ -3,6 +3,12 @@ project:
   output-dir: docs
 
 website:
+  sidebar:
+    contents:
+      - section: "one"
+        contents:
+          - href: CH2.qmd
+          - href: pandas.md
   title: "Taek_Blog"
   navbar:
     left:
