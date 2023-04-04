@@ -128,7 +128,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -216,7 +216,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#데이터-시각화-실습-계절성-그래프-figure-2.3-figure-2.4" id="toc-데이터-시각화-실습-계절성-그래프-figure-2.3-figure-2.4" class="nav-link active" data-scroll-target="#데이터-시각화-실습-계절성-그래프-figure-2.3-figure-2.4">데이터 시각화 실습 : 계절성 그래프 Figure 2.3, Figure 2.4</a>
+  <ul class="collapse">
+  <li><a href="#패키지-불러오기" id="toc-패키지-불러오기" class="nav-link" data-scroll-target="#패키지-불러오기">- 패키지 불러오기</a></li>
+  <li><a href="#파일-불러오기" id="toc-파일-불러오기" class="nav-link" data-scroll-target="#파일-불러오기">- 파일 불러오기</a></li>
+  <li><a href="#불러온-데이터셋-파악" id="toc-불러온-데이터셋-파악" class="nav-link" data-scroll-target="#불러온-데이터셋-파악">- 불러온 데이터셋 파악</a></li>
+  <li><a href="#character-date-형식-변환" id="toc-character-date-형식-변환" class="nav-link" data-scroll-target="#character-date-형식-변환">- character → date 형식 변환</a></li>
+  <li><a href="#station_id-종류-개수" id="toc-station_id-종류-개수" class="nav-link" data-scroll-target="#station_id-종류-개수">- station_id 종류 개수</a></li>
+  <li><a href="#station_id-선정-후-location컬럼-이름-지정한-data.frame-생성" id="toc-station_id-선정-후-location컬럼-이름-지정한-data.frame-생성" class="nav-link" data-scroll-target="#station_id-선정-후-location컬럼-이름-지정한-data.frame-생성">- station_id 선정 후, location(컬럼 이름) 지정한 data.frame 생성</a></li>
+  <li><a href="#station_id로-ncdc_normals와-station_loc-두-컬럼을-inner_join" id="toc-station_id로-ncdc_normals와-station_loc-두-컬럼을-inner_join" class="nav-link" data-scroll-target="#station_id로-ncdc_normals와-station_loc-두-컬럼을-inner_join">- station_id로 ncdc_normals와 station_loc 두 컬럼을 <code>inner_join</code></a></li>
+  <li><a href="#x축에-표시할-눈금-생성" id="toc-x축에-표시할-눈금-생성" class="nav-link" data-scroll-target="#x축에-표시할-눈금-생성">- x축에 표시할 눈금 생성</a></li>
+  <li><a href="#fiqure-2.3-ggplot-축-설정" id="toc-fiqure-2.3-ggplot-축-설정" class="nav-link" data-scroll-target="#fiqure-2.3-ggplot-축-설정">- Fiqure 2.3 ggplot + 축 설정</a></li>
+  <li><a href="#figure-2.4-그래프-데이터셋-전처리" id="toc-figure-2.4-그래프-데이터셋-전처리" class="nav-link" data-scroll-target="#figure-2.4-그래프-데이터셋-전처리">- Figure 2.4 그래프 데이터셋 전처리</a></li>
+  <li><a href="#figure-2.4-ggplot-geom_tile-fill-color" id="toc-figure-2.4-ggplot-geom_tile-fill-color" class="nav-link" data-scroll-target="#figure-2.4-ggplot-geom_tile-fill-color">- Figure 2.4 ggplot + geom_tile + fill color</a></li>
+  </ul></li>
+  <li><a href="#예제-2021년-기상청-자료-figure-2.3-figure-2.4" id="toc-예제-2021년-기상청-자료-figure-2.3-figure-2.4" class="nav-link" data-scroll-target="#예제-2021년-기상청-자료-figure-2.3-figure-2.4">예제 : 2021년 기상청 자료 Figure 2.3, Figure 2.4</a>
+  <ul class="collapse">
+  <li><a href="#csv파일-불러오기-데이터-파악" id="toc-csv파일-불러오기-데이터-파악" class="nav-link" data-scroll-target="#csv파일-불러오기-데이터-파악">- csv파일 불러오기, 데이터 파악</a></li>
+  <li><a href="#일시를-character-date형식으로-변환" id="toc-일시를-character-date형식으로-변환" class="nav-link" data-scroll-target="#일시를-character-date형식으로-변환">- <code>일시</code>를 character → date형식으로 변환</a></li>
+  <li><a href="#기초통계량-파악" id="toc-기초통계량-파악" class="nav-link" data-scroll-target="#기초통계량-파악">- 기초통계량 파악</a></li>
+  <li><a href="#x축에-표시할-눈금" id="toc-x축에-표시할-눈금" class="nav-link" data-scroll-target="#x축에-표시할-눈금">- x축에 표시할 눈금</a></li>
+  <li><a href="#figure-2.3-ggplot-축-설정" id="toc-figure-2.3-ggplot-축-설정" class="nav-link" data-scroll-target="#figure-2.3-ggplot-축-설정">- Figure 2.3 ggplot + 축 설정</a></li>
+  <li><a href="#figure-2.4-그래프-데이터셋-전처리-1" id="toc-figure-2.4-그래프-데이터셋-전처리-1" class="nav-link" data-scroll-target="#figure-2.4-그래프-데이터셋-전처리-1">- Figure 2.4 그래프 데이터셋 전처리</a></li>
+  <li><a href="#figure-2.4-ggplot-geom_tile-fill-color-1" id="toc-figure-2.4-ggplot-geom_tile-fill-color-1" class="nav-link" data-scroll-target="#figure-2.4-ggplot-geom_tile-fill-color-1">- Figure 2.4 ggplot + geom_tile + fill color</a></li>
+  </ul></li>
+  <li><a href="#과제-2022년-기상청-자료-figure-2.3-figure-2.4" id="toc-과제-2022년-기상청-자료-figure-2.3-figure-2.4" class="nav-link" data-scroll-target="#과제-2022년-기상청-자료-figure-2.3-figure-2.4">과제 : 2022년 기상청 자료 Figure 2.3, Figure 2.4</a>
+  <ul class="collapse">
+  <li><a href="#csv파일-불러오기-데이터-파악-1" id="toc-csv파일-불러오기-데이터-파악-1" class="nav-link" data-scroll-target="#csv파일-불러오기-데이터-파악-1">- csv파일 불러오기, 데이터 파악</a></li>
+  <li><a href="#일시를-character-date형식으로-변환-1" id="toc-일시를-character-date형식으로-변환-1" class="nav-link" data-scroll-target="#일시를-character-date형식으로-변환-1">- <code>일시</code>를 character → date형식으로 변환</a></li>
+  <li><a href="#기초통계량-파악-1" id="toc-기초통계량-파악-1" class="nav-link" data-scroll-target="#기초통계량-파악-1">- 기초통계량 파악</a></li>
+  <li><a href="#x축에-표시할-눈금-1" id="toc-x축에-표시할-눈금-1" class="nav-link" data-scroll-target="#x축에-표시할-눈금-1">- x축에 표시할 눈금</a></li>
+  <li><a href="#figure-2.3-ggplot-축-설정-1" id="toc-figure-2.3-ggplot-축-설정-1" class="nav-link" data-scroll-target="#figure-2.3-ggplot-축-설정-1">- Figure 2.3 ggplot + 축 설정</a></li>
+  <li><a href="#figure-2.4-그래프-데이터셋-전처리-2" id="toc-figure-2.4-그래프-데이터셋-전처리-2" class="nav-link" data-scroll-target="#figure-2.4-그래프-데이터셋-전처리-2">- Figure 2.4 그래프 데이터셋 전처리</a></li>
+  <li><a href="#figure-2.4-ggplot-geom_tile-fill-color-2" id="toc-figure-2.4-ggplot-geom_tile-fill-color-2" class="nav-link" data-scroll-target="#figure-2.4-ggplot-geom_tile-fill-color-2">- Figure 2.4 ggplot + geom_tile + fill color</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 

@@ -4,6 +4,7 @@ author: "Seongtaek"
 date: "2023-03-29"
 categories: [code, data_visualize, rstudio]
 image: "ggplot.jpg"
+toc: true
 ---
 
 <table align="bottom">

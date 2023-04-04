@@ -4,6 +4,7 @@ author: "Seongtaek"
 date: "2023-03-28"
 categories: [code, data_mining, jupyter]
 image: "numpy.jpg"
+toc: true
 ---
 
 
