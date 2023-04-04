@@ -7,7 +7,7 @@ website:
     contents:
       - section: "파이썬심화"
         contents:
-          - href: G:/내 드라이브/taek_blog/posts/Advanced_Python_ch2/파이썬 심화 챕터2 공부.md
+          - CH2.qmd
   title: "Taek_Blog"
   navbar:
     left:
