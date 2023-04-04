@@ -5,10 +5,9 @@ project:
 website:
   sidebar:
     contents:
-      - section: "one"
+      - section: "파이썬심화"
         contents:
-          - href: CH2.qmd
-          - href: pandas.md
+          - href: G:/내 드라이브/taek_blog/posts/Advanced_Python_ch2/파이썬 심화 챕터2 공부.md
   title: "Taek_Blog"
   navbar:
     left:
