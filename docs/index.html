@@ -70,9 +70,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
+      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description","listing-categories"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -179,7 +179,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="quarto-listing quarto-listing-container-grid" id="listing-listing">
 <div class="listing-actions-group">
    <div class="input-group input-group-sm quarto-listing-sort">
      <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
@@ -205,20 +205,17 @@ ul.task-list li input[type="checkbox"] {
       <input type="text" class="search form-control" placeholder="Filter">
     </div>
 </div>
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="code,data_mining,jupyter" data-listing-date-sort="1680534000000" data-listing-file-modified-sort="1680539006347" data-listing-reading-time-sort="176.225">
-<div class="thumbnail">
-<p><a href="./posts/Data_Mining_Pandas/pandas.html"> <img src="./posts/Data_Mining_Pandas/pandas_img.jpg" class="thumnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/Data_Mining_Pandas/pandas.html">
-<h3 class="no-anchor listing-title">
+<div class="list grid quarto-listing-cols-3">
+<div class="g-col-1" data-index="0" data-categories="code,data_mining,jupyter" data-listing-date-sort="1680534000000" data-listing-file-modified-sort="1680539006347" data-listing-reading-time-sort="176.225">
+<a href="./posts/Data_Mining_Pandas/pandas.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./posts/Data_Mining_Pandas/pandas_img.jpg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
 Data_Mining CH2
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
+</h5>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
 code
@@ -230,36 +227,31 @@ data_mining
 jupyter
 </div>
 </div>
-<a href="./posts/Data_Mining_Pandas/pandas.html">
-<div class="listing-description">
+<div class="card-text listing-description">
 Pandas Basic
 </div>
-</a>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Seongtaek
 </div>
-<div class="metadata">
-<a href="./posts/Data_Mining_Pandas/pandas.html">
 <div class="listing-date">
 Apr 4, 2023
 </div>
-<div class="listing-author">
-Seongtaek
+</div>
+</div>
 </div>
 </a>
 </div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="code,data_visualize,rstudio" data-listing-date-sort="1680102000000" data-listing-file-modified-sort="1680537863274" data-listing-reading-time-sort="8.095">
-<div class="thumbnail">
-<p><a href="./posts/Data_Visualize_Ch2/CH2.html"> <img src="./posts/Data_Visualize_Ch2/ggplot.jpg" class="thumnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/Data_Visualize_Ch2/CH2.html">
-<h3 class="no-anchor listing-title">
+<div class="g-col-1" data-index="1" data-categories="code,data_visualize,rstudio" data-listing-date-sort="1680102000000" data-listing-file-modified-sort="1680537863274" data-listing-reading-time-sort="8.095">
+<a href="./posts/Data_Visualize_Ch2/CH2.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./posts/Data_Visualize_Ch2/ggplot.jpg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
 Data_Visualize CH2
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
+</h5>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
 code
@@ -271,36 +263,31 @@ data_visualize
 rstudio
 </div>
 </div>
-<a href="./posts/Data_Visualize_Ch2/CH2.html">
-<div class="listing-description">
+<div class="card-text listing-description">
 Figure 2.3, Figure 2.4
 </div>
-</a>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Seongtaek
 </div>
-<div class="metadata">
-<a href="./posts/Data_Visualize_Ch2/CH2.html">
 <div class="listing-date">
 Mar 30, 2023
 </div>
-<div class="listing-author">
-Seongtaek
+</div>
+</div>
 </div>
 </a>
 </div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="code,data_visualize,rstudio" data-listing-date-sort="1680015600000" data-listing-file-modified-sort="1680246244161" data-listing-reading-time-sort="1.59">
-<div class="thumbnail">
-<p><a href="./posts/Data_Visualize_Ch1/데이터시각화 2주차 ggplot2 기초.html"> <img src="./posts/Data_Visualize_Ch1/ggplot.jpg" class="thumnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/Data_Visualize_Ch1/데이터시각화 2주차 ggplot2 기초.html">
-<h3 class="no-anchor listing-title">
+<div class="g-col-1" data-index="2" data-categories="code,data_visualize,rstudio" data-listing-date-sort="1680015600000" data-listing-file-modified-sort="1680246244161" data-listing-reading-time-sort="1.59">
+<a href="./posts/Data_Visualize_Ch1/데이터시각화 2주차 ggplot2 기초.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./posts/Data_Visualize_Ch1/ggplot.jpg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
 Data_Visualize CH1
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
+</h5>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
 code
@@ -312,36 +299,31 @@ data_visualize
 rstudio
 </div>
 </div>
-<a href="./posts/Data_Visualize_Ch1/데이터시각화 2주차 ggplot2 기초.html">
-<div class="listing-description">
+<div class="card-text listing-description">
 ggplot2 Basic
 </div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/Data_Visualize_Ch1/데이터시각화 2주차 ggplot2 기초.html">
-<div class="listing-date">
-Mar 29, 2023
-</div>
+<div class="card-attribution card-text-small justify">
 <div class="listing-author">
 Seongtaek
 </div>
+<div class="listing-date">
+Mar 29, 2023
+</div>
+</div>
+</div>
+</div>
 </a>
 </div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="code,advanced_python,jupyter" data-listing-date-sort="1679929200000" data-listing-file-modified-sort="1680537914721" data-listing-reading-time-sort="9.675">
-<div class="thumbnail">
-<p><a href="./posts/Advanced_Python_ch2/파이썬 심화 챕터2 공부.html"> <img src="./posts/Advanced_Python_ch2/jup_image.jpg" class="thumnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/Advanced_Python_ch2/파이썬 심화 챕터2 공부.html">
-<h3 class="no-anchor listing-title">
+<div class="g-col-1" data-index="3" data-categories="code,advanced_python,jupyter" data-listing-date-sort="1679929200000" data-listing-file-modified-sort="1680537914721" data-listing-reading-time-sort="9.675">
+<a href="./posts/Advanced_Python_ch2/파이썬 심화 챕터2 공부.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./posts/Advanced_Python_ch2/jup_image.jpg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
 advanced_python CH1
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
+</h5>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
 code
@@ -353,36 +335,31 @@ advanced_python
 jupyter
 </div>
 </div>
-<a href="./posts/Advanced_Python_ch2/파이썬 심화 챕터2 공부.html">
-<div class="listing-description">
+<div class="card-text listing-description">
 Basic Grammar
 </div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/Advanced_Python_ch2/파이썬 심화 챕터2 공부.html">
-<div class="listing-date">
-Mar 28, 2023
-</div>
+<div class="card-attribution card-text-small justify">
 <div class="listing-author">
 Seongtaek
 </div>
+<div class="listing-date">
+Mar 28, 2023
+</div>
+</div>
+</div>
+</div>
 </a>
 </div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="code,data_mining,jupyter" data-listing-date-sort="1679929200000" data-listing-file-modified-sort="1680539296160" data-listing-reading-time-sort="49.625">
-<div class="thumbnail">
-<p><a href="./posts/Data_Mining_Numpy/numpy 공부.html"> <img src="./posts/Data_Mining_Numpy/numpy.jpg" class="thumnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/Data_Mining_Numpy/numpy 공부.html">
-<h3 class="no-anchor listing-title">
+<div class="g-col-1" data-index="4" data-categories="code,data_mining,jupyter" data-listing-date-sort="1679929200000" data-listing-file-modified-sort="1680539296160" data-listing-reading-time-sort="49.625">
+<a href="./posts/Data_Mining_Numpy/numpy 공부.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./posts/Data_Mining_Numpy/numpy.jpg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
 Data_Mining CH1
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
+</h5>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
 code
@@ -394,22 +371,20 @@ data_mining
 jupyter
 </div>
 </div>
-<a href="./posts/Data_Mining_Numpy/numpy 공부.html">
-<div class="listing-description">
+<div class="card-text listing-description">
 Numpy Basic
 </div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/Data_Mining_Numpy/numpy 공부.html">
-<div class="listing-date">
-Mar 28, 2023
-</div>
+<div class="card-attribution card-text-small justify">
 <div class="listing-author">
 Seongtaek
 </div>
-</a>
+<div class="listing-date">
+Mar 28, 2023
 </div>
+</div>
+</div>
+</div>
+</a>
 </div>
 </div>
 <div class="listing-no-matching d-none">
