@@ -7,7 +7,6 @@ website:
   navbar:
     left:
       - index3.qmd
-      - coding.qmd
     right:
       - about.qmd
     tools:

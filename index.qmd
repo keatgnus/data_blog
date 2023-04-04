@@ -1,5 +1,6 @@
 ---
 title: "Home"
+subtitle: "Code Archive"
 listing:
   contents: posts
   sort:  "date desc"
