@@ -24,6 +24,6 @@ format:
   html:
     theme: lux
     css: styles.css
-back-to-top-navigation: true
+    toc: true
 
 
