@@ -1,0 +1,213 @@
+---
+title: "Data_Visualize CH5"
+author: "Seongtaek"
+date: "2023-04-06"
+categories: [code, data_visualize, rstudio]
+image: "ggplot.jpg"
+toc: true
+toc-depth: 3
+number-sections: true
+---
+
+<table align="bottom">
+  <td>
+    <a target="_blank" href="figure-3.10.html"><img
+    src = r_logo.png />HTML파일로 보기</a>
+  </td>
+</table>
+
+Figure 3.10
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  comment = "#>",
+  collapse = TRUE # Code와 Output을 분리시키지 않고 하나로 출력시켜 줌
+  )
+```
+
+## 데이터 시각화 실습 : 원형 그래프 Figure 3.10
+
+### 패키지 불러오기
+
+```{r,warning=FALSE}
+library(ggplot2)
+library(dplyr)
+```
+
+### 데이터 불러오기, 파악
+- ncdc_normals.csv (날짜별 온도 등 데이터셋)
+
+```{r}
+ncdc_normals <- read.csv('C:/Users/seong taek/Desktop/3-1 DataVisualize/data_visualize/ncdc_normals.csv')
+
+### 차원 파악
+ncdc_normals %>% dim()
+
+### 앞부분 훑어보기
+ncdc_normals %>% head()
+
+### 통계 요약 정보
+ncdc_normals %>% summary()
+
+### 각 컬럼 클래스(타입) 확인
+ncdc_normals %>% sapply(class)
+
+### 각 컬럼 자료형 확인
+ncdc_normals %>% sapply(typeof)
+```
+
+### 전처리
+
+```{r}
+### staion id와 location 지정 선택한 d.f 만들기
+station_loc <- data.frame(station_id = c("USW00014819","USC00042319","USW00093107","USW00012918"),
+                          location = c("Chicago","Death Valley","San Diego","Houston"))
+
+station_loc %>% head()
+```
+
+```{r}
+### station_id로 ncdc_normals와 station_loc 두 컬럼을 `inner_join`
+temps_long <- ncdc_normals %>% inner_join(station_loc, by="station_id")
+temps_long %>% head()
+temps_long %>% sapply(class)
+
+### temps_long의 `date`의 타입을 Cha → Date로 변환
+temps_long$date <- temps_long$date %>% as.Date('%Y-%m-%d')
+temps_long %>% sapply(class)
+```
+
+### x축 눈금 설정
+
+```{r}
+date_s <- '0000-01-01' %>% as.Date('%Y-%m-%d')
+date_e <- '0001-01-01' %>% as.Date('%Y-%m-%d')
+break_date <- seq.Date(date_s, date_e, by = '3 month')
+date_lab <- format(break_date, '%B')
+```
+
+### figure 3.10
+- 사용 데이터셋 : temps_long
+- x = date, y = temperature
+- color : location별
+- geom_line
+  - 선 굵기 : 1.2
+- scale_x_date
+  - 이름 : 'month'
+  - 간격 : break_date (3개월)
+  - 간격 라벨 (1월 ~ 1월)
+- scale_y_continuous
+  - 이름 : 'temperature'
+  - 범위 : 0 ~ 105
+- coord_polar
+  - 사용 각도 변수 : x축
+  - 시작 각도 : 180도
+  - 반시계 방향
+- 테마 : 밝게
+- 플롯 영역의 테두리(border) 제거
+```{r}
+ggplot(temps_long, aes(x = date, y = temperature, color = location)) +
+  geom_line(linewidth = 1.2) +
+  scale_x_date(name='month',
+                breaks =break_date,
+                labels= date_lab) +
+  scale_y_continuous(name = 'temperature',
+                     limits = c(0, 105)) +
+  coord_polar(theta = 'x',start = pi, direction = -1) + # 6시 위치에서 반시계 방향 (0,1이면 12시 위치에서 시계방향)
+  theme_light() +
+  theme(panel.border = element_blank())
+```
+
+## 예제
+- 2022년 기상청 자료 Figure 3.10
+
+### 데이터 불러오기, 파악
+- OBS_ASOS_DD_20230322080932.csv (2022년 기상청 자료)
+
+```{r}
+data_2022 <- read.csv('C:/Users/seong taek/Desktop/3-1 DataVisualize/data_visualize/OBS_ASOS_DD_20230322080932.csv', fileEncoding = 'cp949')
+
+### 차원 파악
+data_2022 %>% dim()
+
+### 앞부분 훑어보기
+data_2022 %>% head()
+
+### 통계 요약 정보
+data_2022 %>% summary()
+
+### 컬럼 클래스(타입) 확인
+data_2022 %>% sapply(class)
+
+### 컬럼 자료형 확인
+data_2022 %>% sapply(typeof)
+
+### 결측값 있는지 확인
+sum(is.na(data_2022))
+
+### 결측값 제거
+data_2022 <- data_2022 %>% na.omit()
+```
+### 전처리
+
+```{r}
+###  `일시`를 character → date형식으로 변환
+data_2022$일시 <- data_2022$일시 %>% as.Date('%Y-%m-%d')
+
+data_2022 %>% sapply(class)
+
+### 대전, 서울, 세종, 제주 지역만 추출
+data_2022 <- data_2022 %>% filter(data_2022$지점명 %in% c('대전','서울','세종','제주'))
+
+data_2022$지점명 %>% unique()
+```
+###  x축에 표시할 눈금
+
+```{r}
+data_2022$일시 %>% head()
+
+data_2022$일시 %>% tail()
+
+date_s <- '2022-01-01' %>% as.Date('%Y-%m-%d')
+date_e <- '2023-01-01' %>% as.Date('%Y-%m-%d')
+
+break_date <- seq.Date(date_s, date_e, by='2 month')
+break_date
+
+# 월만 문자 값으로 뽑아내기
+date_lab <- format(break_date, '%B')
+date_lab
+```
+### figure 3.10
+- 사용 데이터셋 : data_2022
+- x=일시, y=평균기온..C.
+- color : 지점명별
+- geom_line
+  - 선 굵기 : 1.2
+- scale_x_date
+  - 이름 : '월'
+  - 간격 : break_date (2개월)
+  - 간격 라벨 (1월 ~ 1월)
+- scale_y_continuous
+  - 이름 : '평균기온'
+  - 범위 : -20 ~ 35
+- coord_polar
+  - 사용 각도 변수 : x축
+  - 시작 각도 : 180도
+  - 반시계 방향
+- 테마 : 밝게
+- 플롯 영역의 테두리(border) 제거
+```{r}
+ggplot(data_2022, aes(x=일시, y=평균기온..C., color=지점명)) +
+  geom_line(linewidth = 1.2) +
+  scale_x_date(name='월',
+                breaks =break_date,
+                labels= date_lab) +
+  scale_y_continuous(name = '평균기온',
+                     limits = c(-20, 35)) +
+  coord_polar(theta = 'x',start = pi, direction = -1) + # 6시 위치에서 반시계 방향 0,1이면 12시 위치에서 시계방향
+  theme_light() +
+  theme(panel.border = element_blank())
+```
+
