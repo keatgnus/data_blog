@@ -26,7 +26,7 @@ knitr::opts_chunk$set(
   )
 ```
 
-## 데이터 시각화 실습 : Figure 3.5, Figure 3.6
+## 데이터 시각화 실습 : 상위, 하위지역 그래프 Figure 3.5, Figure 3.6
 
 ### 패키지 불러오기
 
