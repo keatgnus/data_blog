@@ -71,7 +71,8 @@ ul.task-list li input[type="checkbox"] {
 
     const options = {
       valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] }],
-      
+      page: 5,
+    pagination: { item: "<li class='page-item'><a class='page page-link' href='#'></a></li>" },
       searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
     };
 
@@ -411,7 +412,7 @@ Seongtaek
 </div>
 <div class="quarto-post image-right" data-index="5" data-categories="code,data_visualize,rstudio" data-listing-date-sort="1680015600000" data-listing-file-modified-sort="1680606584310" data-listing-reading-time-sort="1.59">
 <div class="thumbnail">
-<p><a href="./posts/Data_Visualize_Ch1/데이터시각화 2주차 ggplot2 기초.html"> <img src="./posts/Data_Visualize_Ch1/ggplot.jpg" class="thumnail-image"> </a></p>
+<p><a href="./posts/Data_Visualize_Ch1/데이터시각화 2주차 ggplot2 기초.html"> <img data-src="./posts/Data_Visualize_Ch1/ggplot.jpg" class="thumnail-image"> </a></p>
 </div>
 <div class="body">
 <a href="./posts/Data_Visualize_Ch1/데이터시각화 2주차 ggplot2 기초.html">
@@ -452,7 +453,7 @@ Seongtaek
 </div>
 <div class="quarto-post image-right" data-index="6" data-categories="code,advanced_python,jupyter" data-listing-date-sort="1679929200000" data-listing-file-modified-sort="1680606672805" data-listing-reading-time-sort="9.675">
 <div class="thumbnail">
-<p><a href="./posts/Advanced_Python_ch2/파이썬 심화 챕터2 공부.html"> <img src="./posts/Advanced_Python_ch2/jup_image.jpg" class="thumnail-image"> </a></p>
+<p><a href="./posts/Advanced_Python_ch2/파이썬 심화 챕터2 공부.html"> <img data-src="./posts/Advanced_Python_ch2/jup_image.jpg" class="thumnail-image"> </a></p>
 </div>
 <div class="body">
 <a href="./posts/Advanced_Python_ch2/파이썬 심화 챕터2 공부.html">
@@ -493,7 +494,7 @@ Seongtaek
 </div>
 <div class="quarto-post image-right" data-index="7" data-categories="code,data_mining,jupyter" data-listing-date-sort="1679929200000" data-listing-file-modified-sort="1680606643115" data-listing-reading-time-sort="49.625">
 <div class="thumbnail">
-<p><a href="./posts/Data_Mining_Numpy/numpy 공부.html"> <img src="./posts/Data_Mining_Numpy/numpy.jpg" class="thumnail-image"> </a></p>
+<p><a href="./posts/Data_Mining_Numpy/numpy 공부.html"> <img data-src="./posts/Data_Mining_Numpy/numpy.jpg" class="thumnail-image"> </a></p>
 </div>
 <div class="body">
 <a href="./posts/Data_Mining_Numpy/numpy 공부.html">
@@ -536,6 +537,9 @@ Seongtaek
 <div class="listing-no-matching d-none">
 No matching items
 </div>
+<nav id="listing-pagination" class="listing-pagination" aria-label="Page Navigation">
+  <ul class="pagination"></ul>
+</nav>
 </div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
