@@ -3,8 +3,10 @@ title: "Data_Visualize CH1"
 author: "Seongtaek"
 date: "2023-03-29"
 categories: [code, data_visualize, rstudio]
-image: "ggplot.jpg"
+image: "basic.jpg"
 toc: true
+toc-depth: 3
+number-sections: true
 ---
 
 <table align="bottom">
