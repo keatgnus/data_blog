@@ -3,7 +3,7 @@ title: "Data_Visualize CH5"
 author: "Seongtaek"
 date: "2023-04-06"
 categories: [code, data_visualize, rstudio]
-image: "ggplot.jpg"
+image: "ch5.png"
 toc: true
 toc-depth: 3
 number-sections: true
