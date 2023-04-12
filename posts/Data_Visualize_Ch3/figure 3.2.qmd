@@ -1,8 +1,8 @@
 ---
-title: "Data_Visualize CH3"
+title: "Data_Visualization CH3"
 author: "Seongtaek"
 date: "2023-04-04"
-categories: [code, data_visualize, rstudio]
+categories: [code, data_visualization, rstudio]
 image: "ch3.png"
 toc: true
 toc-depth: 3

@@ -2,7 +2,7 @@
 title: "Data_Visualization CH6"
 author: "Seongtaek"
 date: "2023-04-12"
-categories: [code, data_visualize, rstudio]
+categories: [code, data_visualization, rstudio]
 image: "ch6.png"
 toc: true
 toc-depth: 3
@@ -11,12 +11,12 @@ number-sections: true
 
 <table align="bottom">
   <td>
-    <a target="_blank" href="figure-4.2.html"><img
+    <a target="_blank" href="figure 4.2, figure 4.8.html"><img
     src = r_logo.png />HTML파일로 보기</a>
   </td>
 </table>
 
-Figure 4.2
+Figure 4.2, Figure 4.8
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
@@ -26,7 +26,7 @@ knitr::opts_chunk$set(
   )
 ```
 
-## 데이터 시각화 실습 : 막대 그래프 Figure 4.2
+## 데이터 시각화 실습 : 막대그래프 Figure 4.2, Figure 4.8
 
 ### 패키지 불러오기
 
@@ -162,7 +162,9 @@ kor_202202_use %>% head()
 kor_202202_use$시도 <- sapply(kor_202202_use$행정구역,
                             function(x) strsplit(x, " ")[[1]][1])
 
-kor_202202_use$시도 %>% head()
+kor_202202_use %>% head()
+
+kor_202202_use %>% sapply(class)
 
 # factor 변환, level 지정
 kor_202202_use$시도 <- factor(kor_202202_use$시도,
@@ -189,10 +191,6 @@ region_colors <- RColorBrewer::brewer.pal(4, "Set2")
   - 이름 : '총인구수, 2022년 2월'
   - 범위 : 0 ~ 0 : 더욱 직관적인 그래프 표현 가능
   - 라벨 : 천 단위 구분 기호 사용
-- scale_x_discrete
-  - 색상 구분 : state_colors별
-- scale_color_manual
-  - 색상 : state_colors
 - scale_fill_manual
   - fill 옵션 색상 : region_colors
 - coord_flip() : x축, y축 체인지 → 세로방향 긴 막대를 가로방향으로 짧게 표시
@@ -282,9 +280,9 @@ ggplot(popgrowth_df, aes(x=state, y=100*popgrowth, fill=region_highlight)) +
         legend.position = c(.58, .58),
         legend.background = element_rect(fill = '#ffffffb0')) # color =테두리색
 ```
-## 예제2
 
-### 대전광역시 강조하기
+## 예제2
+-대전광역시 강조하기 Figure 4.8
 
 ```{r}
 ### 컬러 지정시 대전 따로 지정

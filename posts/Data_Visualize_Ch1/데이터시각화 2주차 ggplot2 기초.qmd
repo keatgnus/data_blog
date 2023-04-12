@@ -1,8 +1,8 @@
 ---
-title: "Data_Visualize CH1"
+title: "Data_Visualization CH1"
 author: "Seongtaek"
 date: "2023-03-29"
-categories: [code, data_visualize, rstudio]
+categories: [code, data_visualization, rstudio]
 image: "basic.png"
 toc: true
 toc-depth: 3
@@ -27,6 +27,7 @@ knitr::opts_chunk$set(
 ```
 
 ## 그래프 패키지(Packages)
+
 ##### [ggplot2] package : R에서 사용할 수 있는 대표적인 그래픽 도구
 - 그래프 결과를 그림 파일로 출력(정적)
 - Top 50 ggplot2 Visualizations
