@@ -1,5 +1,5 @@
 ---
-title: "Data_Visualize CH5"
+title: "Data_Visualization CH5"
 author: "Seongtaek"
 date: "2023-04-06"
 categories: [code, data_visualize, rstudio]

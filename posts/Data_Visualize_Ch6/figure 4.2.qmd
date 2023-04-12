@@ -1,0 +1,313 @@
+---
+title: "Data_Visualization CH6"
+author: "Seongtaek"
+date: "2023-04-12"
+categories: [code, data_visualize, rstudio]
+image: "ch6.png"
+toc: true
+toc-depth: 3
+number-sections: true
+---
+
+<table align="bottom">
+  <td>
+    <a target="_blank" href="figure-4.2.html"><img
+    src = r_logo.png />HTML파일로 보기</a>
+  </td>
+</table>
+
+Figure 4.2
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  comment = "#>",
+  collapse = TRUE # Code와 Output을 분리시키지 않고 하나로 출력시켜 줌
+  )
+```
+
+## 데이터 시각화 실습 : 막대 그래프 Figure 4.2
+
+### 패키지 불러오기
+
+```{r,warning=FALSE}
+library(ggplot2)
+library(dplyr)
+library(colorspace)
+```
+
+### RColorBrewer의 모든 컬러 맵 보기
+
+```{r}
+# install.packages("RColorBrewer")
+RColorBrewer::display.brewer.all()
+```
+
+### 데이터 불러오기, 파악
+- US_cescus.csv  (미국 인구조사 데이터셋)
+- US_regions.csv (미국 지역 분류 정보 데이터셋)
+
+```{r}
+US_census <- read.csv('C:/Users/seong taek/Desktop/3-1 DataVisualize/data_visualize/US_census.csv')
+US_regions <- read.csv('C:/Users/seong taek/Desktop/3-1 DataVisualize/data_visualize/US_regions.csv')
+
+### 차원 파악
+US_census %>% dim()
+US_regions %>% dim()
+
+### 앞부분 훑어보기
+US_census %>% head(2)
+US_regions %>% head()
+```
+
+### 전처리
+
+```{r}
+popgrowth_df <- US_census %>%                         
+  left_join(US_regions) %>%                         # US_census 기준으로 left_join
+  group_by(region, division, state) %>%             # 그룹화할 컬럼 선택  
+  summarise(pop2000 = sum(pop2000, na.rm = T),      # 그룹화된 컬럼들의 집계값 설정
+            pop2010 = sum(pop2010, na.rm = T),
+            popgrowth = (pop2010 - pop2000)/pop2000,
+            area = sum(area)) %>%
+  arrange(popgrowth) %>%                            # 해당 컬럼 기준으로 오름차순 정렬
+  ungroup() %>%                                     # 그룹화 해제
+  mutate(state = factor(state, levels=state),       # 팩터로 변환, level 지정 
+         region = factor(region, levels=c('West','South','Midwest','Northeast')))
+
+popgrowth_df
+
+### 4개 지방의 색 지정
+region_colors <- c('#E69F00','#56B4E9','#009E73','#F0E442')
+region_colors
+```
+
+### Figure 4.2
+- 사용 데이터셋 : popgrowth_df
+- x=state, y=100*popgrowth
+- fill : region별
+- geom_col (막대 그래프)
+- scale_y_continuous
+  - 이름 : 'population growth, 2000 to 2010'
+  - 범위 : 0 ~ 0 : 더욱 직관적인 그래프 표현 가능
+  - 라벨 : 백분율 형식
+- scale_fill_manual
+  - fill 옵션 색상 : region_colors
+- coord_flip() : x축, y축 체인지 → 세로방향 긴 막대를 가로방향으로 짧게 표시
+- 테마 : 밝게
+- 테마 옵션
+  - 그래프 패널의 테두리 제거
+  - y축 그리드 제거
+  - y축 레이블 제거
+  - y축 눈금선 제거
+  - y축 폰트 크기 설정
+  - 그래프상의 범례 위치 조정
+  - 범례 배경 색상 설정
+  
+```{r}
+ggplot(popgrowth_df, aes(x=state, y=100*popgrowth, fill=region)) +
+  geom_col() +
+  scale_y_continuous(name = 'population growth, 2000 to 2010',
+                     labels = scales::percent_format(scale=1),
+                     expand = c(0,0)) +
+  scale_fill_manual(values = region_colors) +
+  coord_flip() +
+  theme_light() +
+  theme(panel.border = element_blank(),
+        panel.grid.major.y = element_blank(),
+        axis.title.y = element_blank(),
+        axis.ticks.length = unit(0, 'pt'),
+        axis.text.y = element_text(size = 6),
+        legend.position = c(.7, .68),
+        legend.background = element_rect(fill = '#ffffffb0'))
+```
+
+## 예제
+- 주민등록 인구 및 세대현황 Figure 4.2
+
+### 데이터 불러오기, 파악
+- 202202_주민등록인구및세대현황.csv
+
+```{r}
+kor_202202 <- read.csv('C:/Users/seong taek/Desktop/3-1 DataVisualize/data_visualize/202202_주민등록인구및세대현황.csv')
+
+### 앞부분 훑어보기
+kor_202202 %>%  head()
+
+### 차원 파악
+kor_202202 %>% dim()
+
+### 컬럼 클래스(타입) 확인
+kor_202202 %>% sapply(class)
+
+### `행정구역_코드`를 numeric → character형식으로 변환
+kor_202202$행정구역_코드 <- kor_202202$행정구역_코드 %>% format()
+```
+### 전처리
+
+```{r}
+# 행정구역 컬럼의 1,2번째 자리의 값을 지정해서 추출
+# 행정구역_코드 컬럼의 3,4번째 자리의 값이 0이 아닌것만 추출
+# 해당 열만 선택
+# 해당 열 기준으로 오름차순 정렬
+kor_202202_use <- kor_202202 %>% 
+  filter(substr(행정구역,1,2) %in% c('서울','대전','대구','부산')) %>% 
+  filter(substr(행정구역_코드,3,4) != '00') %>%                        
+  select(행정구역, 총인구수) %>%                                        
+  arrange(총인구수)                                                    
+
+kor_202202_use %>% head()
+
+### '시도' 컬럼 생성
+kor_202202_use$시도 <- sapply(kor_202202_use$행정구역,
+                            function(x) strsplit(x, " ")[[1]][1])
+
+kor_202202_use$시도 %>% head()
+
+# factor 변환, level 지정
+kor_202202_use$시도 <- factor(kor_202202_use$시도,
+                            levels = c("서울특별시",
+                                       "대전광역시",
+                                       "대구광역시",
+                                       "부산광역시"))
+
+kor_202202_use$시도 %>% head()
+
+kor_202202_use$시도 %>% summary()
+
+### 4개 지방의 색 지정
+region_colors <- RColorBrewer::brewer.pal(4, "Set2")
+```
+
+### Figure 4.2
+- 사용 데이터셋 : kor_202202_use
+- x=reorder(행정구역, 총인구수) : '총인구수' 기준으로 '행정구역' 정렬,
+  y=총인구수
+- fill : 시도별
+- geom_col (막대 그래프)
+- scale_y_continuous
+  - 이름 : '총인구수, 2022년 2월'
+  - 범위 : 0 ~ 0 : 더욱 직관적인 그래프 표현 가능
+  - 라벨 : 천 단위 구분 기호 사용
+- scale_x_discrete
+  - 색상 구분 : state_colors별
+- scale_color_manual
+  - 색상 : state_colors
+- scale_fill_manual
+  - fill 옵션 색상 : region_colors
+- coord_flip() : x축, y축 체인지 → 세로방향 긴 막대를 가로방향으로 짧게 표시
+- 테마 : 밝게
+- 테마 옵션
+  - 그래프 패널의 테두리 제거
+  - y축 그리드 제거
+  - y축 레이블 제거
+  - y축 눈금선 제거
+  - y축 폰트 크기 설정
+  - 그래프상의 범례 위치 조정
+  - 범례 배경 색상 설정
+```{r}
+ggplot(kor_202202_use, aes(x=reorder(행정구역, 총인구수), y=총인구수, fill=시도)) +
+  geom_col() +
+  scale_y_continuous(name = '총인구수, 2022년 2월',
+                     labels = scales::comma,
+                     expand = c(0,0)) +
+  scale_fill_manual(values = region_colors) +
+  coord_flip() +
+  theme_light() +
+  theme(panel.border = element_blank(),
+        panel.grid.major.y = element_blank(),
+        axis.title.y = element_blank(),
+        axis.ticks.length = unit(0, 'pt'),
+        axis.text.y = element_text(size = 5),
+        legend.position = c(.78, .28),
+        legend.background = element_rect(fill = '#ffffffb0'))
+```
+
+## Figure 4.8
+
+### 전처리
+```{r}
+### 4개 지방의 색 지정 + 밝기조정 + 채도조정 
+region_colors <- c('#E69F00','#56B4E9','#009E73','#F0E442') %>% lighten(0.4) %>% desaturate(0.8)
+
+region_colors
+
+### 컬럼 추가 (region_highlight - NA)
+popgrowth_df <- popgrowth_df %>% 
+  mutate(region_highlight = ifelse(state %in% c('Texas', 'Louisiana'),
+                                   NA, region %>% paste()))
+
+popgrowth_df %>% head()
+```
+
+### Figure 4.8
+- 사용 데이터셋 : popgrowth_df
+- x=state, y=100*popgrowth
+- fill : region_highlight별
+- geom_col (막대 그래프)
+- scale_y_continuous
+  - 이름 : 'population growth, 2000 to 2010'
+  - 범위 : 0 ~ 0 : 더욱 직관적인 그래프 표현 가능
+  - 라벨 : 백분율 형식
+- scale_fill_manual
+  - fill 옵션 색상 : region_colors
+  - 그래프상 범례 레이블 지정
+  - NA 값일 때 색상 지정
+- coord_flip() : x축, y축 체인지 → 세로방향 긴 막대를 가로방향으로 짧게 표시
+- 테마 : 밝게
+- 테마 옵션
+  - 그래프 패널의 테두리 제거
+  - y축 그리드 제거
+  - y축 레이블 제거
+  - y축 눈금선 제거
+  - y축 폰트 크기 설정
+  - 그래프상의 범례 위치 조정
+  - 범례 배경 색상 설정
+```{r}
+ggplot(popgrowth_df, aes(x=state, y=100*popgrowth, fill=region_highlight)) +
+  geom_col() +
+  scale_y_continuous(name = 'population growth, 2000 to 2010',
+                     labels = scales::percent_format(scale=1),
+                     expand = c(0,0)) +
+  scale_fill_manual(values = region_colors,
+                    breaks = c("West", "South", "Midwest", "Northeast"),
+                    na.value = "#56B4E9" %>% darken(0.3)) +
+  coord_flip() +
+  theme_light() +
+  theme(panel.border = element_blank(),
+        panel.grid.major.y = element_blank(),
+        axis.title.y = element_blank(),
+        axis.ticks.length = unit(0, 'pt'),
+        axis.text.y = element_text(size = 5),
+        legend.position = c(.58, .58),
+        legend.background = element_rect(fill = '#ffffffb0')) # color =테두리색
+```
+## 예제2
+
+### 대전광역시 강조하기
+
+```{r}
+### 컬러 지정시 대전 따로 지정
+region_colors <- c('#E69F00','#56B4E9','#009E73','#F0E442') %>% lighten(0.4) %>% desaturate(0.8)
+
+region_colors[2] <- "#56B4E9" %>% darken(0.3)
+
+region_colors 
+
+ggplot(kor_202202_use, aes(x=reorder(행정구역, 총인구수), y=총인구수, fill=시도)) +
+  geom_col() +
+  scale_y_continuous(name = '총인구수, 2022년 2월',
+                     labels = scales::comma,
+                     expand = c(0,0)) +
+  scale_fill_manual(values = region_colors) +
+  coord_flip() +
+  theme_light() +
+  theme(panel.border = element_blank(),
+        panel.grid.major.y = element_blank(),
+        axis.title.y = element_blank(),
+        axis.ticks.length = unit(0, 'pt'),
+        axis.text.y = element_text(size = 5),
+        legend.position = c(.78, .28),
+        legend.background = element_rect(fill = '#ffffffb0'))
+```
+
