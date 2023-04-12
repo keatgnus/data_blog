@@ -11,7 +11,7 @@ number-sections: true
 
 <table align="bottom">
   <td>
-    <a target="_blank" href="figure 4.2, figure 4.8.html"><img
+    <a target="_blank" href="figure-4.2,-Figure-4.8.html"><img
     src = r_logo.png />HTML파일로 보기</a>
   </td>
 </table>
