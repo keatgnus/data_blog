@@ -1,0 +1,250 @@
+---
+title: "Data_Visualization CH7"
+author: "Seongtaek"
+date: "2023-04-13"
+categories: [code, data_visualization, rstudio]
+image: "ch7.png"
+toc: true
+toc-depth: 4
+number-sections: true
+---
+
+<table align="bottom">
+  <td>
+    <a target="_blank" href="figure-4.4-,--figure-4.6.html"><img
+    src = r_logo.png />HTML파일로 보기</a>
+  </td>
+</table>
+
+Figure 4.2, Figure 4.8
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  comment = "#>",
+  collapse = TRUE # Code와 Output을 분리시키지 않고 하나로 출력시켜 줌
+  )
+```
+
+## 데이터 시각화 실습 : 지역 정보 시각화 Figure 4.4, 4.6
+
+### 패키지 불러오기
+
+```{r,warning=FALSE}
+#install.packages("geojsonsf")
+library(geojsonsf)
+library(sf)
+library(ggplot2)
+library(dplyr)
+library(colorspace)
+```
+
+### 데이터 불러오기
+- KOR_SIDO.json : 대한민국 시,도 정보
+- KOR_SIGU.json : 대한민국 시,군,구 정보
+- 202202_주민등록인구및세대현황.csv
+
+```{r}
+KOR_SIDO <- geojson_sf('C:/Users/seong taek/Desktop/3-1 DataVisualize/data_visualize/KOR_SIDO.json')
+
+KOR_SIGU <- geojson_sf('C:/Users/seong taek/Desktop/3-1 DataVisualize/data_visualize/KOR_SIGU.json')
+
+kor_202202 <- read.csv('C:/Users/seong taek/Desktop/3-1 DataVisualize/data_visualize/202202_주민등록인구및세대현황.csv')
+```
+
+### 전처리
+
+```{r}
+### 컬럼 클래스(타입) 확인
+kor_202202 %>% sapply(class)
+
+### `행정구역_코드`를 numeric → character형식으로 변환
+kor_202202$행정구역_코드 <- kor_202202$행정구역_코드 %>% format()
+
+use_map <- KOR_SIGU
+use_map %>% head()
+
+### 병합할 컬럼 동일화
+use_map$행정구역_코드 <- paste(use_map$SIG_CD, "00000", sep = "")
+
+### 공통된 '행정구역_코드'를 기준으로 병합 
+use_map <- use_map %>% merge(kor_202202, by = "행정구역_코드", all.x=T)
+```
+
+### Figure 4.4 - 총 인구수
+- 사용 데이터셋 : use_map
+- fill : 총인구수
+- geom_sf (지리적 객체 그래프)
+  - 경계선 색상
+- coord_sf
+  - 지도 좌표계 제거
+- scale_fill_distiller
+  - 이름 : "인구수"
+  - 팔레트 색상 설정
+  - 연속형 색상 척도 사용
+  - 결측값 색상 설정
+  - 색상 척도 방향 설정 : 작은 값 → 큰 값
+  - 색상 척도 눈금 설정
+  - 색상 척도 라벨 설정, 천 단위 옵션, 지수표기법 미사용
+- 테마 : 미니멀
+- 테마 옵션
+  - 범례 제목 위치 지정
+  - 범례 텍스트 위치 지정
+  - 범례 위치 지정
+```{r}
+ggplot(use_map, aes(fill = 총인구수)) +
+geom_sf(color = "gray90") +
+coord_sf(datum = NA) +
+scale_fill_distiller(name = "인구수",
+                      palette = "Blues",
+                      type = "seq",
+                      na.value = "grey60",
+                      direction = 1,
+                      breaks = seq(0,10,2) * 1e+5,
+                      labels = format(seq(0,10,2) * 1e+5,
+                                      big.mark = ",", scientific = F),) +
+theme_minimal() +
+theme(legend.title.align = 0.5,
+      legend.text.align = 1.0,
+      legend.position = c(.85, .2))
+```
+
+### 광주만 뽑기
+
+```{r}
+### filter 이용 광주지역만 추출
+use_map %>%
+  filter(substr(행정구역_코드,1,2) == "29") %>% 
+  ggplot(aes(fill = 총인구수)) +
+  geom_sf(color = "gray90") +
+  coord_sf(datum = NA) +
+  scale_fill_distiller(name = "인구수",
+                       palette = "Blues",
+                       type = "seq",
+                       na.value = "grey60",
+                       direction = 1,
+                       breaks = seq(0,10,2) * 1e+5,
+                       labels = format(seq(0,10,2) * 1e+5,
+                                       big.mark = ",", scientific = F),) +
+  theme_minimal() +
+  theme(legend.title.align = 0.5,
+        legend.text.align = 1.0,
+        legend.position = c(1, .2))
+```
+
+### Figure 4.6 - 남여 비율
+- 사용 데이터셋 : use_map
+- fill : 남여_비율
+- geom_sf (지리적 객체 그래프)
+- coord_sf
+  - 지도 좌표계 제거
+- scale_fill_continuous_diverging
+  - 이름 : "남자/여자"
+  - 팔레트 색상 설정
+  - 색상 척도 : 중앙값 기준
+  - 색상 척도 범위 설정
+  - 색상 척도 순서 반전
+- 테마 : 미니멀
+- 테마 옵션
+  - 범례 제목 위치 지정
+  - 범례 텍스트 위치 지정
+  - 범례 위치 지정
+```{r}
+ggplot(use_map, aes(fill = 남여_비율)) +
+geom_sf() +
+coord_sf(datum = NA) +
+scale_fill_continuous_diverging(name = "남자/여자",
+                                palette = "Blue-Red",
+                                mid = 1,
+                                limits = 1 + c(-1, 1)*0.35,
+                                rev = T) +
+theme_minimal() +
+theme(legend.title.align = 0.5,
+      legend.text.align = 1.0,
+      legend.position = c(.95, .3))
+```
+
+## 과제
+- 2023년3월 총인구수 - Figure 4.4 
+
+### 데이터 불러오기
+- 202303_202303_주민등록인구및세대현황_월간.csv
+- KOR_SIGU.json : 대한민국 시,군,구 정보
+```{r}
+kor_202303 <- read.csv('C:/Users/seong taek/Desktop/3-1 DataVisualize/data_visualize/202303_202303_주민등록인구및세대현황_월간.csv',fileEncoding = "CP949")
+KOR_SIGU <- geojson_sf('C:/Users/seong taek/Desktop/3-1 DataVisualize/data_visualize/KOR_SIGU.json')
+
+kor_202303 %>% head()
+
+KOR_SIGU %>% head()
+```
+
+### 전처리
+
+```{r}
+#install.packages("stringr")
+library(stringr) # 고급 문자 추출 패키지
+
+### 쉼표없는 총인구수 컬럼 생성
+### 행정구역 코드만 추출한 컬럼 생성
+kor_202303 <- kor_202303 %>% 
+  mutate(총인구수_202303 = gsub(",","", X2023년03월_총인구수),
+         행정구역_코드 = str_sub(kor_202303$행정구역, -11, -2))
+
+### 컬럼 클래스(타입) 확인
+kor_202303 %>% sapply(class)
+
+### '총인구수_202303' 컬럼 character → numeric 변환
+kor_202303$총인구수_202303 <- kor_202303$총인구수_202303 %>% as.numeric()
+
+### 병합할 컬럼 동일화
+KOR_SIGU_use <- KOR_SIGU
+KOR_SIGU_use$행정구역_코드 <- paste(KOR_SIGU_use$SIG_CD, "00000", sep = "")
+
+kor_202303 %>% head()
+KOR_SIGU_use %>% head()
+
+### 공통된 '행정구역_코드'를 기준으로 병합 
+KOR_SIGU_use <- KOR_SIGU_use %>% merge(kor_202303, by = "행정구역_코드", all.x=T)
+KOR_SIGU_use %>% head()
+```
+
+### Figure 4.4 - 2023년3월 총인구수
+- 사용 데이터셋 : KOR_SIGU_use
+- fill : 총인구수_202303
+- geom_sf (지리적 객체 그래프)
+  - 경계선 색상
+- coord_sf
+  - 지도 좌표계 제거
+- scale_fill_distiller
+  - 이름 : "2023년 3월 총인구수"
+  - 팔레트 색상 설정
+  - 연속형 색상 척도 사용
+  - 결측값 색상 설정
+  - 색상 척도 방향 설정 : 작은 값 → 큰 값
+  - 색상 척도 눈금 설정
+  - 색상 척도 라벨 설정, 천 단위 옵션, 지수표기법 미사용
+- 테마 : 미니멀
+- 테마 옵션
+  - 범례 제목 위치 지정
+  - 범례 텍스트 위치 지정
+  - 범례 위치 지정
+
+```{r}
+ggplot(KOR_SIGU_use, aes(fill = 총인구수_202303)) +
+geom_sf(color = "gray90") +
+coord_sf(datum = NA) +
+scale_fill_distiller(name = "2023년 3월 총인구수",
+                      palette = "Blues",
+                      type = "seq",
+                      na.value = "grey60",
+                      direction = 1,
+                      breaks = seq(0,10,2) * 1e+5,
+                      labels = format(seq(0,10,2) * 1e+5,
+                                      big.mark = ",", scientific = F),) +
+theme_minimal() +
+theme(legend.title.align = 0.5,
+      legend.text.align = 1.0,
+      legend.position = c(.85, .2))
+```
+
