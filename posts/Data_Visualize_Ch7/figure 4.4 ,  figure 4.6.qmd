@@ -16,7 +16,7 @@ number-sections: true
   </td>
 </table>
 
-Figure 4.2, Figure 4.8
+Figure 4.4, Figure 4.6
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
