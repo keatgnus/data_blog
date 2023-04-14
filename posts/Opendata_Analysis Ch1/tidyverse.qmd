@@ -1,0 +1,186 @@
+---
+title: "Opendata_Analysis CH1"
+author: "Seongtaek"
+date: "2023-04-14"
+categories: [code, opendata_analysis, rstudio]
+image: "tidy_logo.png"
+toc: true
+toc-depth: 4
+number-sections: true
+---
+
+<table align="bottom">
+  <td>
+    <a target="_blank" href="tidyverse.html"><img
+    src = r_logo.png />HTML파일로 보기</a>
+  </td>
+</table>
+
+## 오픈데이터 분석 실습 : Tidyverse 패키지
+
+### 설명
+- 6개의 핵심 패키지 포함 23개의 패키지로 이뤄진 메타 패키지
+  - ggplot2
+  - dplyr
+  - tidyr
+  - readr
+  - purrr
+  - tibble
+  - stringr
+  - forcats
+
+### 패키지 불러오기
+
+```{r,warning=FALSE}
+#install.packages("tidyverse")
+library(tidyverse)
+```
+
+## tidyverse 실습
+- 항공편 데이터 nycflights13
+
+```{r,warning=F}
+#install.packages("nycflights13")
+library(nycflights13)
+```
+
+
+### 파이프 연산자를 통한 코드 직관화 예시
+- 순차적, 간결함
+
+```{r}
+rnorm(10000, mean=10, sd=1) %>%        # 평균10, 표준편차1인 정규분포에서 10000개 난수 생성
+  sample(size = 100, replace = F) %>%  # 샘플 100개를 랜덤으로 비복원 추출
+  log() %>%                            # 로그 함수 적용
+  diff() %>%                           # 차분 계산 
+  plot(col="red", type="l")            # 그래프 그리기
+```
+
+### 행의 수
+
+```{r}
+flights %>% nrow()
+```
+
+### 앞부분 훑어보기
+
+```{r}
+flights %>% head()
+```
+
+### 그룹화 + 집계값 요약
+
+```{r}
+### 날짜별 평균 출발지연 시간
+mean_delay_by_day <- flights %>% 
+  group_by(year, month, day) %>% 
+  summarise(delay = mean(dep_delay, na.rm = T))
+
+mean_delay_by_day
+```
+
+### select()
+- 컬럼 선택 (순서 지정 가능)
+```{r}
+### p.s 컬럼이름 되도록 띄어쓰기 사용×
+flights %>% select(year,month,day)
+```
+
+### 컬럼 선택
+
+```{r}
+### year ~ day, delay로 끝나는 컬럼 외 2개 컬럼
+flights_sample <- flights %>% 
+  select(year:day, ends_with("delay"), distance, air_time)
+
+flights_sample
+```
+
+### mutate()
+- 새로운 컬럼 생성
+```{r}
+flights_sample %>% 
+  mutate(net_delay = arr_delay - dep_delay,
+         speed = distance/air_time*60)
+```
+
+### filter()
+- 필터링 (조건 설정)
+```{r}
+flights %>% filter(month==1)
+```
+
+### bind_rows()
+- 두 데이터 묶기
+```{r}
+jan <- flights %>% filter(month==1)
+feb <- flights %>% filter(month==2)
+janfeb <- bind_rows(jan,feb)
+
+janfeb %>% head()
+
+janfeb %>% tail()
+
+### filter로 간결하게 사용
+flights %>% filter(month %in% c(1,2))
+```
+
+### arrange()
+- 데이터 정렬 (오름/내림차순)
+
+```{r}
+flights %>% arrange(dep_delay)
+
+flights %>% arrange(-dep_delay)
+```
+
+### 그룹화 + 집계값 요약
+- 월별 평균 지연시간, 개수
+```{r}
+flights %>% 
+  group_by(month) %>% 
+  summarise(mean_dep_delay = mean(dep_delay, na.rm = T),
+            count = n())
+```
+
+### left_join
+
+```{r}
+### 컬럼 선택
+flights_sample2 <- flights %>% 
+  select(year:day, origin, carrier)
+
+flights_sample2
+
+### join 시킬 데이터셋 - 'airlines'
+airlines
+
+### key값 기준으로 왼쪽에 join
+flights_sample2 %>% 
+  left_join(airlines, by="carrier")
+
+### key값 컬럼 이름이 다를 때
+colnames(airlines)[1] <- 'different'
+
+flights_sample2 %>% 
+  left_join(airlines, by=c("carrier" = "different"))
+```
+
+## Quiz
+- 1. 월 마다 가장 연착이 긴 시간 톺아보기
+- 2. 월 마다 가장 연착이 많이된 비행기는 해당월의 평균보다 몇배가 높나?
+```{r}
+### 1
+flights %>%
+  group_by(month) %>% 
+  summarise(max_dep_delay = max(dep_delay, na.rm = T)) %>% 
+  arrange(-max_dep_delay)
+
+### 2
+flights %>%
+  group_by(month) %>% 
+  summarise(mean_dep_delay = mean(dep_delay, na.rm = T),
+            max_dep_delay = max(dep_delay, na.rm = T),
+            compare = max_dep_delay/mean_dep_delay)
+
+```
