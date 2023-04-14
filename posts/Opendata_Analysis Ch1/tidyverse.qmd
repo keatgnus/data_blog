@@ -3,7 +3,7 @@ title: "Opendata_Analysis CH1"
 author: "Seongtaek"
 date: "2023-04-14"
 categories: [code, opendata_analysis, rstudio]
-image: "tidy_logo.png"
+image: "tidyverse_logo.png"
 toc: true
 toc-depth: 4
 number-sections: true
@@ -11,10 +11,12 @@ number-sections: true
 
 <table align="bottom">
   <td>
-    <a target="_blank" href="tidyverse.html"><img
+    <a target="_blank" href="CH1_tidyverse.html"><img
     src = r_logo.png />HTML파일로 보기</a>
   </td>
 </table>
+
+Tidyvers Package
 
 ## 오픈데이터 분석 실습 : Tidyverse 패키지
 
