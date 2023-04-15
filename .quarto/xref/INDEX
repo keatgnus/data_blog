@@ -79,5 +79,8 @@
   },
   "posts/Opendata_Analysis Ch1/tidyverse.qmd": {
     "tidyverse.html": "1c712b8a"
+  },
+  "posts/Opendata_Analysis Ch2/data_transformation.qmd": {
+    "data_transformation.html": "c6f3535f"
   }
 }

@@ -1,0 +1,277 @@
+---
+title: "Opendata_Analysis CH2"
+author: "Seongtaek"
+date: "2023-04-15"
+categories: [code, opendata_analysis, rstudio]
+image: "data_transformation.png"
+toc: true
+toc-depth: 4
+number-sections: true
+---
+
+<table align="bottom">
+  <td>
+    <a target="_blank" href="data_transformation_html.html"><img
+    src = r_logo.png />HTML파일로 보기</a>
+  </td>
+</table>
+
+Data Transformaion
+
+## 오픈데이터 분석 실습 : Data Transformation
+
+### 패키지 불러오기
+
+```{r,warning=FALSE,message=FALSE}
+library(tidyverse)
+library(nycflights13)
+```
+
+### 간단한 데이터셋 파악
+- nycflights13
+
+```{r}
+### 도움말
+#?flights
+
+### 요약
+flights %>% str()
+
+### 컬럼 이름
+flights %>% colnames()
+```
+## dplyr 기초
+
+### filter
+- 조건 필터링
+```{r}
+### table - 빈도수 파악
+flights$month %>% table()
+
+### 월별 필터링
+flights %>%
+  filter(month==12 | month==11)
+
+### 월별 필터링 - %in% 사용
+flights %>% 
+  filter(month %in% c(11,12))
+```
+
+### missing values
+- 결측값 NA
+```{r}
+### 결측값은 연산 불가능
+NA
+
+NA > 5
+
+10 == NA
+
+NA + 19
+
+NA / 2
+
+### 결측값 개수
+flights$dep_time %>%
+  is.na() %>% 
+  sum()
+
+### 결측값 있는 df 생성
+df <- data.frame(x = c(1, NA, 3))
+df
+
+### 타입 확인
+df %>% class()
+
+### tibble : tidyverse의 df 클래스
+tibble_df <- tibble(x = c(1, NA, 3))
+tibble_df
+
+tibble_df %>% filter(x > 1)
+
+tibble_df %>% filter(is.na(x) | x>1)
+```
+
+### arrange
+- 정렬
+```{r}
+### 오름차순 정렬
+flights %>% arrange(dep_time)
+
+### 결측값은 가장 하단 배치
+df <- tibble(x = c(5,2,NA))
+arrange(df, x)
+
+arrange(df, -x)
+```
+
+### select
+- 컬럼 선택
+```{r}
+### 컬럼 선택 (순서 지정 가능)
+flights %>% select(year, month, day)
+
+flights %>% select(year:day)
+
+### 컬럼 제외
+flights %>% select(-(year:day))
+
+### 시작 문자열 지정
+flights %>% select(starts_with('dep'))
+
+### 끝 문자열 지정
+flights %>% select(ends_with("time"))
+
+### 포함 문자열 지정
+flights %>% select(contains("time"))
+
+### 컬럼 이름 변경 new = old
+flights %>% rename(tail_num = tailnum)
+
+### 순서 배치 + 나머지
+flights %>% select(time_hour, air_time, everything())
+```
+
+### mutate
+- 새로운 컬럼 생성
+
+```{r}
+flights %>% mutate(
+  gain = dep_delay - arr_delay,
+  hours = air_time / 60,
+  gain_per_hour = gain / hours
+)
+
+### transmute : mutate와 다르게 반환된 값만 출력 
+flights %>% transmute(
+  gain = dep_delay - arr_delay,
+  hours = air_time / 60,
+  gain_per_hour = gain / hours
+)
+```
+
+### 유용한 기능
+
+```{r}
+### 몫
+5 %/% 3
+
+### 나머지
+5 %% 3
+
+### 그룹화 + 집계값 요약
+flights %>% 
+  group_by(year, month, day) %>% 
+  summarise(mean = mean(dep_delay))
+
+### 그룹화 + 집계값 요약 + NA 제거
+flights %>% 
+  group_by(year, month, day) %>% 
+  summarise(mean = mean(dep_delay, na.rm = T))
+
+### !is.na : 결측값 아닌 값들만 출력
+flights %>% 
+  filter(!is.na(dep_delay), !is.na(arr_delay))
+
+### 그룹화 해제 후 집계값 요약
+group <- flights %>%
+  group_by(year, month, day)
+
+group %>% 
+  ungroup() %>% 
+  summarise(flights = n())
+```
+
+### rank, slice
+- 행의 범위 지정
+```{r}
+### 년/월/일자별 top10 'arr_delay' 출력
+
+### rank 사용
+flights %>% 
+  group_by(year,month,day) %>% 
+  filter(rank(desc(arr_delay)) < 11) %>% 
+  select(year,month,day, arr_delay)
+
+### slice 사용
+flights %>% 
+  group_by(year,month,day) %>% 
+  slice_max(arr_delay,n=10) %>% 
+  select(year,month,day, arr_delay)
+
+### 순위 책정
+flights %>% 
+  select(year,month,day,arr_delay) %>% 
+  arrange(year,month,day,desc(arr_delay)) %>% 
+  group_by(year,month,day) %>% 
+  mutate(rank = rank(desc(arr_delay)))
+```
+
+
+## Quiz 1
+- 1. 월별 비행기 개수를 구하시오
+- 2. dest(도착공항)별로 비행기가 10000대 이상 착륙한 공항으로 도착한 비행정보만 추출
+
+```{r}
+### 1
+flights %>%
+  group_by(month) %>% 
+  summarise(fly_count = n())
+
+### 2
+air <- flights %>% 
+  group_by(dest) %>%
+  filter(n() >= 10000)
+
+air %>% nrow()
+
+table(air$dest)
+```
+
+## Quiz 2
+다음은 미국 NBA 농구리그의 농구선수별 게임당 경기통계(stats)이다.  
+- Pos: 농구에서 선수의 포지션
+- Age: 나이
+- Tm: 팀이름
+- 3P: 3점슛 성공횟수
+- 3PA: 3점슛 시도횟수
+- 3P%: 3점 성공률
+- PTS: 평균득점
+일 때 다음 물음에 답하시오.
+
+```{r}
+stats <-  read_csv("C:/Users/seong taek/Desktop/3-1 Opendata_Analysis/opendata/nba2021_per_game.csv")
+stats
+```
+
+### 1. 위의 dataframe을 가지고 group 별 통계값을 계산하시오.
+- NBA 농구팀별(Tm)로 가장 평균득점(PTS)이 높은 사람과 낮은 사람을 추출하는 코드를 작성하시오.
+- 또한, 팀별로 평균득점 최대값과 최소값의 차이를 `gap`이라는 컬럼을 새로 만들어 나타내시오.
+
+```{r}
+stats %>% 
+  group_by(Tm) %>% 
+  summarise(max_score = max(PTS),
+         min_score = min(PTS),
+         gap = max_score - min_score,
+         max_player = Player[which.max(PTS)],
+         min_player = Player[which.min(PTS)])
+```
+
+### 2. 각 포지션별로(Pos) 평균나이 대비 해당 선수의 나이가 몇배 높거나 낮은지 비율을 계산하시오 
+- 예를들어 PG 포지션의 평균나이는 27세이고, Chris Paul의 나이는 35세이므로, 비율은 35/27이 된다. 
+- 모든 선수에 대해 이 비율을 `age_ratio_by_position`이라는 새로운 컬럼으로 저장하는 코드를 작성하시오.
+- 단 , 포지션 별로 비율이 가장 높은 한명만 추출
+```{r}
+stats %>% 
+  group_by(Pos) %>% 
+  mutate(mean_age = mean(Age),
+         age_ratio_by_position = Age/mean_age) %>% 
+  select(Player, Pos, Age, mean_age, age_ratio_by_position) %>% 
+  arrange(-age_ratio_by_position) %>% 
+  slice_max(age_ratio_by_position, n=1)
+
+
+
+```
+
