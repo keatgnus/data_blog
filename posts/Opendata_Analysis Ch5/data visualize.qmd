@@ -1,0 +1,331 @@
+---
+title: "Opendata_Analysis CH5"
+author: "Seongtaek"
+date: "2023-04-16"
+categories: [code, opendata_analysis, rstudio]
+image: "data_visualization.jpg"
+toc: true
+toc-depth: 4
+number-sections: true
+---
+
+<table align="bottom">
+  <td>
+    <a target="_blank" href="data-visualize.html"><img
+    src = r_logo.png />HTML파일로 보기</a>
+  </td>
+</table>
+
+Data Visualization
+
+## 오픈데이터 분석 실습 : Data Visualization
+
+### 패키지 불러오기
+
+```{r,warning=FALSE,message=FALSE}
+library(tidyverse)
+library(ggplot2)
+```
+
+### 데이터 불러오기
+- mpg (자동차 정보 데이터셋)
+```{r}
+mpg %>% head()
+
+### 차원 파악
+mpg %>% dim()
+```
+### 가정
+- 엔진이 큰 차는 엔진이 작은 차보다 연료를 더 많이 사용하는가
+  - displ : 엔진의 크기
+  - hwy : 연비
+  
+### ggplot 생성
+- geom_point : 점 찍기
+  - x축 : 엔진 크기
+  - y축 : 연비
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy))
+```
+
+```{r}
+### 더 간단한 코드
+ggplot(mpg) + 
+  geom_point(aes(displ,hwy))
+```
+
+## 심미적 mapping
+
+
+### 포인트 색상 지정
+
+```{r}
+### class별 색상 지정
+table(mpg$class)
+
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, color = class)) # col='blue' (통일된 색상)
+```
+
+### 포인트 사이즈 지정
+- 단점 : 구별 어려움
+```{r}
+### class 별 크기 지정
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, size = class))
+```
+
+### 포인트 투명성 제어
+- 단점 : 구별 어려움
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, alpha = class))
+```
+
+### 포인트 모양 변경
+- 단점 : 최대 6가지 모양만 보임
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, shape = class))
+```
+
+## 면
+
+###  facet_wrap()
+- 패널plot 생성
+```{r}
+### class별 2행의 패널
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  facet_wrap(~ class, nrow = 2)
+```
+
+### facet_grid()
+- 두 개 이상의 변수에 대해 그리드형태의 패널plot 생성
+
+```{r}
+table(mpg$drv)
+table(mpg$cyl)
+
+ggplot(mpg) + 
+  geom_point(aes(x = displ, y = hwy)) + 
+  facet_grid(drv ~ cyl) # facet 하지 않으려면 변수 대신 마침표 사용가능
+```
+
+## 기하학적 객체
+
+### geom_smooth
+- 스무스한 선
+```{r}
+### linetype = drv : drv에 따른 라인 구분
+ggplot(mpg) + 
+  geom_smooth(aes(x = displ, y = hwy,linetype = drv))
+```
+
+```{r}
+### 점, 컬러 추가
+ggplot(mpg,aes(x=displ,
+               y=hwy,
+               color=drv)) +
+  geom_point() +
+  geom_smooth(aes(linetype=drv))
+```
+
+```{r}
+### 그룹화만 했을 경우
+ggplot(mpg) +
+  geom_smooth(aes(x=displ, y=hwy, group = drv))
+```
+
+```{r}
+### 선 색상으로 구분 + 범례 미표기
+ggplot(mpg) +
+  geom_smooth(aes(x=displ, y=hwy, color = drv),
+              show.legend = F)
+```
+
+```{r,warning=FALSE,message=FALSE}
+### 선/색상/점 모두 구분
+ggplot(mpg, aes(x=displ, y=hwy)) +
+  geom_point(aes(color= class)) +
+  geom_smooth(aes(linetype = class))
+```
+
+```{r}
+### 특정 데이터 필터링
+### se=F : 회귀선의 표준오차 미표시
+ggplot(mpg, aes(x=displ, y=hwy)) +
+  geom_point(aes(color= class)) +
+  geom_smooth(data = mpg %>% filter(class == 'subcompact'),se=F) 
+```
+
+
+## 통계적 변환
+
+### 데이터셋 파악
+- diamonds
+
+```{r}
+diamonds
+
+### 특정 컬럼 빈도수
+diamonds$cut %>% table()
+```
+
+### 데이터 시각화
+
+```{r}
+### 특정 컬럼 빈도수 시각화
+ggplot(diamonds) +
+  geom_bar(aes(x=cut)) # stat_count와 동일
+```
+
+
+### 세부 조정
+- position
+```{r}
+### 막대그래프 색상 조정 color= cut
+ggplot(diamonds) +
+  geom_bar(aes(x=cut, color= cut))
+```
+
+
+```{r}
+### 막대그래프 색상 조정 fill= cut
+ggplot(diamonds) +
+  geom_bar(aes(x=cut, fill= cut))
+```
+
+```{r}
+### 막대그래프 색상 조정 fill= clarity
+### x축에 대해서 색상 조정 가능
+ggplot(diamonds) +
+  geom_bar(aes(x=cut, fill= clarity))
+```
+
+
+```{r}
+### 투명도 + identity: 막대 안겹치게 포지셔닝
+ggplot(diamonds, aes(x=cut, fill=clarity)) +
+  geom_bar(alpha=1/5, position = "identity")
+```
+
+
+```{r}
+### 채움색상 NA(투명) 
+ggplot(diamonds, aes(x=cut, color=clarity)) +
+  geom_bar(fill=NA, position = "identity")
+```
+
+
+
+```{r}
+### fill : 전체높이에 대한 비율 표현 → 상대적 비교 가능
+ggplot(diamonds) +
+  geom_bar(aes(x=cut, fill=clarity), position = "fill")
+```
+
+```{r}
+### dodge : 비교선상의 막대 나란히 배열
+ggplot(diamonds) +
+  geom_bar(aes(x=cut, fill=clarity), position = "dodge")
+```
+
+```{r}
+### jitter : 점 뿌리기
+ggplot(mpg) +
+  geom_point(aes(x=displ, y=hwy), position = 'jitter')
+
+ggplot(mpg) +
+  geom_jitter(aes(x=displ, y= hwy))
+```
+
+
+
+
+
+### 세부 조정2
+- coord
+
+```{r}
+### boxplot
+ggplot(mpg) +
+  geom_boxplot(aes(x=class, y=hwy))
+
+### 색상 지정 가능
+ggplot(mpg) +
+  geom_boxplot(aes(x=class,y=hwy, fill = class))
+```
+
+
+```{r}
+### coord_flip : x축, y축 변경
+ggplot(mpg) +
+  geom_boxplot(aes(x=class, y=hwy)) +
+  coord_flip()
+```
+
+
+```{r,warning=FALSE}
+#install.packages("maps")
+library(maps)
+
+### maps 패키지의 데이터셋 저장/생성
+nz <- map_data("nz")
+nz %>% head()
+
+### geom_polygon : 지도 형식 시각화
+ggplot(nz, aes(x=long, y=lat, group=group)) +
+  geom_polygon(fill="white", color="black")
+```
+
+
+```{r}
+### coord_quickmap : 가로 세율 비율 보존 (정확한 지도)
+ggplot(nz, aes(x=long, y=lat, group=group)) +
+  geom_polygon(fill="white", color="black") +
+  coord_quickmap()
+```
+
+
+
+```{r}
+bar <- ggplot(diamonds) +
+  geom_bar(aes(x=cut, fill=cut),
+           show.legend = F,
+           width = 1) +
+  theme(aspect.ratio = 1) + # 그래프 가로:세로 비율
+  labs(x=NULL, y=NULL)
+
+bar
+```
+
+
+```{r}
+### coord_polar : 원형 막대 그래프
+bar + coord_polar()
+```
+
+
+
+## Quiz
+- geoom_errorbar
+
+```{r}
+### 차종에 따라서 고속도로에서 연비차이가 날까?
+
+### errorbar로 연비 범위(평균-표준오차, 평균+표준오차) 구하기
+mpg %>% 
+  group_by(class) %>% 
+  summarise(mean_hwy = mean(hwy), sd_hwy = sd(hwy)) %>% 
+  ggplot(aes(x=class, y=mean_hwy, fill=class)) +
+  geom_bar(stat = "identity") +
+  geom_errorbar(aes(ymin = mean_hwy - sd_hwy, ymax = mean_hwy + sd_hwy),
+                width = 0.5,
+                position = position_dodge(width = 0.9),
+                color = "black")
+```
+
+
+
