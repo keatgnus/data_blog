@@ -3,6 +3,14 @@ h1 {
     color: #ffffffde;
   }
 
-.code-block {
+code-block {
     background-color: #91ad93; /* 원하는 색상으로 변경 */
+  }
+
+  .code-block {
+    background-color: #91ad93; /* 원하는 색상으로 변경 */
+  }
+
+.code-block {
+  background-color: #91ad93; /* 원하는 색상으로 변경 */
   }
