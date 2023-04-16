@@ -1,0 +1,151 @@
+---
+title: "Opendata_Analysis CH3"
+author: "Seongtaek"
+date: "2023-04-16"
+categories: [code, opendata_analysis, rstudio]
+image: "import.jpg"
+toc: true
+toc-depth: 4
+number-sections: true
+---
+
+<table align="bottom">
+  <td>
+    <a target="_blank" href="import---write.html"><img
+    src = r_logo.png />HTML파일로 보기</a>
+  </td>
+</table>
+
+Import & Write
+
+## 오픈데이터 분석 실습 : Import/Write Data
+
+### 패키지 불러오기
+- read_csv 기능 존재
+```{r,warning=FALSE,message=FALSE}
+library(tidyverse)
+```
+
+## Import Data
+
+### read_csv
+- read.csv와 다르게 문자열 factor 처리X
+
+```{r,message=FALSE,warning=FALSE}
+### 현재 경로 확인
+getwd()
+
+### 경로 설정
+#setwd()
+
+### csv파일 불러오기
+heights <- read_csv("heights.csv")
+heights
+
+### 절대경로 사용
+heights <- read_csv("C:/Users/seong taek/Desktop/3-1 Opendata_Analysis/opendata/heights.csv")
+heights
+
+### tibble 데이터 프레임 생성
+read_csv("a,b,c
+         1,2,3
+         4,5,6")
+
+### 라인 스킵
+read_csv("The first line of metadata
+         The second line of metadata
+         x,y,z
+         1,2,3" , skip=2)
+
+### 주석 스킵
+read_csv("#A comment I want to skip
+         x,y,z
+         1,2,3", comment="#")
+
+### 컬럼 이름 없이 내용만
+read_csv("1,2,3
+         4,5,6", col_names = F)
+
+### '\n' : 한줄 띄우기
+read_csv("1,2,3 \n 4,5,6,", col_names = F)
+
+### 컬럼 이름 지정
+read_csv("1,2,3 \n 4,5,6,", col_names = c("A","B","C"))
+
+### NA값 부여
+read_csv("a,b,c \n 1,2,.", na=".")
+```
+
+### Locale 설정/확인
+
+```{r}
+Sys.getlocale()
+
+### 언어 영어로
+#Sys.setlocale("LC_ALL", "English")
+
+### 강제 언어 삭제
+#Sys.setlocale("LC_ALL", "C")
+```
+
+### 한글 파일 읽기
+
+```{r,message=FALSE,warning=FALSE}
+### 인코딩 찾기
+guess_encoding("exercise.csv")
+
+### 인코딩 입력으로 에러해결
+exercise <- read_csv("exercise.csv", locale = locale(encoding = "EUC-KR"))
+exercise
+
+### csv파일을 미리 열어보고 인코딩 변경
+exercise <- read_csv("exercise_utf_8.csv")
+exercise
+
+guess_encoding("exercise_utf_8.csv")
+```
+
+## Write Data
+
+### 파일 저장/삭제
+
+```{r,warning=FALSE,message=FALSE}
+heights <- read_csv("heights.csv")
+heights
+
+### 현재 경로에 csv파일 저장
+write_csv(heights, "만들 파일 이름.csv")
+
+### rds 확장자 
+write_rds(heights, "만들 파일 이름.rds")
+read_rds("만들 파일 이름.rds")
+
+### 파일 삭제
+file.remove("만들 파일 이름.csv")
+```
+
+### feather 패키지
+
+```{r,warning=FALSE}
+#install.packages("feather")
+library(feather)
+
+write_feather(heights, "heights.feather")
+read_feather("heights.feather")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
