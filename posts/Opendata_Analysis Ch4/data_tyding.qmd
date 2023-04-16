@@ -1,0 +1,183 @@
+---
+title: "Opendata_Analysis CH4"
+author: "Seongtaek"
+date: "2023-04-16"
+categories: [code, opendata_analysis, rstudio]
+image: "td.png"
+toc: true
+toc-depth: 4
+number-sections: true
+---
+
+<table align="bottom">
+  <td>
+    <a target="_blank" href="data_tyding_ht.html"><img
+    src = r_logo.png />HTML파일로 보기</a>
+  </td>
+</table>
+
+Data Tyding
+
+## 오픈데이터 분석 실습 : Data Tyding
+
+### 패키지 불러오기
+
+```{r,warning=FALSE,message=FALSE}
+library(tidyverse)
+library(ggplot2)
+```
+
+### Tidy data
+- 원칙
+  - 각 변수는 각각의 열을 가져야한다
+  - 각 변수는 각각의 행을 가져야한다
+  - 각 셀은 하나의 값을 가져야한다
+
+```{r}
+### 확진자수 데이터셋
+table1
+
+### rate 컬럼 생성
+table1 %>% 
+  mutate(rate = cases/population*10000)
+
+### 연도별 cases(확진자) 수
+table1 %>% 
+  count(year, wt=cases) # wt=weight=가중치
+
+### 국가별 확진자 수 추이
+ggplot(table1, aes(x=year, y=cases)) +
+  geom_line(aes(group = country), colour = "grey50") + # 국가별 선 구분, 색상 통일
+  geom_point(aes(colour = country, shape = country)) + # 국가별 점 색상/모양 구분
+  scale_x_continuous(breaks = c(1999,2000)) +          # x축 눈금 지정
+  facet_wrap(vars(country), scales = "free")           # 국가별 패널 구분, 눈금-독립조정
+### 2000년도 국가별 ratio 
+data<- table1 %>% 
+  group_by(country) %>% 
+  mutate(ratio = cases/min(cases)) %>%  # ratio = 확진자 수 최소 정규화
+  filter(year==2000)
+
+data
+
+### 국가별 2000년도 확진자 수 최소 정규화
+ggplot(data, aes(x = country, y = ratio, fill = country)) + # 색상:국가별
+  geom_bar(stat = "identity", width = 0.5) +                # 막대너비 지정
+  labs(title = "Ratio by Country",
+       x = "Country", y = "Ratio") +
+  theme_minimal() +
+  theme(legend.position = "none")                           # 범례 미지정
+### 1999 - 2000 증가량 계산
+data <- table1
+
+data<- table1 %>% 
+  group_by(country) %>%  
+  mutate(increase = cases - cases[year == 1999])  
+
+data
+
+### 국가별 확진자 수 증가량 추이
+ggplot(data %>% filter(year==2000), 
+       aes(x = country, y = increase, fill = country)) + 
+  geom_bar(stat = "identity", width = 0.5) +
+  labs(title = "Cases Increase from 1999 to 2000 by Country",
+       x = "Country", y = "Cases Increase") +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+## Pivoting
+
+### pivot_longer
+- 데이터를 긴 형태에서 넓은 형태로 변환
+- 여러 컬럼을 하나의 컬럼으로 정리
+- 주로 정규화 작업을 수행
+
+```{r}
+### 국가/연도별 확진자 수
+table4a
+
+### pivot_longer
+table4a_pivot_longer <- table4a %>%
+  pivot_longer(
+    cols = c(`1999`, `2000`),        # 변환할 컬럼 지정
+    names_to = "year",               # 변환될 컬럼 이름 지정
+    values_to = "cases"              # 변환된 값들이 저장될 컬럼 이름 지정
+    ) %>%
+  mutate(year = parse_integer(year)) # 정수형 타입 변환
+
+table4a_pivot_longer
+
+### ggplot 그래프
+table4a_pivot_longer %>%
+  ggplot(aes(x = year, y = cases)) +
+  geom_line(aes(group = country), colour = "grey50") +
+  geom_point(aes(colour = country, shape = country)) +
+  scale_x_continuous(breaks = c(1999, 2000))
+```
+
+### pivot_longer + left_join
+
+```{r}
+### 국가/연도별 인구수
+table4b
+
+### pivot_longer
+table4b_pivot_longer <- table4b %>%
+  pivot_longer(
+    cols = c(`1999`, `2000`),
+    names_to = "year",
+    values_to = "population"
+  ) %>%
+  mutate(year = parse_integer(year))
+
+table4b_pivot_longer
+
+### 확진자 수 + 인구수 left_join
+table4a_pivot_longer %>% left_join(table4b_pivot_longer, by = c("country", "year"))
+```
+
+### pivot_wider
+- 데이터를 넓은 형태에서 긴 형태로 변환
+- 하나의 컬럼을 여러개 컬럼으로 확장
+- 주로 비정규화 작업을 수행
+
+```{r}
+table2
+
+### pivot_wider
+table2_pivot_wider <- table2 %>%
+  pivot_wider(names_from = type,       # 여러 컬럼으로 확장할 컬럼 지정
+              values_from = count) %>% # 확장할 컬럼에 해당하는 값
+  mutate(rate = cases / population)
+
+table2_pivot_wider
+
+### ggplot 그래프
+table2_pivot_wider %>% ggplot(aes(x = year, y = rate)) +
+  geom_line(aes(group = country), colour = "grey50") +
+  geom_point(aes(colour = country, shape = country)) +
+  scale_x_continuous(breaks = c(1999, 2000))
+```
+
+## Advanced Pivoting (Missing values)
+
+### NA값이 있을 때의 `pivot_longer`
+```{r}
+#remotes::install_github("dcl-docs/dcldata")
+library(dcldata)
+
+example_migration
+
+### drop_na로 제거
+example_migration %>% 
+  pivot_longer(cols = !dest, 
+               names_to = "origin", 
+               values_to = "migrants") %>% 
+  drop_na(migrants)
+
+```
+
+
+
+
+
