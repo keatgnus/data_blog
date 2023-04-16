@@ -7,3 +7,7 @@ h1 {
   .code-block {
     background-color: #91ad93; /* 원하는 색상으로 변경 */
   }
+
+.code-block {
+  background-color: #91ad93;
+}
