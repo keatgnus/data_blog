@@ -28,4 +28,4 @@ format:
     toc-depth: 3
     number-sections: true
     highlight-style: solarized
-    monofont: fangsong;
+    monofont: Latin Modern sans;
