@@ -27,5 +27,5 @@ format:
     toc: true
     toc-depth: 4
     number-sections: true
-    highlight-style: a11y
+    highlight-style: nord
     monofont: Latin Modern san;
