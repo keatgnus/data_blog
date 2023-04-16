@@ -11,7 +11,7 @@ number-sections: true
 
 <table align="bottom">
   <td>
-    <a target="_blank" href="data_transformation_html.html"><img
+    <a target="_blank" href="data_transformation_html2.html"><img
     src = r_logo.png />HTML파일로 보기</a>
   </td>
 </table>
@@ -180,6 +180,13 @@ group <- flights %>%
 group %>% 
   ungroup() %>% 
   summarise(flights = n())
+
+### drop_na
+tibble_df %>% drop_na()
+
+### mutate 컬럼 위치 지정
+flights %>%
+  mutate(mean_arr_time = mean(arr_time, na.rm = T), .after = arr_time)
 ```
 
 ### rank, slice
@@ -207,8 +214,31 @@ flights %>%
   mutate(rank = rank(desc(arr_delay)))
 ```
 
-
 ## Quiz 1
+- dep_time의 결측지를 dep_time의 평균 값으로 교체하시오
+
+```{r}
+### NA 제외한 평균값
+mean_dep_time <- mean(flights$dep_time,na.rm = T) %>% as.integer()
+mean_dep_time
+
+### repalce_na 
+flights$dep_time <- flights$dep_time %>% 
+  replace_na(mean_dep_time)
+
+flights$dep_time %>% is.na() %>% sum()
+
+### mutate + ifelse
+flights %>% 
+  mutate(dep_time = ifelse(is.na(dep_time),
+                           mean_dep_time,dep_time))
+```
+
+
+
+
+
+## Quiz 2
 - 1. 월별 비행기 개수를 구하시오
 - 2. dest(도착공항)별로 비행기가 10000대 이상 착륙한 공항으로 도착한 비행정보만 추출
 
@@ -228,7 +258,7 @@ air %>% nrow()
 table(air$dest)
 ```
 
-## Quiz 2
+## Quiz 3
 다음은 미국 NBA 농구리그의 농구선수별 게임당 경기통계(stats)이다. 
 
 - Pos: 농구에서 선수의 포지션
