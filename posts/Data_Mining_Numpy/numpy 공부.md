@@ -1,7 +1,7 @@
 ---
 title: "Data_Mining CH1"
 author: "Seongtaek"
-date: "2023-03-28"
+date: "2023-04-04"
 categories: [code, data_mining, jupyter]
 image: "numpy.jpg"
 toc: true
@@ -13,25 +13,27 @@ Numpy Basic
 
 
 
+
 ## Numpy 기본
 
 **도구 - 넘파이(NumPy)**
 
-*넘파이(NumPy)는 파이썬의 과학 컴퓨팅을 위한 기본 라이브러리입니다. 넘파이의 핵심은 강력한 N-차원 배열 객체입니다. 또한 선형 대수, 푸리에(Fourier) 변환, 유사 난수 생성과 같은 유용한 함수들도 제공합니다."
+- 넘파이(NumPy)는 파이썬의 과학 컴퓨팅을 위한 기본 라이브러리입니다.
+- 넘파이의 핵심은 강력한 N-차원 배열 객체입니다.
+- 선형 대수, 푸리에(Fourier) 변환, 유사 난수 생성과 같은 유용한 함수들도 제공합니다.
 
 <table align="bottom">
   <td>
-    <a target="_blank" href="http://localhost:8888/notebooks/3-1%20Data_Mining/numpy%20%EA%B3%B5%EB%B6%80.ipynb"><img
+    <a target="_blank" href="http://localhost:8888/notebooks/3-1%20Data_Mining/numpy%20%EA%B3%B5%EB%B6%80.ipynb#"><img
     src = small_jup_image.jpg />Jupyter에서 실행하기</a>
   </td>
 </table>
 
-<table align="bottom">
+<table align="left">
   <td>
     <a target="_blank" href="https://colab.research.google.com/github/rickiepark/handson-ml2/blob/master/tools_numpy.ipynb"><img src="https://www.tensorflow.org/images/colab_logo_32px.png" />구글 코랩에서 실행하기</a>
   </td>
 </table>
-
 
 ## 배열 생성
 
@@ -42,7 +44,7 @@ Numpy Basic
 import numpy as np
 ```
 
-## `np.zeros`
+###  np.zeros
 
 `zeros` 함수는 0으로 채워진 배열을 만듭니다:
 
@@ -141,17 +143,19 @@ a.size
 
 
 ```python
-np.zeros((2,2,5))
+np.zeros((2,3,4))
 ```
 
 
 
 
-    array([[[0., 0., 0., 0., 0.],
-            [0., 0., 0., 0., 0.]],
+    array([[[0., 0., 0., 0.],
+            [0., 0., 0., 0.],
+            [0., 0., 0., 0.]],
     
-           [[0., 0., 0., 0., 0.],
-            [0., 0., 0., 0., 0.]]])
+           [[0., 0., 0., 0.],
+            [0., 0., 0., 0.],
+            [0., 0., 0., 0.]]])
 
 
 
@@ -170,7 +174,7 @@ type(np.zeros((3,4)))
 
 
 
-## `np.ones`
+### np.ones
 `ndarray`를 만들 수 있는 넘파이 함수가 많습니다.
 
 다음은 1로 채워진 $3 \times 4$ 크기의 행렬입니다:
@@ -189,7 +193,7 @@ np.ones((3,4))
 
 
 
-## `np.full`
+### np.full
 주어진 값으로 지정된 크기의 배열을 초기화합니다. 다음은 `π`로 채워진 $3 \times 4$ 크기의 행렬입니다.
 
 
@@ -206,7 +210,7 @@ np.full((3,4), np.pi)
 
 
 
-## `np.empty`
+### np.empty
 초기화되지 않은 $2 \times 3$ 크기의 배열을 만듭니다(배열의 내용은 예측이 불가능하며 메모리 상황에 따라 달라집니다):
 
 
@@ -222,23 +226,24 @@ np.empty((2,3))
 
 
 
-## np.array
+### np.array
 `array` 함수는 파이썬 리스트를 사용하여 `ndarray`를 초기화합니다:
 
 
 ```python
-np.array([[1,2,3,4], [10, 20, 30, 40]])
+np.array([[1,2,3,4], [10, 20, 30, 40],[3,4,5,6]])
 ```
 
 
 
 
     array([[ 1,  2,  3,  4],
-           [10, 20, 30, 40]])
+           [10, 20, 30, 40],
+           [ 3,  4,  5,  6]])
 
 
 
-## `np.arange`
+### np.arange
 파이썬의 기본 `range` 함수와 비슷한 넘파이 `arange` 함수를 사용하여 `ndarray`를 만들 수 있습니다:
 
 
@@ -295,18 +300,18 @@ print(np.arange(0, 5/3, 0.333333334))
     [0.         0.33333333 0.66666667 1.         1.33333334]
     
 
-## `np.linspace`
+### np.linspace
 이런 이유로 부동 소수를 사용할 땐 `arange` 대신에 `linspace` 함수를 사용하는 것이 좋습니다. `linspace` 함수는 지정된 개수만큼 두 값 사이를 나눈 배열을 반환합니다(`arange`와는 다르게 최댓값이 **포함**됩니다):
 
 
 ```python
-print(np.linspace(0, 5/3, 6))
+print(np.linspace(0, 5/3, 6)) #n=6
 ```
 
     [0.         0.33333333 0.66666667 1.         1.33333333 1.66666667]
     
 
-## `np.rand`와 `np.randn`
+### np.rand & np.randn
 넘파이의 `random` 모듈에는 `ndarray`를 랜덤한 값으로 초기화할 수 있는 함수들이 많이 있습니다.
 예를 들어, 다음은 (균등 분포인) 0과 1사이의 랜덤한 부동 소수로 $3 \times 4$ 행렬을 초기화합니다:
 
@@ -318,9 +323,9 @@ np.random.rand(3,4)
 
 
 
-    array([[0.06155426, 0.74605262, 0.15696099, 0.10848505],
-           [0.99477242, 0.50644411, 0.85697022, 0.7538202 ],
-           [0.69186472, 0.70790355, 0.1212439 , 0.40088931]])
+    array([[0.97658453, 0.12023957, 0.1385255 , 0.27344451],
+           [0.7107592 , 0.51802762, 0.03772338, 0.76349622],
+           [0.22866009, 0.60059563, 0.20339496, 0.83995902]])
 
 
 
@@ -334,9 +339,9 @@ np.random.randn(3,4)
 
 
 
-    array([[ 0.68549892, -0.35640678,  0.49284835, -1.11736284],
-           [ 1.50288866, -1.04041734,  1.1961761 ,  1.34060815],
-           [ 0.19706421,  0.13122654,  0.68539933, -0.13550458]])
+    array([[ 0.44399064, -0.38009088,  1.49175547,  0.15028664],
+           [ 0.12956604, -1.54072513, -0.26739546,  0.15539485],
+           [-0.62462998,  0.53105371,  0.09237904, -1.127329  ]])
 
 
 
@@ -366,7 +371,7 @@ plt.show()
     
 
 
-## np.fromfunction
+### np.fromfunction
 함수를 사용하여 `ndarray`를 초기화할 수도 있습니다:
 
 
@@ -405,7 +410,7 @@ np.fromfunction(my_function, (3, 2, 10))
 위의 식 `x + 10 * y + 100 * z`에서 `x`, `y`, `z`는 사실 `ndarray`입니다(배열의 산술 연산에 대해서는 아래에서 설명합니다). 중요한 점은 함수 `my_function`이 원소마다 호출되는 것이 아니고 딱 **한 번** 호출된다는 점입니다. 그래서 매우 효율적으로 초기화할 수 있습니다.
 
 ## 배열 데이터
-## `dtype`
+### dtype
 넘파이의 `ndarray`는 모든 원소가 동일한 타입(보통 숫자)을 가지기 때문에 효율적입니다. `dtype` 속성으로 쉽게 데이터 타입을 확인할 수 있습니다:
 
 
@@ -439,37 +444,34 @@ print(d.dtype, d)
 
 가능한 데이터 타입은 `int8`, `int16`, `int32`, `int64`, `uint8`|`16`|`32`|`64`, `float16`|`32`|`64`, `complex64`|`128`가 있습니다. 전체 리스트는 [온라인 문서](http://docs.scipy.org/doc/numpy/user/basics.types.html)를 참고하세요.
 
-## `itemsize`
+### itemsize
 `itemsize` 속성은 각 아이템의 크기(바이트)를 반환합니다:
 
 
 ```python
 e = np.arange(1, 5, dtype=np.complex64)
-e.itemsize
+print(e)
+print(e.itemsize)
 ```
 
-
-
-
+    [1.+0.j 2.+0.j 3.+0.j 4.+0.j]
     8
+    
 
-
-
-## `data` 버퍼
+### data 버퍼
 배열의 데이터는 1차원 바이트 버퍼로 메모리에 저장됩니다. `data` 속성을 사용해 참조할 수 있습니다(사용할 일은 거의 없겠지만요).
 
 
 ```python
 f = np.array([[1,2],[1000, 2000]], dtype=np.int32)
-f.data
+print(f)
+print(f.data)
 ```
 
-
-
-
-    <memory at 0x00000250B4976E10>
-
-
+    [[   1    2]
+     [1000 2000]]
+    <memory at 0x0000020364206380>
+    
 
 파이썬 2에서는 `f.data`가 버퍼이고 파이썬 3에서는 memoryview입니다.
 
@@ -494,7 +496,7 @@ data_bytes
 
 ## 배열 크기 변경
 
-## 자신을 변경
+### 자신을 변경
 
 `ndarray`의 `shape` 속성을 지정하면 간단히 크기를 바꿀 수 있습니다. 배열의 원소 개수는 동일하게 유지됩니다.
 
@@ -554,7 +556,7 @@ g[1,1,1] # 3차원 인덱싱 0,1 ~ 순
 
 
 
-## `reshape`
+### reshape
 
 `reshape` 함수는 동일한 데이터를 가리키는 새로운 `ndarray` 객체를 반환합니다. 한 배열을 수정하면 다른 것도 함께 바뀝니다.
 
@@ -610,7 +612,7 @@ g
 
 
 
-## `ravel`
+### ravel
 
 마지막으로 `ravel` 함수는 동일한 데이터를 가리키는 새로운 1차원 `ndarray`를 반환합니다:
 
@@ -639,8 +641,8 @@ print("a + b  =", a + b)
 print("a - b  =", a - b)
 print("a * b  =", a * b)
 print("a / b  =", a / b)
-print("a // b  =", a // b)
-print("a % b  =", a % b)
+print("a // b  =", a // b) # 몫
+print("a % b  =", a % b)   # 나머지
 print("a ** b =", a ** b)
 ```
 
@@ -661,13 +663,13 @@ print("a ** b =", a ** b)
 
 일반적으로 넘파이는 동일한 크기의 배열을 기대합니다. 그렇지 않은 상황에는 브로드캐시틍 규칙을 적용합니다:
 
-## 규칙 1
+### 규칙 1
 
 배열의 랭크가 동일하지 않으면 랭크가 맞을 때까지 랭크가 작은 배열 앞에 1을 추가합니다.
 
 
 ```python
-h = np.arange(5).reshape(1, 1, 5)
+h = np.arange(5).reshape(1,1, 5)
 h
 ```
 
@@ -692,7 +694,7 @@ h + [10, 20, 30, 40, 50]  # 다음과 동일합니다: h + [[[10, 20, 30, 40, 50
 
 
 
-## 규칙 2
+### 규칙 2
 
 특정 차원이 1인 배열은 그 차원에서 크기가 가장 큰 배열의 크기에 맞춰 동작합니다. 배열의 원소가 차원을 따라 반복됩니다.
 
@@ -755,12 +757,13 @@ k + 1000  # 다음과 같습니다: k + [[1000, 1000, 1000], [1000, 1000, 1000]]
 
 
 
-## 규칙 3
+### 규칙 3
 
 규칙 1 & 2을 적용했을 때 모든 배열의 크기가 맞아야 합니다.
 
 
 ```python
+### 차원(배열 크기)가 달라서 생기는 문제
 try:
     k + [33, 44]
 except ValueError as e:
@@ -773,12 +776,12 @@ except ValueError as e:
 브로드캐스팅 규칙은 산술 연산 뿐만 아니라 넘파이 연산에서 많이 사용됩니다. 아래에서 더 보도록 하죠. 브로드캐스팅에 관한 더 자세한 정보는 [온라인 문서](https://docs.scipy.org/doc/numpy-dev/user/basics.broadcasting.html)를 참고하세요.
 
 ## 업캐스팅
-## 스킵
+### 스킵
 `dtype`이 다른 배열을 합칠 때 넘파이는 (실제 값에 상관없이) 모든 값을 다룰 수 있는 타입으로 업캐스팅합니다.
 
 
 ```python
-k1 = np.arange(0, 5, dtype=np.uint8)
+k1 = np.arange(5, dtype=np.uint8)
 print(k1.dtype, k1)
 ```
 
@@ -854,7 +857,7 @@ m[m < 25]
 
 `ndarray`에서 사용할 수 있는 수학 함수와 통계 함수가 많습니다.
 
-## `ndarray` 메서드
+### ndarray 메서드
 
 일부 함수는 `ndarray` 메서드로 제공됩니다. 예를 들면:
 
@@ -1047,9 +1050,9 @@ for func in (np.abs, np.sqrt, np.exp, np.log, np.sign, np.ceil, np.modf, np.isna
      [-0.83907153  0.0044257   0.84385396]]
     
 
-    C:\Users\seong taek\AppData\Local\Temp\ipykernel_12688\4103705789.py:5: RuntimeWarning: invalid value encountered in sqrt
+    C:\Users\seong taek\AppData\Local\Temp\ipykernel_8916\4103705789.py:5: RuntimeWarning: invalid value encountered in sqrt
       print(func(a))
-    C:\Users\seong taek\AppData\Local\Temp\ipykernel_12688\4103705789.py:5: RuntimeWarning: invalid value encountered in log
+    C:\Users\seong taek\AppData\Local\Temp\ipykernel_8916\4103705789.py:5: RuntimeWarning: invalid value encountered in log
       print(func(a))
     
 
@@ -1109,7 +1112,7 @@ np.copysign(a, b)
 
 ## 배열 인덱싱
 
-## 1차원 배열
+### 1차원 배열
 
 1차원 넘파이 배열은 보통의 파이썬 배열과 비슷하게 사용할 수 있습니다:
 
@@ -1264,16 +1267,18 @@ except ValueError as e:
 
 ```python
 a_slice = a[2:6]
+print(a_slice)
+
 a_slice[1] = 1000
-a  # 원본 배열이 수정됩니다!
+print(a_slice)
+
+print(a)  # 원본 배열이 수정됩니다!
 ```
 
-
-
-
-    array([   1,    5,   -1, 1000,   -1,    7,    3])
-
-
+    [-1 -1 -1  7]
+    [  -1 1000   -1    7]
+    [   1    5   -1 1000   -1    7    3]
+    
 
 
 ```python
@@ -1292,17 +1297,17 @@ a_slice  # 비슷하게 원본 배열을 수정하면 슬라이싱 객체에도 
 
 
 ```python
+print(a)
+
 another_slice = a[2:6].copy()
 another_slice[1] = 3000
-a  # 원본 배열이 수정되지 않습니다
+
+print(a)  # 원본 배열이 수정되지 않습니다
 ```
 
-
-
-
-    array([   1,    5,   -1, 2000,   -1,    7,    3])
-
-
+    [   1    5   -1 2000   -1    7    3]
+    [   1    5   -1 2000   -1    7    3]
+    
 
 
 ```python
@@ -1413,6 +1418,18 @@ b[1:2, :]
 
 
 ```python
+b[1, :].shape
+```
+
+
+
+
+    (12,)
+
+
+
+
+```python
 b[1:2, :].shape
 ```
 
@@ -1428,6 +1445,21 @@ b[1:2, :].shape
 ## 팬시 인덱싱(Fancy indexing)
 
 관심 대상의 인덱스 리스트를 지정할 수도 있습니다. 이를 팬시 인덱싱이라고 부릅니다.
+
+
+```python
+b
+```
+
+
+
+
+    array([[ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11],
+           [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+           [24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35],
+           [36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47]])
+
+
 
 
 ```python
@@ -1471,7 +1503,7 @@ b[(-1, 2, -1, 2), (5, 9, 1, 9)]  # returns a 1D array with b[-1, 5], b[2, 9], b[
 
 
 
-## Quiz
+### Quiz
 array([[24, 25],
        [36, 37]])
 
@@ -1479,18 +1511,20 @@ array([[24, 25],
 
 
 ```python
-b[(2,3),0:2]
+b[(2,3),0:2], b[2:4,0:2]
 ```
 
 
 
 
-    array([[24, 25],
-           [36, 37]])
+    (array([[24, 25],
+            [36, 37]]),
+     array([[24, 25],
+            [36, 37]]))
 
 
 
-## Quiz
+### Quiz
 1. 2차원 배열 'array_2d'에서 첫번째 행의 모든 요소 선택
 2. 2차원 배열 'array_2d'에서 두번째 열의 모든 요소 선택
 3. 2차원 배열 'array_2d'에서 25,30,40,45 선택
@@ -1514,7 +1548,23 @@ array_2d
 
 
 ```python
-#답
+# 1
+print(array_2d[0,:])
+# 2
+print(array_2d[:,1])
+# 3
+print(array_2d[1:3,1:3])
+```
+
+    [ 5 10 15]
+    [10 25 40]
+    [[25 30]
+     [40 45]]
+    
+
+
+```python
+# 또는
 array_2d[0,:],array_2d[:,1], array_2d[(1,2),1:3]
 ```
 
@@ -1672,7 +1722,7 @@ b
 
 ```python
 rows_on = np.array([True, False, True, False])
-b[rows_on, :]  # 행 0과 2, 모든 열. b[(0, 2), :]와 동일
+b[rows_on, :]  # True에 해당하는 값 가져오기, 행 0과 2, 모든 열. b[(0, 2), :]와 동일
 ```
 
 
@@ -1699,7 +1749,7 @@ b[:, cols_on]  # 모든 행, 열 1, 4, 7, 10
 
 
 
-## `np.ix_`
+## np.ix_
 
 여러 축에 걸쳐서는 불리언 인덱싱을 사용할 수 없고 `ix_` 함수를 사용합니다:
 
@@ -1718,7 +1768,7 @@ b[np.ix_(rows_on, cols_on)]
 
 
 ```python
-np.ix_(rows_on, cols_on)
+np.ix_(rows_on, cols_on) # 추출 위치 출력
 ```
 
 
@@ -1744,7 +1794,7 @@ b[b % 3 == 1]
 
 
 
-## 반복
+# 반복
 
 `ndarray`를 반복하는 것은 일반적인 파이썬 배열을 반복한는 것과 매우 유사합니다. 다차원 배열을 반복하면 첫 번째 축에 대해서 수행됩니다.
 
@@ -1886,7 +1936,7 @@ q3
 
 
 
-## `vstack`
+### vstack
 
 `vstack` 함수를 사용하여 수직으로 쌓아보죠:
 
@@ -1926,7 +1976,7 @@ q4.shape
 
 q1, q2, q3가 모두 같은 크기이므로 가능합니다(수직으로 쌓기 때문에 수직 축은 크기가 달라도 됩니다).
 
-## `hstack`
+### hstack
 
 `hstack`을 사용해 수평으로도 쌓을 수 있습니다:
 
@@ -1947,7 +1997,7 @@ q5
 
 
 ```python
-# 문제
+# concatenate도 가능
 np.concatenate((q1,q3),axis=1)
 ```
 
@@ -1985,7 +2035,7 @@ except ValueError as e:
     all the input array dimensions for the concatenation axis must match exactly, but along dimension 0, the array at index 0 has size 3 and the array at index 1 has size 4
     
 
-## `concatenate`
+### concatenate
 
 `concatenate` 함수는 지정한 축으로도 배열을 쌓습니다.
 
@@ -2025,7 +2075,7 @@ q7.shape
 
 예상했겠지만 `hstack`은 `axis=1`으로 `concatenate`를 호출하는 것과 같습니다.
 
-## `stack`
+### stack
 
 `stack` 함수는 새로운 축을 따라 배열을 쌓습니다. 모든 배열은 같은 크기를 가져야 합니다.
 
@@ -2088,6 +2138,7 @@ r
 
 
 ```python
+### 3개의 변수로 분할 - 수직
 r1, r2, r3 = np.vsplit(r, 3)
 r1
 ```
@@ -2130,6 +2181,7 @@ r3
 
 
 ```python
+### 2개의 변수로 분할 - 수평
 r4, r5 = np.hsplit(r, 2)
 r4
 ```
@@ -2373,6 +2425,18 @@ m2r
 
 
     array([[0, 1, 2, 3, 4]])
+
+
+
+
+```python
+m2.shape, m2r.shape
+```
+
+
+
+
+    ((5,), (1, 5))
 
 
 
@@ -2887,7 +2951,7 @@ plt.show()
 
 
     
-![png](output_295_0.png)
+![png](output_299_0.png)
     
 
 
@@ -2908,8 +2972,8 @@ a
 
 
 
-    array([[0.2086315 , 0.86504028, 0.48487373],
-           [0.31435031, 0.97172107, 0.83472074]])
+    array([[0.82824112, 0.34529149, 0.09610369],
+           [0.81324126, 0.16441513, 0.64848436]])
 
 
 
@@ -2931,7 +2995,7 @@ content
 
 
 
-    b"\x93NUMPY\x01\x00v\x00{'descr': '<f8', 'fortran_order': False, 'shape': (2, 3), }                                                          \n\xf8\x10\x97\xdfo\xb4\xca?\t1i\xf2h\xae\xeb?\x18\x00\x19\xd4+\x08\xdf?\x1c\x14\xa1\xc1P\x1e\xd4?\xb8O \xc7V\x18\xef?t\xf1\xabB\x08\xb6\xea?"
+    b"\x93NUMPY\x01\x00v\x00{'descr': '<f8', 'fortran_order': False, 'shape': (2, 3), }                                                          \n\xfe\x8b\xd2\x83\xf3\x80\xea?$\xefIwA\x19\xd6?(\xca\x9d]@\x9a\xb8?\xf8\xd9\xcf\x87\x12\x06\xea?\xfcF\xd3\x14\x8e\x0b\xc5?\xc8)dCb\xc0\xe4?"
 
 
 
@@ -2946,8 +3010,8 @@ a_loaded
 
 
 
-    array([[0.2086315 , 0.86504028, 0.48487373],
-           [0.31435031, 0.97172107, 0.83472074]])
+    array([[0.82824112, 0.34529149, 0.09610369],
+           [0.81324126, 0.16441513, 0.64848436]])
 
 
 
@@ -2968,8 +3032,8 @@ with open("my_array.csv", "rt") as f:
     print(f.read())
 ```
 
-    2.086315004108951765e-01 8.650402769649484513e-01 4.848737307802379881e-01
-    3.143503085050853851e-01 9.717210663970865525e-01 8.347207357578967368e-01
+    8.282411169678878249e-01 3.452914872102488264e-01 9.610369000964935626e-02
+    8.132412579132610730e-01 1.644151307760280956e-01 6.484843555675121607e-01
     
     
 
@@ -2991,8 +3055,8 @@ a_loaded
 
 
 
-    array([[0.2086315 , 0.86504028, 0.48487373],
-           [0.31435031, 0.97172107, 0.83472074]])
+    array([[0.82824112, 0.34529149, 0.09610369],
+           [0.81324126, 0.16441513, 0.64848436]])
 
 
 
@@ -3037,7 +3101,7 @@ repr(content)[:180] + "[...]"
 
 
 
-    'b"PK\\x03\\x04\\x14\\x00\\x00\\x00\\x00\\x00\\x00\\x00!\\x00\\x118\\x1f\\xce\\xb0\\x00\\x00\\x00\\xb0\\x00\\x00\\x00\\x08\\x00\\x14\\x00my_a.npy\\x01\\x00\\x10\\x00\\xb0\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\xb0\\x00\\x00\\x[...]'
+    'b"PK\\x03\\x04\\x14\\x00\\x00\\x00\\x00\\x00\\x00\\x00!\\x00\\xfe\\xb3\\xe3\\xa4\\xb0\\x00\\x00\\x00\\xb0\\x00\\x00\\x00\\x08\\x00\\x14\\x00my_a.npy\\x01\\x00\\x10\\x00\\xb0\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\xb0\\x00\\x0[...]'
 
 
 
@@ -3052,7 +3116,7 @@ my_arrays
 
 
 
-    <numpy.lib.npyio.NpzFile at 0x250b5247df0>
+    <numpy.lib.npyio.NpzFile at 0x19163d4cc70>
 
 
 
@@ -3066,7 +3130,7 @@ my_arrays.keys()
 
 
 
-    KeysView(<numpy.lib.npyio.NpzFile object at 0x00000250B5247DF0>)
+    KeysView(<numpy.lib.npyio.NpzFile object at 0x0000019163D4CC70>)
 
 
 
@@ -3078,11 +3142,16 @@ my_arrays["my_a"]
 
 
 
-    array([[0.2086315 , 0.86504028, 0.48487373],
-           [0.31435031, 0.97172107, 0.83472074]])
+    array([[0.82824112, 0.34529149, 0.09610369],
+           [0.81324126, 0.16441513, 0.64848436]])
 
 
 
-## 그 다음은?
+# 그 다음은?
 
 넘파이 기본 요소를 모두 배웠지만 훨씬 더 많은 기능이 있습니다. 이를 배우는 가장 좋은 방법은 넘파이를 직접 실습해 보고 훌륭한 [넘파이 문서](http://docs.scipy.org/doc/numpy/reference/index.html)에서 필요한 함수와 기능을 찾아 보세요.
+
+
+```python
+
+```
