@@ -10,10 +10,7 @@ number-sections: true
 ---
 
 
-
 Numpy Basic 
-
-
 
 
 ## Numpy 기본
@@ -36,7 +33,6 @@ Numpy Basic
     <a target="_blank" href="https://colab.research.google.com/github/rickiepark/handson-ml2/blob/master/tools_numpy.ipynb"><img src="https://www.tensorflow.org/images/colab_logo_32px.png" />구글 코랩에서 실행하기</a>
   </td>
 </table>
-
 
 ## 배열 생성
 
@@ -326,9 +322,9 @@ np.random.rand(3,4)
 
 
 
-    array([[0.97658453, 0.12023957, 0.1385255 , 0.27344451],
-           [0.7107592 , 0.51802762, 0.03772338, 0.76349622],
-           [0.22866009, 0.60059563, 0.20339496, 0.83995902]])
+    array([[0.10446653, 0.08608099, 0.39113434, 0.51368828],
+           [0.5422316 , 0.60730771, 0.14296635, 0.65012684],
+           [0.32191595, 0.67644108, 0.97250068, 0.02085189]])
 
 
 
@@ -342,9 +338,12 @@ np.random.randn(3,4)
 
 
 
-    array([[ 0.44399064, -0.38009088,  1.49175547,  0.15028664],
-           [ 0.12956604, -1.54072513, -0.26739546,  0.15539485],
-           [-0.62462998,  0.53105371,  0.09237904, -1.127329  ]])
+    array([[-8.45928911e-01, -2.54018182e-04,  1.58171732e-01,
+            -1.56553088e-01],
+           [ 1.26984307e+00,  1.06076160e-01,  1.79499825e+00,
+            -1.34570830e-01],
+           [ 1.47976512e+00,  3.92371306e-01,  1.82902549e+00,
+             1.14404415e+00]])
 
 
 
@@ -473,7 +472,7 @@ print(f.data)
 
     [[   1    2]
      [1000 2000]]
-    <memory at 0x0000020364206380>
+    <memory at 0x000002664FD6BEE0>
     
 
 파이썬 2에서는 `f.data`가 버퍼이고 파이썬 3에서는 memoryview입니다.
@@ -1053,9 +1052,9 @@ for func in (np.abs, np.sqrt, np.exp, np.log, np.sign, np.ceil, np.modf, np.isna
      [-0.83907153  0.0044257   0.84385396]]
     
 
-    C:\Users\seong taek\AppData\Local\Temp\ipykernel_8916\4103705789.py:5: RuntimeWarning: invalid value encountered in sqrt
+    C:\Users\seong taek\AppData\Local\Temp\ipykernel_8044\4103705789.py:5: RuntimeWarning: invalid value encountered in sqrt
       print(func(a))
-    C:\Users\seong taek\AppData\Local\Temp\ipykernel_8916\4103705789.py:5: RuntimeWarning: invalid value encountered in log
+    C:\Users\seong taek\AppData\Local\Temp\ipykernel_8044\4103705789.py:5: RuntimeWarning: invalid value encountered in log
       print(func(a))
     
 
@@ -2975,8 +2974,8 @@ a
 
 
 
-    array([[0.82824112, 0.34529149, 0.09610369],
-           [0.81324126, 0.16441513, 0.64848436]])
+    array([[0.64010765, 0.96817264, 0.58635902],
+           [0.84834041, 0.25887928, 0.52484385]])
 
 
 
@@ -2998,7 +2997,7 @@ content
 
 
 
-    b"\x93NUMPY\x01\x00v\x00{'descr': '<f8', 'fortran_order': False, 'shape': (2, 3), }                                                          \n\xfe\x8b\xd2\x83\xf3\x80\xea?$\xefIwA\x19\xd6?(\xca\x9d]@\x9a\xb8?\xf8\xd9\xcf\x87\x12\x06\xea?\xfcF\xd3\x14\x8e\x0b\xc5?\xc8)dCb\xc0\xe4?"
+    b"\x93NUMPY\x01\x00v\x00{'descr': '<f8', 'fortran_order': False, 'shape': (2, 3), }                                                          \n%u\x9e\x0b\xc3{\xe4?\n\\\x9e2E\xfb\xee?`,\xcc\xffs\xc3\xe2?\x90\x10F\xc8\x9a%\xeb?V\x0e-gz\x91\xd0?\x19y\xa1V\x85\xcb\xe0?"
 
 
 
@@ -3013,8 +3012,8 @@ a_loaded
 
 
 
-    array([[0.82824112, 0.34529149, 0.09610369],
-           [0.81324126, 0.16441513, 0.64848436]])
+    array([[0.64010765, 0.96817264, 0.58635902],
+           [0.84834041, 0.25887928, 0.52484385]])
 
 
 
@@ -3035,8 +3034,8 @@ with open("my_array.csv", "rt") as f:
     print(f.read())
 ```
 
-    8.282411169678878249e-01 3.452914872102488264e-01 9.610369000964935626e-02
-    8.132412579132610730e-01 1.644151307760280956e-01 6.484843555675121607e-01
+    6.401076533253770018e-01 9.681726444858906877e-01 5.863590236707629799e-01
+    8.483404075236808950e-01 2.588792808130383483e-01 5.248438541418948278e-01
     
     
 
@@ -3058,8 +3057,8 @@ a_loaded
 
 
 
-    array([[0.82824112, 0.34529149, 0.09610369],
-           [0.81324126, 0.16441513, 0.64848436]])
+    array([[0.64010765, 0.96817264, 0.58635902],
+           [0.84834041, 0.25887928, 0.52484385]])
 
 
 
@@ -3104,7 +3103,7 @@ repr(content)[:180] + "[...]"
 
 
 
-    'b"PK\\x03\\x04\\x14\\x00\\x00\\x00\\x00\\x00\\x00\\x00!\\x00\\xfe\\xb3\\xe3\\xa4\\xb0\\x00\\x00\\x00\\xb0\\x00\\x00\\x00\\x08\\x00\\x14\\x00my_a.npy\\x01\\x00\\x10\\x00\\xb0\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\xb0\\x00\\x0[...]'
+    'b"PK\\x03\\x04\\x14\\x00\\x00\\x00\\x00\\x00\\x00\\x00!\\x00D\\x08%/\\xb0\\x00\\x00\\x00\\xb0\\x00\\x00\\x00\\x08\\x00\\x14\\x00my_a.npy\\x01\\x00\\x10\\x00\\xb0\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\xb0\\x00\\x00\\x00\\x00[...]'
 
 
 
@@ -3119,7 +3118,7 @@ my_arrays
 
 
 
-    <numpy.lib.npyio.NpzFile at 0x19163d4cc70>
+    <numpy.lib.npyio.NpzFile at 0x2665066fd00>
 
 
 
@@ -3133,7 +3132,7 @@ my_arrays.keys()
 
 
 
-    KeysView(<numpy.lib.npyio.NpzFile object at 0x0000019163D4CC70>)
+    KeysView(<numpy.lib.npyio.NpzFile object at 0x000002665066FD00>)
 
 
 
@@ -3145,16 +3144,11 @@ my_arrays["my_a"]
 
 
 
-    array([[0.82824112, 0.34529149, 0.09610369],
-           [0.81324126, 0.16441513, 0.64848436]])
+    array([[0.64010765, 0.96817264, 0.58635902],
+           [0.84834041, 0.25887928, 0.52484385]])
 
 
 
-## 그 다음은?
+# 그 다음은?
 
 넘파이 기본 요소를 모두 배웠지만 훨씬 더 많은 기능이 있습니다. 이를 배우는 가장 좋은 방법은 넘파이를 직접 실습해 보고 훌륭한 [넘파이 문서](http://docs.scipy.org/doc/numpy/reference/index.html)에서 필요한 함수와 기능을 찾아 보세요.
-
-
-```python
-
-```
