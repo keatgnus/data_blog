@@ -1,0 +1,424 @@
+---
+title: "Spatial_Info_Analysis CH2"
+author: "Seongtaek"
+date: "2023-04-22"
+categories: [code, Spatial_Info_Analysis, rstudio]
+image: "ch3.png"
+toc: true
+toc-depth: 4
+number-sections: true
+---
+
+<table align="bottom">
+  <td>
+    <a target="_blank" href="공간정보분석-CH3.html"><img
+    src = r_logo.png />HTML파일로 보기</a>
+  </td>
+</table>
+
+속성 데이터 - 벡터 & 래스터
+
+## 공간 정보 분석 CH3 : Attribute data operations
+
+## 패키지 불러오기 
+
+```{r, warning=FALSE,message=FALSE}
+library(sf)
+library(raster)
+library(dplyr)
+library(stringr) # for working with strings (pattern matching)
+library(tidyr)   # for unite() and separate()
+library(spData)  # 데이터 세트를 로드
+```
+
+## 3.1 속성데이터 (벡터 vs 래스터)
+- 지리공간 벡터 데이터
+  - 점, 선, 면 등의 리스트로 이뤄진 지리공간 데이터
+  - 지리공간 데이터 제외한 속성데이터
+- sf 객체: 벡터 데이터에서 속성 정보 가져옴, 클래스 지원
+  - 속성 정보만 가져오기 : st_drop_geometry()
+  - base R 구문, dplyr : 벡더 데이터 속성 정보의 dim
+
+```{r}
+### sf 객체 methods
+methods(class = 'sf') %>% head()
+
+methods(class = 'sf') %>% tail()
+
+length(methods(class = 'sf'))
+```
+
+## spData : 세계 나라 데이터(world)
+
+```{r}
+### 10개의 속성 데이터, 1개의 지리기하 열
+
+dim(world)
+
+world
+
+names(world)
+```
+## sf 객체에서 속성 정보만 가져오기 : st_drop_geometry()
+
+- 점, 선, 면 등의 지리기하 데이터를 리스트로 갖는 geom 컬럼 항상 존재
+- geom 컬럼을 제거하고 나머지 속성 정보만으로 d.f 만들 때 사용
+- geom 컬럼 : 지리기하 리스트 정보를 가지기때문에 메모리 점유 큼
+- 사용할 필요 없으면 웬만하면 제거하기
+
+```{r}
+### geom 컬럼 제거
+
+world_df = st_drop_geometry(world)
+
+world_df
+
+class(world_df)
+
+names(world_df)
+```
+## Base R 구문으로 벡터 데이터 속성정보의 차원 가져오기
+
+- 행, 열 가져올때 df[i,j], subset() 등 활용
+  - i행, j열에는 정수로 위치 파악
+  - j열의 이름 사용
+  - 논리 벡터 사용가능 subset 등
+- dplyr 패키지 : select(), filter(), pull() 등
+_ 특정 행, 열의 부분집합 가져오면 끝에 geom 칼럼 따라옴
+
+#### 1. 위치 지정해서 지리공간 벡터 데이터 가져오기
+
+```{r}
+### 1행 ~ 6행 정보
+world[1:6,]
+
+### 1열 ~ 3열 정보
+world[,1:3]
+```
+
+#### 2. 열이름 사용해서 지리공간 벡터 데이터 열 가져오기
+
+```{r}
+world[, c('name_long', 'lifeExp')]
+```
+
+### 3. 논리 벡터 사용해서 데이터 가져오기
+
+```{r}
+sel_area <-  world$area_km2 < 10000
+summary(sel_area)
+
+small_countries <-  world[sel_area, ]
+small_countries
+
+small_countries <- world[world$area_km2 < 10000, ]
+small_countries
+
+small_countries <- subset(world, area_km2 < 10000)
+small_countries
+```
+
+## dplyr 패키지로 벡터 데이터 속성정보 차원 가져오기
+
+- 가독성 좋고 속도 빠름
+- 체인 (%>%) 사용가능
+- select(), slice(), filter(), pull() 등의 함수 사용가능
+
+```{r}
+### select로 강력하게 지정가능
+
+# 선택지정
+world1 <- select(world, name_long, pop)
+names(world1)
+
+# 범위지정
+world2 <- select(world, name_long:pop)
+names(world2)
+
+# 컬럼 번호로 선택지정
+world3 <- select(world,2,7)
+names(world3)
+
+# 특정 컬럼 제외
+world4 <- select(world, -subregion, -area_km2)
+names(world4)
+
+# 컬럼 이름 재설정
+world5 <- select(world, name_long, population = pop)
+names(world5)
+
+# 특정 단어가 포함된 열 추출
+world6 <- select(world, contains('Ex')) 
+names(world6)
+
+# 특정 단어로 시작하는 열 추출
+world7  <- select(world, starts_with('life')) 
+names(world7)
+
+# 특정 단어로 끝나는 열 추출
+world8 <-  select(world, ends_with('Exp')) 
+names(world8)
+
+# 특정 단어의 소문자 or 대문자 포함된 열 추출
+world9 <-  select(world, matches("[p]")) 
+names(world9)
+
+### num_range() 함수
+x1 <- c(1:5) 
+x2 <- c(6:10) 
+x3 <- c(11:15) 
+x4 <- c(16:20) 
+x5 <- c(21:25)
+df <- data.frame(x1, x2, x3, x4, x5) 
+df
+
+df2 <- select(df, num_range("x", 1:3))
+df2
+```
+
+```{r}
+### filter() 함수 subset과 비슷
+
+# 조건 걸기
+world10  <-  filter(world, lifeExp > 82)
+world10
+
+### 체인(%>%) 활용, 가독성 좋음
+
+world11 <-  world %>%
+  filter(continent == "Asia") %>%
+  select(name_long, continent) %>%
+  slice(1:5)
+world11
+```
+```{r}
+### aggregate() 함수 사용해서 그룹별로 집계
+
+# x(속성정보:인구) ~ group(그룹:대륙), sum집계
+world_agg1  <-  aggregate(pop ~ continent, FUN = sum, data = world, na.rm = TRUE)
+
+world_agg1
+
+str(world_agg1)
+
+class(world_agg1)
+
+### 2번째 방법
+world_agg2  <-  aggregate(world["pop"], by = list(world$continent),
+                       FUN = sum, na.rm = TRUE)
+world_agg2
+class(world_agg2)
+
+# sf 객체는 집계 결과가 sf 객체로 반환
+world['pop']
+class(world['pop'])
+
+# 숫자형 벡터는 aggregate 적용하면 d.f로 반환
+world$pop %>% head()
+class(world$pop)
+```
+
+```{r}
+### group_by + summarize : aggregate보다 가독성 좋음
+
+# 대륙별 인구의 합계
+world_agg3  <-  world %>%
+  group_by(continent) %>%
+  summarize(pop = sum(pop, na.rm = TRUE))
+world_agg3
+
+# 대륙별 인구의 합계 + 대륙별 국가 수
+world_agg4  <-  world %>%
+  group_by(continent) %>%
+  summarize(pop = sum(pop, na.rm = TRUE), n_countries = n())
+world_agg4
+
+# 대륙별 인구의 합계 + 대륙별 국가 수 + 인구 탑3 대륙 + 인구 내림차순
+world %>% 
+  select(pop, continent) %>% 
+  group_by(continent) %>% 
+  summarize(pop = sum(pop, na.rm = TRUE), n_countries = n()) %>% 
+  top_n(n = 3, wt = pop) %>%
+  arrange(desc(pop)) %>%
+  st_drop_geometry() # geom 컬럼 제거
+```
+
+## data.table로 벡터 데이터의 속성정보 그룹별 집계
+- data.table 데이터 구조를 조작, 관리, 처리할 때 사용. 간결성
+```{r, warning=FALSE}
+#install.packages("data.table")
+library(data.table)
+
+world_dt <-  data.table(world)
+world_dt
+
+# 간결하게 top3 대륙 추출
+world_dt[, .(pop = sum(pop, na.rm = TRUE), n = .N), by = list(continent)][order(-pop)][1:3] 
+```
+
+## 두개의 지리 벡터 데이터 테이블 `join` 하기
+
+```{r}
+### name_long 컬럼 기준으로 join
+world_coffee <-  left_join(world, coffee_data) # by='name_long'
+world_coffee
+
+class(world_coffee)
+
+names(world_coffee)
+
+plot(world_coffee["coffee_production_2017"])
+
+### 두 데이터 셋에 같은 이름의 컬럼이 없는 경우
+# coffee_data의 name_long변수 이름을 nm으로 변경
+coffee_renamed  <-  rename(coffee_data, nm = name_long)
+
+# by 사용하여 결합 변수를 지정하여 다른이름변수를 기준으로 조인하기
+world_coffee2 <- left_join(world, coffee_renamed, by = c(name_long = "nm"))
+
+world_coffee2
+
+### inner_join (left_join과 다른점 : 공통된 값이 있는 행만 살림)
+world_coffee_inner <- inner_join(world, coffee_data)
+
+world_coffee_inner
+
+### 비교
+dim(world_coffee_inner)
+dim(world_coffee)
+nrow(coffee_data)
+
+### setdiff(x,y) : x에서 y에는 없는 데이터 추출
+setdiff(coffee_data$name_long, world$name_long)
+
+### 문자열 추출 (Dem으로 시작, Congo로 끝나는 단어 추출)
+str_subset(world$name_long, 'Dem*.+Congo')
+
+### grepl : 문자열에서 특정 문자열 지정
+# 이름 동일하게 변경
+coffee_data$name_long[grepl("Congo,", coffee_data$name_long)]  <-  
+  str_subset(world$name_long, "Dem*.+Congo")
+
+str_subset(coffee_data$name_long, 'Dem*.+Congo')
+
+# 46개의 국가 모두 반환
+world_coffee_match <- inner_join(world, coffee_data)
+dim(world_coffee_match)
+
+### left_join(x,y) : x기준으로 y 병합
+coffee_world = left_join(world, coffee_data)
+dim(coffee_world)
+
+coffee_world2 = left_join(coffee_data, world)
+dim(coffee_world2)
+```
+
+
+## 지리 벡터 데이터의 새로운 속성 만들기/지리정보 제거하기
+
+```{r}
+### 원본 데이터 덮어쓰기 방지
+world_new <- world
+
+### 새로운 속성 pop_dens 생성 (Km2 면적당 인구밀도)
+world_new$pop_dens <- world_new$pop / world_new$area_km2
+
+### 속성값으로 보기 vs 지도상으로 보기(geom 정보가 있기때문)
+plot(world_new$pop_dens)
+plot(world_new['pop_dens'])
+
+### dplyr로 새로운 속성 만들기
+# mutate
+world_new <- world_new %>% mutate(pop_dens2 = pop / area_km2)
+
+# transmute : 기존 열 모두 제거, 새로 만든 열 + geom 열만 반환
+world_new <- world %>% transmute(pop_dens3 = pop/area_km2)
+
+world_new %>% head()
+
+### tidyr로 기존 속성 합치거나 분리하기
+
+### unite()
+# con_reg : continent + region_un 합치고 ':' 로 분리, 합쳐진 열들 remove
+world_unite <-  world %>%
+  unite("con_reg", continent:region_un, sep = ":", remove = TRUE)
+
+world_unite
+
+# 합쳐진 열들 제거X
+world_unite2 <-  world %>%
+  unite("con_reg", continent:region_un, sep = ":", remove = FALSE)
+
+world_unite2
+
+### separate()
+# con_reg를 continent, region_un로 분리
+world_separate <-  world_unite %>% 
+  separate(con_reg, c("continent", "region_un"), sep = ':')
+
+world_separate
+
+### 데이터 속성 이름 바꾸기
+# rename(x:new = y:old)
+world %>% rename(name = name_long)
+world
+
+# 여러개의 이름 변경
+new_names <- c("i", "n", "c", "r", "s", "t", "a", "p", "l", "gP", "geom")
+world %>% setNames(new_names)
+```
+
+## 래스터 객체 조작
+- numeric, integer, logical, factor 데이처 유형 지원 (character지원X)
+- 문자형으로 래스터 객체 만들기 : 요인형 or 논리형으로 변환 필요
+
+```{r}
+### raster 패키지를 이용한 integer 속성의 래스터객체
+elev <- raster(nrows = 6,  
+               ncols = 6,  
+               xmn = -1.5, 
+               xmx = 1.5, 
+               ymn = -1.5,  
+               ymx = 1.5, 
+               vals = 1:36) 
+
+elev
+
+plot(elev, main = 'raster datasets with numeric valeus')
+
+### 모래 굵기 수준 래스터객체 만들기
+grain_order <- c("clay", "silt", "sand")                      # 모래 이름
+grain_char <- sample(grain_order, 36, replace = TRUE)         # 개수지정(중복허용)
+grain_fact <- factor(grain_char, levels = grain_order)        # 팩터 변환
+grain <- raster(nrows = 6, ncols = 6, res = 0.5, 
+               xmn = -1.5, xmx = 1.5, ymn = -1.5, ymx = 1.5,
+               vals = grain_fact)
+
+plot(grain)
+
+###새로운 facter levels 추가
+levels(grain)[[1]] <- cbind(levels(grain)[[1]], wetness = c("wet", "moist", "dry"))
+levels(grain)
+
+grain[c(1, 11, 35)]
+factorValues(grain, grain[c(1, 11, 35)])
+```
+
+
+## 래스터 부분 설정
+- R에서 래스터 부분 설정 4가지
+  - 행,열 인덱싱
+  - 셀 ID
+  - 좌표
+  - 다른 공간 객체
+  
+- 래스터 객체 elev의 왼쪽상단( the top left pixel) 의 값을 출력
+- 모든 값을 추출하거나 전체 행을 추출하려면 values, getValues를 사용
+```{r}
+### row 1, column 1
+elev[1, 1]
+
+### cell ID 1
+elev[1]
+```
+
