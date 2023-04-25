@@ -232,6 +232,36 @@ ggplot(diamonds) +
   geom_bar(aes(x=cut, fill=clarity), position = "dodge")
 ```
 
+### Quiz 1
+다이아몬드 cut이 Ideal인 다이아몬드 중애서 Clarity가 IF인 비율은 얼마인가?
+
+```{r}
+ggplot(data = diamonds %>% filter(cut == 'Ideal')) +
+  geom_bar(aes(x=cut, fill=clarity), position = "dodge")
+
+### 다이아몬드 cut이 Ideal인 다이아몬드 중애서 Clarity가 IF인 비율
+(diamonds %>% filter(cut == 'Ideal', clarity=="IF") %>% nrow)/(diamonds %>% filter(cut=="Ideal") %>% 
+                                                                nrow)
+```
+
+### Quiz 2
+
+다이아몬드 cut 등급별로, clarity의 비율이 나오도록 데이터프레임을 가공해봅시다
+
+
+```{r}
+diamonds %>%
+  group_by(cut, clarity) %>%
+  summarize(n=n()) %>%
+  mutate(total = sum(n), prop = n/total) %>%
+  select(-n) %>%
+  pivot_wider(names_from = clarity, values_from = prop)
+```
+
+
+
+### jitter
+
 ```{r}
 ### jitter : 점 뿌리기
 ggplot(mpg) +
