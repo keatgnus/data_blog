@@ -648,10 +648,11 @@ specifying shapes manually if you must have them.</code></pre>
 </section>
 <section id="quiz-1" class="level3" data-number="5.4">
 <h3 data-number="5.4" class="anchored" data-anchor-id="quiz-1"><span class="header-section-number">5.4</span> Quiz 1</h3>
-<p>다이아몬드 cut이 Ideal인 다이아몬드 중애서 Clarity가 IF인 비율은 얼마인가?</p>
+<p>다이아몬드 cut이 Ideal인 다이아몬드 중에서 Clarity가 IF인 비율은 얼마인가?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> diamonds <span class="sc">%&gt;%</span> <span class="fu">filter</span>(cut <span class="sc">==</span> <span class="st">'Ideal'</span>)) <span class="sc">+</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x=</span>cut, <span class="at">fill=</span>clarity), <span class="at">position =</span> <span class="st">"dodge"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="do">### 그래프</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> diamonds <span class="sc">%&gt;%</span> <span class="fu">filter</span>(cut <span class="sc">==</span> <span class="st">'Ideal'</span>)) <span class="sc">+</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x=</span>cut, <span class="at">fill=</span>clarity), <span class="at">position =</span> <span class="st">"dodge"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="data-visualize_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
 </div>

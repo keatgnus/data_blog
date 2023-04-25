@@ -233,9 +233,10 @@ ggplot(diamonds) +
 ```
 
 ### Quiz 1
-다이아몬드 cut이 Ideal인 다이아몬드 중애서 Clarity가 IF인 비율은 얼마인가?
+다이아몬드 cut이 Ideal인 다이아몬드 중에서 Clarity가 IF인 비율은 얼마인가?
 
 ```{r}
+### 그래프
 ggplot(data = diamonds %>% filter(cut == 'Ideal')) +
   geom_bar(aes(x=cut, fill=clarity), position = "dodge")
 
