@@ -2,7 +2,7 @@
 title: "Lab"
 subtitle: "Project & Task"
 listing:
-  contents: posts
+  contents: posts_Lab
   sort:  "date desc"
   type: default
   categories: true
