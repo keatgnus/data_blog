@@ -1,0 +1,152 @@
+---
+title: "Data_Mining CH3"
+author: "Seongtaek"
+date: "2023-04-27"
+categories: [code, data_mining, jupyter]
+image: "geopandas.png"
+toc: true
+---
+
+
+
+Install Geopandas
+
+<table align="bottom">
+  <td>
+    <a target="_blank" href="http://localhost:8888/notebooks/3-1%20Data_Mining/0_install_geopandas.ipynb#"><img
+    src = small_jup_image.jpg />Jupyter에서 실행하기</a>
+  </td>
+</table>
+
+
+
+
+## 자료 출처
+
+https://domdom.tistory.com/599
+
+## 기본 환경
+- 현재 실행 중인 파이썬 인터프리터의 경로
+
+
+```python
+import sys
+sys.executable
+```
+
+
+
+
+    'C:\\Users\\seong taek\\anaconda3\\python.exe'
+
+
+
+- 파이썬 인터프리터의 버전 정보
+
+
+```python
+sys.version
+```
+
+
+
+
+    '3.9.16 (main, Mar  1 2023, 18:30:21) [MSC v.1916 64 bit (AMD64)]'
+
+
+
+## 패키지 다운로드
+
+더 아래의 pip 설치 구문에 있는 패키지별 버전을 참조하여
+아래의 사이트에서 각 패키지 설치 파일(.whl)을 다운로드 받습니다.
+
+https://www.lfd.uci.edu/~gohlke/pythonlibs/#shapely  
+https://www.lfd.uci.edu/~gohlke/pythonlibs/#gdal  
+https://www.lfd.uci.edu/~gohlke/pythonlibs/#fiona  
+https://pypi.org/project/geopandas/#files
+
+## 설치 (윈도우)
+
+아나콘다 프롬프트를 관리자 권한으로 실행합니다.  
+VSCode로 진행하시는 분은 VSCode 실행을 관리자권한으로 해야 합니다.  
+현재 경로를 확인하고 이를 감안하여 적정 경로에 설치 파일을 이동해놓습니다.  
+저는 강의자료가 있는 곳에 geopandas를 폴더를 만들고 이 폴더 안에 설치 파일들을 옮겨놓았습니다 
+
+아래의 설치/업데이트 구문을 한줄씩 실행합니다.  
+먼저, pip와 numpy를 업그레이드 합니다.  
+
+
+```python
+#!python -m pip install -- upgrade pip
+#!pip install -- upgrade numpy
+```
+
+    ERROR: Could not find a version that satisfies the requirement upgrade (from versions: none)
+    ERROR: No matching distribution found for upgrade
+    ERROR: Could not find a version that satisfies the requirement upgrade (from versions: none)
+    ERROR: No matching distribution found for upgrade
+    
+
+그 다음 아래 패키지를 순차적으로 설치합니다
+
+저는 윈도우 10을 써서 cp310으로 다운받았습니다
+
+
+```python
+#!pip install pyproj 
+#!pip install geopandas/Shapely-1.8.2-cp310-cp310-win_amd64.whl
+#!pip install geopandas/GDAL-3.4.3-cp310-cp310-win_amd64.whl
+#!pip install geopandas/Fiona-1.8.21-cp310-cp310-win_amd64.whl
+#!pip install geopandas/geopandas-0.12.2-py3-none-any.whl 
+```
+
+    Requirement already satisfied: pyproj in c:\users\seong taek\anaconda3\lib\site-packages (3.5.0)
+    Requirement already satisfied: certifi in c:\users\seong taek\anaconda3\lib\site-packages (from pyproj) (2022.12.7)
+    
+
+    ERROR: Shapely-1.8.2-cp310-cp310-win_amd64.whl is not a supported wheel on this platform.
+    ERROR: GDAL-3.4.3-cp310-cp310-win_amd64.whl is not a supported wheel on this platform.
+    ERROR: Fiona-1.8.21-cp310-cp310-win_amd64.whl is not a supported wheel on this platform.
+    
+
+    Processing c:\users\seong taek\3-1 data_mining\geopandas\geopandas-0.12.2-py3-none-any.whl
+    Requirement already satisfied: pyproj>=2.6.1.post1 in c:\users\seong taek\anaconda3\lib\site-packages (from geopandas==0.12.2) (3.5.0)
+    Requirement already satisfied: pandas>=1.0.0 in c:\users\seong taek\anaconda3\lib\site-packages (from geopandas==0.12.2) (1.5.3)
+    Requirement already satisfied: fiona>=1.8 in c:\users\seong taek\anaconda3\lib\site-packages (from geopandas==0.12.2) (1.9.3)
+    Requirement already satisfied: packaging in c:\users\seong taek\anaconda3\lib\site-packages (from geopandas==0.12.2) (22.0)
+    Requirement already satisfied: shapely>=1.7 in c:\users\seong taek\anaconda3\lib\site-packages (from geopandas==0.12.2) (2.0.1)
+    Requirement already satisfied: attrs>=19.2.0 in c:\users\seong taek\anaconda3\lib\site-packages (from fiona>=1.8->geopandas==0.12.2) (22.1.0)
+    Requirement already satisfied: importlib-metadata in c:\users\seong taek\anaconda3\lib\site-packages (from fiona>=1.8->geopandas==0.12.2) (4.11.3)
+    Requirement already satisfied: certifi in c:\users\seong taek\anaconda3\lib\site-packages (from fiona>=1.8->geopandas==0.12.2) (2022.12.7)
+    Requirement already satisfied: cligj>=0.5 in c:\users\seong taek\anaconda3\lib\site-packages (from fiona>=1.8->geopandas==0.12.2) (0.7.2)
+    Requirement already satisfied: munch>=2.3.2 in c:\users\seong taek\anaconda3\lib\site-packages (from fiona>=1.8->geopandas==0.12.2) (2.5.0)
+    Requirement already satisfied: click-plugins>=1.0 in c:\users\seong taek\anaconda3\lib\site-packages (from fiona>=1.8->geopandas==0.12.2) (1.1.1)
+    Requirement already satisfied: click~=8.0 in c:\users\seong taek\anaconda3\lib\site-packages (from fiona>=1.8->geopandas==0.12.2) (8.0.4)
+    Requirement already satisfied: pytz>=2020.1 in c:\users\seong taek\anaconda3\lib\site-packages (from pandas>=1.0.0->geopandas==0.12.2) (2022.7)
+    Requirement already satisfied: python-dateutil>=2.8.1 in c:\users\seong taek\anaconda3\lib\site-packages (from pandas>=1.0.0->geopandas==0.12.2) (2.8.2)
+    Requirement already satisfied: numpy>=1.20.3 in c:\users\seong taek\anaconda3\lib\site-packages (from pandas>=1.0.0->geopandas==0.12.2) (1.23.5)
+    Requirement already satisfied: colorama in c:\users\seong taek\anaconda3\lib\site-packages (from click~=8.0->fiona>=1.8->geopandas==0.12.2) (0.4.6)
+    Requirement already satisfied: six in c:\users\seong taek\anaconda3\lib\site-packages (from munch>=2.3.2->fiona>=1.8->geopandas==0.12.2) (1.16.0)
+    Requirement already satisfied: zipp>=0.5 in c:\users\seong taek\anaconda3\lib\site-packages (from importlib-metadata->fiona>=1.8->geopandas==0.12.2) (3.11.0)
+    geopandas is already installed with the same version as the provided wheel. Use --force-reinstall to force an installation of the wheel.
+    
+
+## 설치 (맥북)
+
+```{python}
+#!pip install pyproj
+#!pip install geopy
+#!pip install geopandas
+```
+
+import 되면 성공 !
+
+
+```python
+import geopandas as gpd
+```
+
+
+```python
+
+```

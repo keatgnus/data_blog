@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/Data_Mining_Geopandas/0_install_geopandas.html",
       "/posts/Spatial_Info_Analysis Ch2/공간정보분석 CH3.html",
       "/posts/Spatial_Info_Analysis Ch1/공간정보분석 CH2.html",
       "/posts/Opendata_Analysis Ch3/import & write.html",
