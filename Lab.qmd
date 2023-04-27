@@ -1,0 +1,14 @@
+---
+title: "Lab"
+subtitle: "Project & Task"
+listing:
+  contents: posts
+  sort:  "date desc"
+  type: default
+  categories: true
+  sort-ui: [title,date]
+  filter-ui: true
+  page-size: 5
+page-layout: full
+title-block-banner: true 
+---
