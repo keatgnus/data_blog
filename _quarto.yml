@@ -22,6 +22,7 @@ website:
     left: "Copyright 2023, Seongtaek"
 format:
   html:
+    code-overflow: scroll
     theme:
       light: lux
       dark: [lux, theme_dark.scss]
