@@ -3,6 +3,7 @@ title: "Profile"
 image: profile.jpg
 about:
   template: jolla
+number-sections: false
 ---
 ##### Name            
 Seongtaek Jo
