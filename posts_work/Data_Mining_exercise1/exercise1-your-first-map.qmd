@@ -7,7 +7,7 @@ image: "kiva.png"
 toc: true
 ---
 
-Exercise 1 - Your First MAp
+Exercise 1 - Your First Map
 
 <table align="bottom">
   <td>
