@@ -1,0 +1,813 @@
+---
+title: "Data_Mining_Penguin"
+author: "Seongtaek"
+date: "2023-04-27"
+categories: [code, data_mining, jupyter]
+image: "penguin.jpg"
+toc: true
+---
+
+
+
+Penguin Data
+
+<table align="bottom">
+  <td>
+    <a target="_blank" href="http://localhost:8888/notebooks/3-1%20Data_Mining/4%EC%9B%94%2025%EC%9D%BC%20%ED%8E%AD%EA%B7%84.ipynb#"><img
+    src = small_jup_image.jpg />Jupyter에서 실행하기</a>
+  </td>
+</table>
+
+
+
+
+## Load data
+- 예제로 사용할 펭귄 데이터를 불러옵니다.
+- seaborn에 내장되어 있습니다.
+
+
+```python
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+penguins = sns.load_dataset("penguins")
+penguins.head()
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>species</th>
+      <th>island</th>
+      <th>bill_length_mm</th>
+      <th>bill_depth_mm</th>
+      <th>flipper_length_mm</th>
+      <th>body_mass_g</th>
+      <th>sex</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Adelie</td>
+      <td>Torgersen</td>
+      <td>39.1</td>
+      <td>18.7</td>
+      <td>181.0</td>
+      <td>3750.0</td>
+      <td>Male</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Adelie</td>
+      <td>Torgersen</td>
+      <td>39.5</td>
+      <td>17.4</td>
+      <td>186.0</td>
+      <td>3800.0</td>
+      <td>Female</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Adelie</td>
+      <td>Torgersen</td>
+      <td>40.3</td>
+      <td>18.0</td>
+      <td>195.0</td>
+      <td>3250.0</td>
+      <td>Female</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Adelie</td>
+      <td>Torgersen</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Adelie</td>
+      <td>Torgersen</td>
+      <td>36.7</td>
+      <td>19.3</td>
+      <td>193.0</td>
+      <td>3450.0</td>
+      <td>Female</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+## Figure and Axes
+- matplotlib으로 도화지figure를 깔고 축공간axes를 만듭니다.
+- 1 x 2 축공간을 구성합니다.
+
+
+```python
+### 도화지 생성
+fig, axes = plt.subplots(ncols=2, figsize=(8,4))
+
+fig.tight_layout()
+```
+
+
+    
+![png](output_3_0.png)
+    
+
+
+## plot with matplotlib
+- matplotlib 기능을 이용해서 산점도를 그립니다.
+  - x축은 부리 길이 bill length
+  - y축은 부리 위 아래 두께 bill depth
+  - 색상은 종species로 합니다.
+  - Adelie, Chinstrap, Gentoo이 있습니다.
+- 두 축공간 중 왼쪽에만 그립니다.
+
+- 컬러를 다르게 주기 위해 f-string 포맷을 사용했습니다.
+f-string 포맷에 대한 설명은 https://blockdmask.tistory.com/429를 참고하세요
+
+
+```python
+### 도화지 생성
+fig, axes = plt.subplots(ncols=2,figsize=(8,4))
+
+### 모든 펭귄 종류
+species_u = penguins["species"].unique()
+
+### 첫 번째 subplot 그리기
+for i, s in enumerate(species_u):
+    axes[0].scatter(penguins["bill_length_mm"].loc[penguins["species"]==s],
+                    penguins["bill_depth_mm"].loc[penguins["species"]==s],
+                    c=f"C{i}", label=s, alpha=0.3)
+
+### 범례 추가
+axes[0].legend(species_u, title="species", fontsize=8)
+
+### x,y 레이블 지정
+axes[0].set_xlabel("Bill Length (mm)")
+axes[0].set_ylabel("Bill Depth (mm)")
+
+### plt.show()
+fig.tight_layout()
+```
+
+
+    
+![png](output_5_0.png)
+    
+
+
+- 조금 더 간단히 그리는 방법
+  - matplotlib는 기본적으로 Categorical 변수를 color로 바로 사용하지 못함
+
+
+```python
+### 펭귄 종류를 고유의 숫자코드로 변환
+penguins["species_codes"] = pd.Categorical(penguins["species"]).codes
+
+### 도화지 생성
+fig, axes = plt.subplots(ncols=2,figsize=(8,4))
+
+### 첫 번재 subplot 그리기 
+a = axes[0].scatter(data=penguins, x="bill_length_mm", y="bill_depth_mm", c="species_codes", alpha=0.3) # 크기:s
+a
+
+### 범례 추가
+axes[0].legend(*a.legend_elements(), title="Species", fontsize=8) # 범례위치 : loc='lower right', 'upper center', etc..
+
+### x,y 레이블 지정
+axes[0].set_xlabel("Bill Length (mm)")
+axes[0].set_ylabel("Bill Depth (mm)")
+```
+
+    <__array_function__ internals>:180: UserWarning: Warning: converting a masked element to nan.
+    C:\Users\seong taek\anaconda3\lib\site-packages\matplotlib\colors.py:1311: UserWarning: Warning: converting a masked element to nan.
+      data = np.asarray(value)
+    C:\Users\seong taek\anaconda3\lib\site-packages\matplotlib\ticker.py:521: UserWarning: Warning: converting a masked element to nan.
+      if self._useLocale else fmt % arg)
+    
+
+
+
+
+    Text(0, 0.5, 'Bill Depth (mm)')
+
+
+
+
+    
+![png](output_7_2.png)
+    
+
+
+## Plot with seaborn
+- 두 번째 plot 그리기
+
+
+```python
+### 도화지 생성
+fig, axes = plt.subplots(ncols=2,figsize=(8,4))
+
+### 모든 펭귄 종류
+species_u = penguins["species"].unique()
+
+### 첫 번째 subplot 그리기
+for i, s in enumerate(species_u):
+    axes[0].scatter(penguins["bill_length_mm"].loc[penguins["species"]==s],
+                    penguins["bill_depth_mm"].loc[penguins["species"]==s],
+                    c=f"C{i}", label=s, alpha=0.3)
+
+### 범례 추가    
+axes[0].legend(species_u, title="species")
+
+### x,y 레이블 지정
+axes[0].set_xlabel("Bill Length (mm)")
+axes[0].set_ylabel("Bill Depth (mm)")
+
+
+### 두 번째 subplot 그리기
+sns.scatterplot(x="bill_length_mm", y="bill_depth_mm", hue="species", data=penguins, alpha=0.3, ax=axes[1])
+axes[1].set_xlabel("Bill Length (mm)")
+axes[1].set_ylabel("Bill Depth (mm)")
+
+fig.tight_layout()
+```
+
+
+    
+![png](output_9_0.png)
+    
+
+
+- 단 세 줄로 거의 동일한 그림이 나왔습니다.
+  - scatter plot의 점 크기만 살짝 작습니다.
+  - label의 투명도만 살짝 다릅니다.
+- seaborn 명령 scatterplot()을 그대로 사용했습니다.
+- x축과 y축 label도 바꾸었습니다.
+  - ax=axes[1] 인자에서 볼 수 있듯, 존재하는 axes에 그림만 얹었습니다.
+  - matplotlib 틀 + seaborn 그림 이므로, matplotlib 명령이 모두 통합니다.
+
+## matplotlib + seaborn & seaborn + matplotlib
+- matplotlib과 seaborn이 자유롭게 섞일 수 있습니다.
+  - matplotlib 산점도 위에 seaborn 추세선을 얹을 수 있고,
+  - seaborn 산점도 위에 matplotlib 중심점을 얹을 수 있습니다.
+- 파이썬 코드는 다음과 같습니다.
+
+
+```python
+### 도화지 생성
+fig, axes = plt.subplots(ncols=2, figsize=(8, 4))
+
+### 모든 펭귄 종류
+species_u = penguins["species"].unique()
+
+### 첫 번째 subplot 그리기 + 추세선
+for i, s in enumerate(species_u):
+    axes[0].scatter(penguins["bill_length_mm"].loc[penguins["species"]==s],
+                   penguins["bill_depth_mm"].loc[penguins["species"]==s],
+                   c=f"C{i}", label=s, alpha=0.3
+                  )                  
+    sns.regplot(x="bill_length_mm", y="bill_depth_mm", data=penguins.loc[penguins["species"]==s], 
+                scatter=False, ax=axes[0])
+    
+axes[0].legend(species_u, title="species")
+axes[0].set_xlabel("Bill Length (mm)")
+axes[0].set_ylabel("Bill Depth (mm)")
+
+### 두 번째 subplot 그리기
+sns.scatterplot(x="bill_length_mm", y="bill_depth_mm", hue="species", data=penguins, alpha=0.3, ax=axes[1])
+axes[1].set_xlabel("Bill Length (mm)")
+axes[1].set_ylabel("Bill Depth (mm)")
+
+
+### 중심점 marker
+for i, s in enumerate(species_u):
+    axes[1].scatter(penguins["bill_length_mm"].loc[penguins["species"]==s].mean(),
+                   penguins["bill_depth_mm"].loc[penguins["species"]==s].mean(),
+                   c=f"C{i}", alpha=1, marker="x", s=100
+                  )
+
+fig.tight_layout()
+```
+
+
+    
+![png](output_12_0.png)
+    
+
+
+## seaborn + seaborn + matplotlib
+- 안 될 이유가 없습니다.
+- seaborn scatterplot + seaborn kdeplot + matplotlib text입니다
+
+
+```python
+### 도화지 생성
+fig, ax = plt.subplots(figsize=(6,5))
+
+### plot 0: scatter plot
+sns.scatterplot(x="bill_length_mm", y="bill_depth_mm", color="k", data=penguins, alpha=0.3, ax=ax, legend=False)
+
+### plot 1: kde plot (밀도 그래프)
+sns.kdeplot(x="bill_length_mm", y="bill_depth_mm", hue="species", data=penguins, alpha=0.5, ax=ax, legend=False)
+
+### text:
+species_u = penguins["species"].unique()
+for i, s in enumerate(species_u):
+    ax.text(penguins["bill_length_mm"].loc[penguins["species"]==s].mean(),
+            penguins["bill_depth_mm"].loc[penguins["species"]==s].mean(),
+            s = s, fontdict={"fontsize":14, "fontweight":"bold","color":"k"}
+            )
+
+ax.set_xlabel("Bill Length (mm)")
+ax.set_ylabel("Bill Depth (mm)")
+
+fig.tight_layout()
+```
+
+
+    
+![png](output_14_0.png)
+    
+
+
+## Quiz
+Bill length를 10단위로 나눈 후, Bill length에 따른 Bill depth의 boxplot을 그리시오
+
+
+```python
+### bill length를 10단위로 만든 후, 새로운 컬럼 추가
+penguins['bill_length_10'] = (penguins['bill_length_mm'] // 10) * 10
+penguins
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>species</th>
+      <th>island</th>
+      <th>bill_length_mm</th>
+      <th>bill_depth_mm</th>
+      <th>flipper_length_mm</th>
+      <th>body_mass_g</th>
+      <th>sex</th>
+      <th>species_codes</th>
+      <th>bill_length_10</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Adelie</td>
+      <td>Torgersen</td>
+      <td>39.1</td>
+      <td>18.7</td>
+      <td>181.0</td>
+      <td>3750.0</td>
+      <td>Male</td>
+      <td>0</td>
+      <td>30.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Adelie</td>
+      <td>Torgersen</td>
+      <td>39.5</td>
+      <td>17.4</td>
+      <td>186.0</td>
+      <td>3800.0</td>
+      <td>Female</td>
+      <td>0</td>
+      <td>30.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Adelie</td>
+      <td>Torgersen</td>
+      <td>40.3</td>
+      <td>18.0</td>
+      <td>195.0</td>
+      <td>3250.0</td>
+      <td>Female</td>
+      <td>0</td>
+      <td>40.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Adelie</td>
+      <td>Torgersen</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Adelie</td>
+      <td>Torgersen</td>
+      <td>36.7</td>
+      <td>19.3</td>
+      <td>193.0</td>
+      <td>3450.0</td>
+      <td>Female</td>
+      <td>0</td>
+      <td>30.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>339</th>
+      <td>Gentoo</td>
+      <td>Biscoe</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>340</th>
+      <td>Gentoo</td>
+      <td>Biscoe</td>
+      <td>46.8</td>
+      <td>14.3</td>
+      <td>215.0</td>
+      <td>4850.0</td>
+      <td>Female</td>
+      <td>2</td>
+      <td>40.0</td>
+    </tr>
+    <tr>
+      <th>341</th>
+      <td>Gentoo</td>
+      <td>Biscoe</td>
+      <td>50.4</td>
+      <td>15.7</td>
+      <td>222.0</td>
+      <td>5750.0</td>
+      <td>Male</td>
+      <td>2</td>
+      <td>50.0</td>
+    </tr>
+    <tr>
+      <th>342</th>
+      <td>Gentoo</td>
+      <td>Biscoe</td>
+      <td>45.2</td>
+      <td>14.8</td>
+      <td>212.0</td>
+      <td>5200.0</td>
+      <td>Female</td>
+      <td>2</td>
+      <td>40.0</td>
+    </tr>
+    <tr>
+      <th>343</th>
+      <td>Gentoo</td>
+      <td>Biscoe</td>
+      <td>49.9</td>
+      <td>16.1</td>
+      <td>213.0</td>
+      <td>5400.0</td>
+      <td>Male</td>
+      <td>2</td>
+      <td>40.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>344 rows × 9 columns</p>
+</div>
+
+
+
+
+```python
+### 박스 plot
+sns.boxenplot(x = 'bill_length_10', y = 'bill_depth_mm', data=penguins)
+
+### 점 표현
+sns.stripplot(x = 'bill_length_10', y = 'bill_depth_mm', data=penguins, color='black', size=4)
+
+sns.set_style('whitegrid')
+plt.show()
+```
+
+
+    
+![png](output_17_0.png)
+    
+
+
+### sns.set_style
+- darkgrid: 어두운 배경에 격자 라인이 그려지는 스타일
+- whitegrid: 밝은 배경에 격자 라인이 그려지는 스타일
+- dark: 어두운 배경에 격자 라인이 없는 스타일
+- white: 밝은 배경에 격자 라인이 없는 스타일
+- ticks: 격자 라인 대신 축의 눈금 표시가 있는 스타일
+
+### pd.cut 이용
+
+
+```python
+### bill length를 구간별로 만든 후, 새로운 컬럼 추가
+penguins['bill_length_group'] = pd.cut(penguins['bill_length_mm'],
+                                      bins=[0,40,50,60],
+                                      labels=['0~40', '40~50', '50~60'])
+penguins
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>species</th>
+      <th>island</th>
+      <th>bill_length_mm</th>
+      <th>bill_depth_mm</th>
+      <th>flipper_length_mm</th>
+      <th>body_mass_g</th>
+      <th>sex</th>
+      <th>species_codes</th>
+      <th>bill_length_10</th>
+      <th>bill_length_group</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Adelie</td>
+      <td>Torgersen</td>
+      <td>39.1</td>
+      <td>18.7</td>
+      <td>181.0</td>
+      <td>3750.0</td>
+      <td>Male</td>
+      <td>0</td>
+      <td>30.0</td>
+      <td>0~40</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Adelie</td>
+      <td>Torgersen</td>
+      <td>39.5</td>
+      <td>17.4</td>
+      <td>186.0</td>
+      <td>3800.0</td>
+      <td>Female</td>
+      <td>0</td>
+      <td>30.0</td>
+      <td>0~40</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Adelie</td>
+      <td>Torgersen</td>
+      <td>40.3</td>
+      <td>18.0</td>
+      <td>195.0</td>
+      <td>3250.0</td>
+      <td>Female</td>
+      <td>0</td>
+      <td>40.0</td>
+      <td>40~50</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Adelie</td>
+      <td>Torgersen</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Adelie</td>
+      <td>Torgersen</td>
+      <td>36.7</td>
+      <td>19.3</td>
+      <td>193.0</td>
+      <td>3450.0</td>
+      <td>Female</td>
+      <td>0</td>
+      <td>30.0</td>
+      <td>0~40</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>339</th>
+      <td>Gentoo</td>
+      <td>Biscoe</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>340</th>
+      <td>Gentoo</td>
+      <td>Biscoe</td>
+      <td>46.8</td>
+      <td>14.3</td>
+      <td>215.0</td>
+      <td>4850.0</td>
+      <td>Female</td>
+      <td>2</td>
+      <td>40.0</td>
+      <td>40~50</td>
+    </tr>
+    <tr>
+      <th>341</th>
+      <td>Gentoo</td>
+      <td>Biscoe</td>
+      <td>50.4</td>
+      <td>15.7</td>
+      <td>222.0</td>
+      <td>5750.0</td>
+      <td>Male</td>
+      <td>2</td>
+      <td>50.0</td>
+      <td>50~60</td>
+    </tr>
+    <tr>
+      <th>342</th>
+      <td>Gentoo</td>
+      <td>Biscoe</td>
+      <td>45.2</td>
+      <td>14.8</td>
+      <td>212.0</td>
+      <td>5200.0</td>
+      <td>Female</td>
+      <td>2</td>
+      <td>40.0</td>
+      <td>40~50</td>
+    </tr>
+    <tr>
+      <th>343</th>
+      <td>Gentoo</td>
+      <td>Biscoe</td>
+      <td>49.9</td>
+      <td>16.1</td>
+      <td>213.0</td>
+      <td>5400.0</td>
+      <td>Male</td>
+      <td>2</td>
+      <td>40.0</td>
+      <td>40~50</td>
+    </tr>
+  </tbody>
+</table>
+<p>344 rows × 10 columns</p>
+</div>
+
+
+
+
+```python
+sns.boxenplot(x = 'bill_length_group', y = 'bill_depth_mm', data=penguins)
+sns.stripplot(x = 'bill_length_group', y = 'bill_depth_mm', data=penguins, color='black', size=4)
+
+sns.set_style('whitegrid')
+sns.despine()
+plt.show()
+```
+
+
+    
+![png](output_21_0.png)
+    
+
+
+
+```python
+sns.scatterplot(x='bill_length_mm', y='bill_depth_mm', data=penguins, alpha=0.3)
+
+plt.show()
+```
+
+
+    
+![png](output_22_0.png)
+    
+
+
+- 열 기준 : species
+- 색상 : species별
+- 한 행의 subplot 개수
+- map : x축, y축 지정
+- sns.despine : 상단, 우측 축 제거
+
+
+```python
+g = sns.FacetGrid(penguins, col='species',hue='species',col_wrap=3)
+g.map(sns.scatterplot, 'bill_length_mm', 'bill_depth_mm')
+
+sns.set_style('whitegrid')
+sns.despine()
+
+plt.show()
+```
+
+
+    
+![png](output_24_0.png)
+    
+
+
+## 
