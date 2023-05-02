@@ -2014,5 +2014,124 @@
     "title": "Project & Task",
     "section": "",
     "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n  \n\n\n\n\nData_Mining_Kaggle\n\n\n\n\n\n\n\ncode\n\n\ndata_mining\n\n\njupyter\n\n\nkaggle\n\n\n\n\n\n\n\n\n\n\n\nMay 2, 2023\n\n\nSeongtaek\n\n\n\n\n\n\n  \n\n\n\n\nData_Mining_Penguin\n\n\n\n\n\n\n\ncode\n\n\ndata_mining\n\n\njupyter\n\n\n\n\n\n\n\n\n\n\n\nApr 27, 2023\n\n\nSeongtaek\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts_work/Data_Mining_exercise1/exercise1-your-first-map.html",
+    "href": "posts_work/Data_Mining_exercise1/exercise1-your-first-map.html",
+    "title": "Data_Mining_Kaggle",
+    "section": "",
+    "text": "Exercise 1 - Your First MAp"
+  },
+  {
+    "objectID": "posts_work/Data_Mining_exercise1/exercise1-your-first-map.html#introduction",
+    "href": "posts_work/Data_Mining_exercise1/exercise1-your-first-map.html#introduction",
+    "title": "Data_Mining_Kaggle",
+    "section": "1 Introduction",
+    "text": "1 Introduction\nKiva.org is an online crowdfunding platform extending financial services to poor people around the world. Kiva lenders have provided over $1 billion dollars in loans to over 2 million people.\n\n\n\nKiva reaches some of the most remote places in the world through their global network of “Field Partners”. These partners are local organizations working in communities to vet borrowers, provide services, and administer loans.\nIn this exercise, you’ll investigate Kiva loans in the Philippines. Can you identify regions that might be outside of Kiva’s current network, in order to identify opportunities for recruiting new Field Partners?\nTo get started, run the code cell below to set up our feedback system.\nThis notebook is an exercise in the Geospatial Analysis course. You can reference the tutorial at this link.\n\nimport geopandas as gpd\nimport matplotlib.pyplot as plt"
+  },
+  {
+    "objectID": "posts_work/Data_Mining_exercise1/exercise1-your-first-map.html#get-the-data",
+    "href": "posts_work/Data_Mining_exercise1/exercise1-your-first-map.html#get-the-data",
+    "title": "Data_Mining_Kaggle",
+    "section": "2 Get the data",
+    "text": "2 Get the data\n\n다음 셀을 사용하여 loans_filepath에 있는 모양 파일을 로드하여 GeoDataFrame world_loans를 만듭니다.\n\nloans_filepath = \"C:/Users\\seong taek/Desktop/archive/kiva_loans/kiva_loans/kiva_loans.shp\"\n\n### Your code here: Load the data\nworld_loans = gpd.read_file(loans_filepath)\n\n### Uncomment to view the first five rows of the data\nworld_loans.head()\n\n\n\n\n\n\n\n\n\nPartner ID\n\n\nField Part\n\n\nsector\n\n\nLoan Theme\n\n\ncountry\n\n\namount\n\n\ngeometry\n\n\n\n\n\n\n0\n\n\n9\n\n\nKREDIT Microfinance Institution\n\n\nGeneral Financial Inclusion\n\n\nHigher Education\n\n\nCambodia\n\n\n450\n\n\nPOINT (102.89751 13.66726)\n\n\n\n\n1\n\n\n9\n\n\nKREDIT Microfinance Institution\n\n\nGeneral Financial Inclusion\n\n\nVulnerable Populations\n\n\nCambodia\n\n\n20275\n\n\nPOINT (102.98962 13.02870)\n\n\n\n\n2\n\n\n9\n\n\nKREDIT Microfinance Institution\n\n\nGeneral Financial Inclusion\n\n\nHigher Education\n\n\nCambodia\n\n\n9150\n\n\nPOINT (102.98962 13.02870)\n\n\n\n\n3\n\n\n9\n\n\nKREDIT Microfinance Institution\n\n\nGeneral Financial Inclusion\n\n\nVulnerable Populations\n\n\nCambodia\n\n\n604950\n\n\nPOINT (105.31312 12.09829)\n\n\n\n\n4\n\n\n9\n\n\nKREDIT Microfinance Institution\n\n\nGeneral Financial Inclusion\n\n\nSanitation\n\n\nCambodia\n\n\n275\n\n\nPOINT (105.31312 12.09829)\n\n\n\n\n\n\n\n2.1 시각화\nworld_loans.plot()\n<Axes: >\n\n\n\npng"
+  },
+  {
+    "objectID": "posts_work/Data_Mining_exercise1/exercise1-your-first-map.html#plot-the-data.",
+    "href": "posts_work/Data_Mining_exercise1/exercise1-your-first-map.html#plot-the-data.",
+    "title": "Data_Mining_Kaggle",
+    "section": "3 Plot the data.",
+    "text": "3 Plot the data.\n\n변경하지 않고 다음 코드 셀을 실행하여 국가 경계가 포함된 GeoDataFrame 월드를 로드합니다\n\n### This dataset is provided in GeoPandas\nworld_filepath = gpd.datasets.get_path('naturalearth_lowres')\nworld = gpd.read_file(world_filepath)\nworld.head()\n\n\n\n\n\n\n\n\n\npop_est\n\n\ncontinent\n\n\nname\n\n\niso_a3\n\n\ngdp_md_est\n\n\ngeometry\n\n\n\n\n\n\n0\n\n\n889953.0\n\n\nOceania\n\n\nFiji\n\n\nFJI\n\n\n5496\n\n\nMULTIPOLYGON (((180.00000 -16.06713, 180.00000…\n\n\n\n\n1\n\n\n58005463.0\n\n\nAfrica\n\n\nTanzania\n\n\nTZA\n\n\n63177\n\n\nPOLYGON ((33.90371 -0.95000, 34.07262 -1.05982…\n\n\n\n\n2\n\n\n603253.0\n\n\nAfrica\n\n\nW. Sahara\n\n\nESH\n\n\n907\n\n\nPOLYGON ((-8.66559 27.65643, -8.66512 27.58948…\n\n\n\n\n3\n\n\n37589262.0\n\n\nNorth America\n\n\nCanada\n\n\nCAN\n\n\n1736425\n\n\nMULTIPOLYGON (((-122.84000 49.00000, -122.9742…\n\n\n\n\n4\n\n\n328239523.0\n\n\nNorth America\n\n\nUnited States of America\n\n\nUSA\n\n\n21433226\n\n\nMULTIPOLYGON (((-122.84000 49.00000, -120.0000…\n\n\n\n\n\n\n\n3.1 world 데이터셋 시각화\nworld.plot()\n<Axes: >\n\n\n\npng\n\n\n\n\n3.2 World and World_loans GeoDataFrames를 사용하여 전 세계 Kiva 대출 위치 시각화하기\n### Your code here\nworld_data = world.plot()\nworld_loans.plot(ax=world_data, color='red', markersize=0.1)\n<Axes: >\n\n\n\npng"
+  },
+  {
+    "objectID": "posts_work/Data_Mining_exercise1/exercise1-your-first-map.html#select-loans-based-in-the-philippines.",
+    "href": "posts_work/Data_Mining_exercise1/exercise1-your-first-map.html#select-loans-based-in-the-philippines.",
+    "title": "Data_Mining_Kaggle",
+    "section": "4 Select loans based in the Philippines.",
+    "text": "4 Select loans based in the Philippines.\n\n다음으로, 당신은 필리핀에 기반을 둔 대출에 초점을 맞출 것입니다. 다음 코드 셀을 사용하여 필리핀에 기반을 둔 대출이 있는 world_loans의 모든 행을 포함하는 GeoDataFrame PHL_loans를 생성합니다\n\n# Your code here\nPHL_loans = world_loans.loc[world_loans['country'] =='Philippines']\nPHL_loans.head()\n\n\n\n\n\n\n\n\n\nPartner ID\n\n\nField Part\n\n\nsector\n\n\nLoan Theme\n\n\ncountry\n\n\namount\n\n\ngeometry\n\n\n\n\n\n\n2859\n\n\n123\n\n\nAlalay sa Kaunlaran (ASKI)\n\n\nGeneral Financial Inclusion\n\n\nGeneral\n\n\nPhilippines\n\n\n400\n\n\nPOINT (121.73961 17.64228)\n\n\n\n\n2860\n\n\n123\n\n\nAlalay sa Kaunlaran (ASKI)\n\n\nGeneral Financial Inclusion\n\n\nGeneral\n\n\nPhilippines\n\n\n400\n\n\nPOINT (121.74169 17.63235)\n\n\n\n\n2861\n\n\n123\n\n\nAlalay sa Kaunlaran (ASKI)\n\n\nGeneral Financial Inclusion\n\n\nGeneral\n\n\nPhilippines\n\n\n400\n\n\nPOINT (121.46667 16.60000)\n\n\n\n\n2862\n\n\n123\n\n\nAlalay sa Kaunlaran (ASKI)\n\n\nGeneral Financial Inclusion\n\n\nGeneral\n\n\nPhilippines\n\n\n6050\n\n\nPOINT (121.73333 17.83333)\n\n\n\n\n2863\n\n\n123\n\n\nAlalay sa Kaunlaran (ASKI)\n\n\nGeneral Financial Inclusion\n\n\nGeneral\n\n\nPhilippines\n\n\n625\n\n\nPOINT (121.51800 16.72368)"
+  },
+  {
+    "objectID": "posts_work/Data_Mining_exercise1/exercise1-your-first-map.html#understand-loans-in-the-philippines.",
+    "href": "posts_work/Data_Mining_exercise1/exercise1-your-first-map.html#understand-loans-in-the-philippines.",
+    "title": "Data_Mining_Kaggle",
+    "section": "5 Understand loans in the Philippines.",
+    "text": "5 Understand loans in the Philippines.\n\n변경 없이 다음 코드 셀을 실행하여 필리핀의 모든 섬에 대한 경계가 포함된 GeoDataFrame “PHL”을 로드합니다\n\n# Load a KML file containing island boundaries\ngpd.io.file.fiona.drvsupport.supported_drivers['KML'] = 'rw'\nPHL = gpd.read_file(\"C:/Users\\seong taek/Desktop/archive/Philippines_AL258.kml\", driver='KML')\nPHL.head()\n\n\n\n\n\n\n\n\n\nName\n\n\nDescription\n\n\ngeometry\n\n\n\n\n\n\n0\n\n\nAutonomous Region in Muslim Mindanao\n\n\n\n\nMULTIPOLYGON (((119.46690 4.58718, 119.46653 4…\n\n\n\n\n1\n\n\nBicol Region\n\n\n\n\nMULTIPOLYGON (((124.04577 11.57862, 124.04594 …\n\n\n\n\n2\n\n\nCagayan Valley\n\n\n\n\nMULTIPOLYGON (((122.51581 17.04436, 122.51568 …\n\n\n\n\n3\n\n\nCalabarzon\n\n\n\n\nMULTIPOLYGON (((120.49202 14.05403, 120.49201 …\n\n\n\n\n4\n\n\nCaraga\n\n\n\n\nMULTIPOLYGON (((126.45401 8.24400, 126.45407 8…\n\n\n\n\n\n\n\n5.1 PHL’ 및 ‘PHL_loans’ GeoDataFrames를 사용하여 필리핀의 대출을 시각화할 수 있습니다.\n# Your code here\nPHL = PHL.plot()\nPHL_loans.plot(ax=PHL, color='red', markersize=0.2)\n<Axes: >\n\n\n\npng\n\n\n새로운 Field Partners를 모집하는 데 유용한 섬을 찾을 수 있습니까? 현재 키바의 손이 닿지 않는 곳에 보이는 섬이 있습니까?\nthis map 은 질문에 대답하는 데 유용할 수 있습니다."
+  },
+  {
+    "objectID": "posts_work/Data_Mining_exercise1/exercise1-your-first-map.html#keep-going",
+    "href": "posts_work/Data_Mining_exercise1/exercise1-your-first-map.html#keep-going",
+    "title": "Data_Mining_Kaggle",
+    "section": "6 Keep going",
+    "text": "6 Keep going\nContinue to learn about coordinate reference systems.\n\nHave questions or comments? Visit the course discussion forum to chat with other learners."
+  },
+  {
+    "objectID": "work.html",
+    "href": "work.html",
+    "title": "Work",
+    "section": "",
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n  \n\n\n\n\nData_Mining_Kaggle\n\n\n\n\n\n\n\ncode\n\n\ndata_mining\n\n\njupyter\n\n\nkaggle\n\n\n\n\n\n\n\n\n\n\n\nMay 2, 2023\n\n\nSeongtaek\n\n\n\n\n\n\n  \n\n\n\n\nData_Mining_Penguin\n\n\n\n\n\n\n\ncode\n\n\ndata_mining\n\n\njupyter\n\n\n\n\n\n\n\n\n\n\n\nApr 27, 2023\n\n\nSeongtaek\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts_work/Data_Mining_penguin/4월 25일 펭귄.html",
+    "href": "posts_work/Data_Mining_penguin/4월 25일 펭귄.html",
+    "title": "Data_Mining_Penguin",
+    "section": "",
+    "text": "Penguin Data"
+  },
+  {
+    "objectID": "posts_work/Data_Mining_penguin/4월 25일 펭귄.html#load-data",
+    "href": "posts_work/Data_Mining_penguin/4월 25일 펭귄.html#load-data",
+    "title": "Data_Mining_Penguin",
+    "section": "1 Load data",
+    "text": "1 Load data\n\n예제로 사용할 펭귄 데이터를 불러옵니다.\nseaborn에 내장되어 있습니다.\n\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\npenguins = sns.load_dataset(\"penguins\")\npenguins.head()\n\n\n\n\n\n\n\n\n\nspecies\n\n\nisland\n\n\nbill_length_mm\n\n\nbill_depth_mm\n\n\nflipper_length_mm\n\n\nbody_mass_g\n\n\nsex\n\n\n\n\n\n\n0\n\n\nAdelie\n\n\nTorgersen\n\n\n39.1\n\n\n18.7\n\n\n181.0\n\n\n3750.0\n\n\nMale\n\n\n\n\n1\n\n\nAdelie\n\n\nTorgersen\n\n\n39.5\n\n\n17.4\n\n\n186.0\n\n\n3800.0\n\n\nFemale\n\n\n\n\n2\n\n\nAdelie\n\n\nTorgersen\n\n\n40.3\n\n\n18.0\n\n\n195.0\n\n\n3250.0\n\n\nFemale\n\n\n\n\n3\n\n\nAdelie\n\n\nTorgersen\n\n\nNaN\n\n\nNaN\n\n\nNaN\n\n\nNaN\n\n\nNaN\n\n\n\n\n4\n\n\nAdelie\n\n\nTorgersen\n\n\n36.7\n\n\n19.3\n\n\n193.0\n\n\n3450.0\n\n\nFemale"
+  },
+  {
+    "objectID": "posts_work/Data_Mining_penguin/4월 25일 펭귄.html#figure-and-axes",
+    "href": "posts_work/Data_Mining_penguin/4월 25일 펭귄.html#figure-and-axes",
+    "title": "Data_Mining_Penguin",
+    "section": "2 Figure and Axes",
+    "text": "2 Figure and Axes\n\nmatplotlib으로 도화지figure를 깔고 축공간axes를 만듭니다.\n1 x 2 축공간을 구성합니다.\n\n### 도화지 생성\nfig, axes = plt.subplots(ncols=2, figsize=(8,4))\n\nfig.tight_layout()\n\n\n\npng"
+  },
+  {
+    "objectID": "posts_work/Data_Mining_penguin/4월 25일 펭귄.html#plot-with-matplotlib",
+    "href": "posts_work/Data_Mining_penguin/4월 25일 펭귄.html#plot-with-matplotlib",
+    "title": "Data_Mining_Penguin",
+    "section": "3 plot with matplotlib",
+    "text": "3 plot with matplotlib\n\nmatplotlib 기능을 이용해서 산점도를 그립니다.\n\nx축은 부리 길이 bill length\ny축은 부리 위 아래 두께 bill depth\n색상은 종species로 합니다.\nAdelie, Chinstrap, Gentoo이 있습니다.\n\n두 축공간 중 왼쪽에만 그립니다.\n컬러를 다르게 주기 위해 f-string 포맷을 사용했습니다. f-string 포맷에 대한 설명은 https://blockdmask.tistory.com/429를 참고하세요\n\n### 도화지 생성\nfig, axes = plt.subplots(ncols=2,figsize=(8,4))\n\n### 모든 펭귄 종류\nspecies_u = penguins[\"species\"].unique()\n\n### 첫 번째 subplot 그리기\nfor i, s in enumerate(species_u):\n    axes[0].scatter(penguins[\"bill_length_mm\"].loc[penguins[\"species\"]==s],\n                    penguins[\"bill_depth_mm\"].loc[penguins[\"species\"]==s],\n                    c=f\"C{i}\", label=s, alpha=0.3)\n\n### 범례 추가\naxes[0].legend(species_u, title=\"species\", fontsize=8)\n\n### x,y 레이블 지정\naxes[0].set_xlabel(\"Bill Length (mm)\")\naxes[0].set_ylabel(\"Bill Depth (mm)\")\n\n### plt.show()\nfig.tight_layout()\n\n\n\npng\n\n\n\n조금 더 간단히 그리는 방법\n\nmatplotlib는 기본적으로 Categorical 변수를 color로 바로 사용하지 못함\n\n\n### 펭귄 종류를 고유의 숫자코드로 변환\npenguins[\"species_codes\"] = pd.Categorical(penguins[\"species\"]).codes\n\n### 도화지 생성\nfig, axes = plt.subplots(ncols=2,figsize=(8,4))\n\n### 첫 번재 subplot 그리기 \na = axes[0].scatter(data=penguins, x=\"bill_length_mm\", y=\"bill_depth_mm\", c=\"species_codes\", alpha=0.3) # 크기:s\na\n\n### 범례 추가\naxes[0].legend(*a.legend_elements(), title=\"Species\", fontsize=8) # 범례위치 : loc='lower right', 'upper center', etc..\n\n### x,y 레이블 지정\naxes[0].set_xlabel(\"Bill Length (mm)\")\naxes[0].set_ylabel(\"Bill Depth (mm)\")\n<__array_function__ internals>:180: UserWarning: Warning: converting a masked element to nan.\nC:\\Users\\seong taek\\anaconda3\\lib\\site-packages\\matplotlib\\colors.py:1311: UserWarning: Warning: converting a masked element to nan.\n  data = np.asarray(value)\nC:\\Users\\seong taek\\anaconda3\\lib\\site-packages\\matplotlib\\ticker.py:521: UserWarning: Warning: converting a masked element to nan.\n  if self._useLocale else fmt % arg)\n\n\n\n\n\nText(0, 0.5, 'Bill Depth (mm)')\n\n\n\npng"
+  },
+  {
+    "objectID": "posts_work/Data_Mining_penguin/4월 25일 펭귄.html#plot-with-seaborn",
+    "href": "posts_work/Data_Mining_penguin/4월 25일 펭귄.html#plot-with-seaborn",
+    "title": "Data_Mining_Penguin",
+    "section": "4 Plot with seaborn",
+    "text": "4 Plot with seaborn\n\n두 번째 plot 그리기\n\n### 도화지 생성\nfig, axes = plt.subplots(ncols=2,figsize=(8,4))\n\n### 모든 펭귄 종류\nspecies_u = penguins[\"species\"].unique()\n\n### 첫 번째 subplot 그리기\nfor i, s in enumerate(species_u):\n    axes[0].scatter(penguins[\"bill_length_mm\"].loc[penguins[\"species\"]==s],\n                    penguins[\"bill_depth_mm\"].loc[penguins[\"species\"]==s],\n                    c=f\"C{i}\", label=s, alpha=0.3)\n\n### 범례 추가    \naxes[0].legend(species_u, title=\"species\")\n\n### x,y 레이블 지정\naxes[0].set_xlabel(\"Bill Length (mm)\")\naxes[0].set_ylabel(\"Bill Depth (mm)\")\n\n\n### 두 번째 subplot 그리기\nsns.scatterplot(x=\"bill_length_mm\", y=\"bill_depth_mm\", hue=\"species\", data=penguins, alpha=0.3, ax=axes[1])\naxes[1].set_xlabel(\"Bill Length (mm)\")\naxes[1].set_ylabel(\"Bill Depth (mm)\")\n\nfig.tight_layout()\n\n\n\npng\n\n\n\n단 세 줄로 거의 동일한 그림이 나왔습니다.\n\nscatter plot의 점 크기만 살짝 작습니다.\nlabel의 투명도만 살짝 다릅니다.\n\nseaborn 명령 scatterplot()을 그대로 사용했습니다.\nx축과 y축 label도 바꾸었습니다.\n\nax=axes[1] 인자에서 볼 수 있듯, 존재하는 axes에 그림만 얹었습니다.\nmatplotlib 틀 + seaborn 그림 이므로, matplotlib 명령이 모두 통합니다."
+  },
+  {
+    "objectID": "posts_work/Data_Mining_penguin/4월 25일 펭귄.html#matplotlib-seaborn-seaborn-matplotlib",
+    "href": "posts_work/Data_Mining_penguin/4월 25일 펭귄.html#matplotlib-seaborn-seaborn-matplotlib",
+    "title": "Data_Mining_Penguin",
+    "section": "5 matplotlib + seaborn & seaborn + matplotlib",
+    "text": "5 matplotlib + seaborn & seaborn + matplotlib\n\nmatplotlib과 seaborn이 자유롭게 섞일 수 있습니다.\n\nmatplotlib 산점도 위에 seaborn 추세선을 얹을 수 있고,\nseaborn 산점도 위에 matplotlib 중심점을 얹을 수 있습니다.\n\n파이썬 코드는 다음과 같습니다.\n\n### 도화지 생성\nfig, axes = plt.subplots(ncols=2, figsize=(8, 4))\n\n### 모든 펭귄 종류\nspecies_u = penguins[\"species\"].unique()\n\n### 첫 번째 subplot 그리기 + 추세선\nfor i, s in enumerate(species_u):\n    axes[0].scatter(penguins[\"bill_length_mm\"].loc[penguins[\"species\"]==s],\n                   penguins[\"bill_depth_mm\"].loc[penguins[\"species\"]==s],\n                   c=f\"C{i}\", label=s, alpha=0.3\n                  )                  \n    sns.regplot(x=\"bill_length_mm\", y=\"bill_depth_mm\", data=penguins.loc[penguins[\"species\"]==s], \n                scatter=False, ax=axes[0])\n    \naxes[0].legend(species_u, title=\"species\")\naxes[0].set_xlabel(\"Bill Length (mm)\")\naxes[0].set_ylabel(\"Bill Depth (mm)\")\n\n### 두 번째 subplot 그리기\nsns.scatterplot(x=\"bill_length_mm\", y=\"bill_depth_mm\", hue=\"species\", data=penguins, alpha=0.3, ax=axes[1])\naxes[1].set_xlabel(\"Bill Length (mm)\")\naxes[1].set_ylabel(\"Bill Depth (mm)\")\n\n\n### 중심점 marker\nfor i, s in enumerate(species_u):\n    axes[1].scatter(penguins[\"bill_length_mm\"].loc[penguins[\"species\"]==s].mean(),\n                   penguins[\"bill_depth_mm\"].loc[penguins[\"species\"]==s].mean(),\n                   c=f\"C{i}\", alpha=1, marker=\"x\", s=100\n                  )\n\nfig.tight_layout()\n\n\n\npng"
+  },
+  {
+    "objectID": "posts_work/Data_Mining_penguin/4월 25일 펭귄.html#seaborn-seaborn-matplotlib",
+    "href": "posts_work/Data_Mining_penguin/4월 25일 펭귄.html#seaborn-seaborn-matplotlib",
+    "title": "Data_Mining_Penguin",
+    "section": "6 seaborn + seaborn + matplotlib",
+    "text": "6 seaborn + seaborn + matplotlib\n\n안 될 이유가 없습니다.\nseaborn scatterplot + seaborn kdeplot + matplotlib text입니다\n\n### 도화지 생성\nfig, ax = plt.subplots(figsize=(6,5))\n\n### plot 0: scatter plot\nsns.scatterplot(x=\"bill_length_mm\", y=\"bill_depth_mm\", color=\"k\", data=penguins, alpha=0.3, ax=ax, legend=False)\n\n### plot 1: kde plot (밀도 그래프)\nsns.kdeplot(x=\"bill_length_mm\", y=\"bill_depth_mm\", hue=\"species\", data=penguins, alpha=0.5, ax=ax, legend=False)\n\n### text:\nspecies_u = penguins[\"species\"].unique()\nfor i, s in enumerate(species_u):\n    ax.text(penguins[\"bill_length_mm\"].loc[penguins[\"species\"]==s].mean(),\n            penguins[\"bill_depth_mm\"].loc[penguins[\"species\"]==s].mean(),\n            s = s, fontdict={\"fontsize\":14, \"fontweight\":\"bold\",\"color\":\"k\"}\n            )\n\nax.set_xlabel(\"Bill Length (mm)\")\nax.set_ylabel(\"Bill Depth (mm)\")\n\nfig.tight_layout()\n\n\n\npng"
+  },
+  {
+    "objectID": "posts_work/Data_Mining_penguin/4월 25일 펭귄.html#quiz",
+    "href": "posts_work/Data_Mining_penguin/4월 25일 펭귄.html#quiz",
+    "title": "Data_Mining_Penguin",
+    "section": "7 Quiz",
+    "text": "7 Quiz\nBill length를 10단위로 나눈 후, Bill length에 따른 Bill depth의 boxplot을 그리시오\n### bill length를 10단위로 만든 후, 새로운 컬럼 추가\npenguins['bill_length_10'] = (penguins['bill_length_mm'] // 10) * 10\npenguins\n\n\n\n\n\n\n\n\n\nspecies\n\n\nisland\n\n\nbill_length_mm\n\n\nbill_depth_mm\n\n\nflipper_length_mm\n\n\nbody_mass_g\n\n\nsex\n\n\nspecies_codes\n\n\nbill_length_10\n\n\n\n\n\n\n0\n\n\nAdelie\n\n\nTorgersen\n\n\n39.1\n\n\n18.7\n\n\n181.0\n\n\n3750.0\n\n\nMale\n\n\n0\n\n\n30.0\n\n\n\n\n1\n\n\nAdelie\n\n\nTorgersen\n\n\n39.5\n\n\n17.4\n\n\n186.0\n\n\n3800.0\n\n\nFemale\n\n\n0\n\n\n30.0\n\n\n\n\n2\n\n\nAdelie\n\n\nTorgersen\n\n\n40.3\n\n\n18.0\n\n\n195.0\n\n\n3250.0\n\n\nFemale\n\n\n0\n\n\n40.0\n\n\n\n\n3\n\n\nAdelie\n\n\nTorgersen\n\n\nNaN\n\n\nNaN\n\n\nNaN\n\n\nNaN\n\n\nNaN\n\n\n0\n\n\nNaN\n\n\n\n\n4\n\n\nAdelie\n\n\nTorgersen\n\n\n36.7\n\n\n19.3\n\n\n193.0\n\n\n3450.0\n\n\nFemale\n\n\n0\n\n\n30.0\n\n\n\n\n…\n\n\n…\n\n\n…\n\n\n…\n\n\n…\n\n\n…\n\n\n…\n\n\n…\n\n\n…\n\n\n…\n\n\n\n\n339\n\n\nGentoo\n\n\nBiscoe\n\n\nNaN\n\n\nNaN\n\n\nNaN\n\n\nNaN\n\n\nNaN\n\n\n2\n\n\nNaN\n\n\n\n\n340\n\n\nGentoo\n\n\nBiscoe\n\n\n46.8\n\n\n14.3\n\n\n215.0\n\n\n4850.0\n\n\nFemale\n\n\n2\n\n\n40.0\n\n\n\n\n341\n\n\nGentoo\n\n\nBiscoe\n\n\n50.4\n\n\n15.7\n\n\n222.0\n\n\n5750.0\n\n\nMale\n\n\n2\n\n\n50.0\n\n\n\n\n342\n\n\nGentoo\n\n\nBiscoe\n\n\n45.2\n\n\n14.8\n\n\n212.0\n\n\n5200.0\n\n\nFemale\n\n\n2\n\n\n40.0\n\n\n\n\n343\n\n\nGentoo\n\n\nBiscoe\n\n\n49.9\n\n\n16.1\n\n\n213.0\n\n\n5400.0\n\n\nMale\n\n\n2\n\n\n40.0\n\n\n\n\n\n\n344 rows × 9 columns\n\n\n### 박스 plot\nsns.boxenplot(x = 'bill_length_10', y = 'bill_depth_mm', data=penguins)\n\n### 점 표현\nsns.stripplot(x = 'bill_length_10', y = 'bill_depth_mm', data=penguins, color='black', size=4)\n\nsns.set_style('whitegrid')\nplt.show()\n\n\n\npng\n\n\n\n7.1 sns.set_style\n\ndarkgrid: 어두운 배경에 격자 라인이 그려지는 스타일\nwhitegrid: 밝은 배경에 격자 라인이 그려지는 스타일\ndark: 어두운 배경에 격자 라인이 없는 스타일\nwhite: 밝은 배경에 격자 라인이 없는 스타일\nticks: 격자 라인 대신 축의 눈금 표시가 있는 스타일\n\n\n\n7.2 pd.cut 이용\n### bill length를 구간별로 만든 후, 새로운 컬럼 추가\npenguins['bill_length_group'] = pd.cut(penguins['bill_length_mm'],\n                                      bins=[0,40,50,60],\n                                      labels=['0~40', '40~50', '50~60'])\npenguins\n\n\n\n\n\n\n\n\n\nspecies\n\n\nisland\n\n\nbill_length_mm\n\n\nbill_depth_mm\n\n\nflipper_length_mm\n\n\nbody_mass_g\n\n\nsex\n\n\nspecies_codes\n\n\nbill_length_10\n\n\nbill_length_group\n\n\n\n\n\n\n0\n\n\nAdelie\n\n\nTorgersen\n\n\n39.1\n\n\n18.7\n\n\n181.0\n\n\n3750.0\n\n\nMale\n\n\n0\n\n\n30.0\n\n\n0~40\n\n\n\n\n1\n\n\nAdelie\n\n\nTorgersen\n\n\n39.5\n\n\n17.4\n\n\n186.0\n\n\n3800.0\n\n\nFemale\n\n\n0\n\n\n30.0\n\n\n0~40\n\n\n\n\n2\n\n\nAdelie\n\n\nTorgersen\n\n\n40.3\n\n\n18.0\n\n\n195.0\n\n\n3250.0\n\n\nFemale\n\n\n0\n\n\n40.0\n\n\n40~50\n\n\n\n\n3\n\n\nAdelie\n\n\nTorgersen\n\n\nNaN\n\n\nNaN\n\n\nNaN\n\n\nNaN\n\n\nNaN\n\n\n0\n\n\nNaN\n\n\nNaN\n\n\n\n\n4\n\n\nAdelie\n\n\nTorgersen\n\n\n36.7\n\n\n19.3\n\n\n193.0\n\n\n3450.0\n\n\nFemale\n\n\n0\n\n\n30.0\n\n\n0~40\n\n\n\n\n…\n\n\n…\n\n\n…\n\n\n…\n\n\n…\n\n\n…\n\n\n…\n\n\n…\n\n\n…\n\n\n…\n\n\n…\n\n\n\n\n339\n\n\nGentoo\n\n\nBiscoe\n\n\nNaN\n\n\nNaN\n\n\nNaN\n\n\nNaN\n\n\nNaN\n\n\n2\n\n\nNaN\n\n\nNaN\n\n\n\n\n340\n\n\nGentoo\n\n\nBiscoe\n\n\n46.8\n\n\n14.3\n\n\n215.0\n\n\n4850.0\n\n\nFemale\n\n\n2\n\n\n40.0\n\n\n40~50\n\n\n\n\n341\n\n\nGentoo\n\n\nBiscoe\n\n\n50.4\n\n\n15.7\n\n\n222.0\n\n\n5750.0\n\n\nMale\n\n\n2\n\n\n50.0\n\n\n50~60\n\n\n\n\n342\n\n\nGentoo\n\n\nBiscoe\n\n\n45.2\n\n\n14.8\n\n\n212.0\n\n\n5200.0\n\n\nFemale\n\n\n2\n\n\n40.0\n\n\n40~50\n\n\n\n\n343\n\n\nGentoo\n\n\nBiscoe\n\n\n49.9\n\n\n16.1\n\n\n213.0\n\n\n5400.0\n\n\nMale\n\n\n2\n\n\n40.0\n\n\n40~50\n\n\n\n\n\n\n344 rows × 10 columns\n\n\nsns.boxenplot(x = 'bill_length_group', y = 'bill_depth_mm', data=penguins)\nsns.stripplot(x = 'bill_length_group', y = 'bill_depth_mm', data=penguins, color='black', size=4)\n\nsns.set_style('whitegrid')\nsns.despine()\nplt.show()\n\n\n\npng\n\n\nsns.scatterplot(x='bill_length_mm', y='bill_depth_mm', data=penguins, alpha=0.3)\n\nplt.show()\n\n\n\npng\n\n\n\n열 기준 : species\n색상 : species별\n한 행의 subplot 개수\nmap : x축, y축 지정\nsns.despine : 상단, 우측 축 제거\n\ng = sns.FacetGrid(penguins, col='species',hue='species',col_wrap=3)\ng.map(sns.scatterplot, 'bill_length_mm', 'bill_depth_mm')\n\nsns.set_style('whitegrid')\nsns.despine()\n\nplt.show()\n\n\n\npng"
+  },
+  {
+    "objectID": "posts_work/Data_Mining_penguin/4월 25일 펭귄.html#section",
+    "href": "posts_work/Data_Mining_penguin/4월 25일 펭귄.html#section",
+    "title": "Data_Mining_Penguin",
+    "section": "8 ",
+    "text": "8"
   }
 ]

@@ -6,7 +6,7 @@ website:
   title: "Taek_Blog"
   navbar:
     left: 
-      - Project & Task.qmd
+      - work.qmd
     right:
       - about.qmd
     tools:

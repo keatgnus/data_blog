@@ -1,8 +1,8 @@
 ---
-title: "Project & Task"
-subtitle: "Code Archive"
+title: "Work"
+subtitle: "Project & Task"
 listing:
-  contents: posts_Task
+  contents: posts_work
   sort:  "date desc"
   type: default
   categories: true
