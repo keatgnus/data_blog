@@ -2,7 +2,7 @@
 title: "Project & Task"
 subtitle: "Code Archive"
 listing:
-  contents: posts_Lab
+  contents: posts_Task
   sort:  "date desc"
   type: default
   categories: true
