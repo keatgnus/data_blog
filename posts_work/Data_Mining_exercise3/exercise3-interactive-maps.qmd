@@ -7,7 +7,7 @@ image: "earthquake.png"
 toc: true
 ---
 
-Exercise 2 - Coordinate Reference Systems
+Exercise 3 - Interactive Maps
 
 <table align="bottom">
   <td>
