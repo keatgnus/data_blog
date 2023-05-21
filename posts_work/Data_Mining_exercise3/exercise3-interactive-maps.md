@@ -1,7 +1,7 @@
 ---
 title: "Data_Mining_Kaggle"
 author: "Seongtaek"
-date: "2023-05-20"
+date: "2023-05-02"
 categories: [code, data_mining, jupyter, kaggle]
 image: "earthquake.png"
 toc: true

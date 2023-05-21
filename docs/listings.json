@@ -1,79 +1,10 @@
 [
   {
-    "listing": "/index.html",
-    "items": [
-      "/posts/Data_Mining_Geopandas/0_install_geopandas.html",
-      "/posts/Spatial_Info_Analysis Ch2/공간정보분석 CH3.html",
-      "/posts/Spatial_Info_Analysis Ch1/공간정보분석 CH2.html",
-      "/posts/Opendata_Analysis Ch3/import & write.html",
-      "/posts/Opendata_Analysis Ch4/data_tyding.html",
-      "/posts/Opendata_Analysis Ch5/data visualize.html",
-      "/posts/Opendata_Analysis Ch2/data_transformation.html",
-      "/posts/Opendata_Analysis Ch1/tidyverse.html",
-      "/posts/Data_Visualize_Ch7/figure 4.4 ,  figure 4.6.html",
-      "/posts/Data_Visualize_Ch6/figure 4.2, Figure 4.8.html",
-      "/posts/Data_Visualize_Ch5/figure 3.10.html",
-      "/posts/Data_Visualize_Ch4/figure 3.5 ~ 3.6.html",
-      "/posts/Data_Mining_Numpy/numpy 공부2.html",
-      "/posts/Data_Mining_Pandas/pandas.html",
-      "/posts/Data_Visualize_Ch3/figure 3.2.html",
-      "/posts/Data_Visualize_Ch2/CH2.html",
-      "/posts/Data_Visualize_Ch1/데이터시각화 2주차 ggplot2 기초.html",
-      "/posts/Advanced_Python_ch2/파이썬 심화 챕터2 공부.html"
-    ]
-  },
-  {
-    "listing": "/coding.html",
-    "items": [
-      "/posts/Data_Mining_Pandas/pandas.html",
-      "/posts/Data_Visualize_Ch2/CH2.html",
-      "/posts/Data_Visualize_Ch1/데이터시각화 2주차 ggplot2 기초.html",
-      "/posts/Advanced_Python_ch2/파이썬 심화 챕터2 공부.html",
-      "/posts/Data_Mining_Numpy/numpy 공부.html"
-    ]
-  },
-  {
-    "listing": "/project.html",
-    "items": [
-      "/posts/Data_Mining_Geopandas/0_install_geopandas.html",
-      "/posts/Spatial_Info_Analysis Ch2/공간정보분석 CH3.html",
-      "/posts/Spatial_Info_Analysis Ch1/공간정보분석 CH2.html",
-      "/posts/Opendata_Analysis Ch3/import & write.html",
-      "/posts/Opendata_Analysis Ch4/data_tyding.html",
-      "/posts/Opendata_Analysis Ch5/data visualize.html",
-      "/posts/Opendata_Analysis Ch2/data_transformation.html",
-      "/posts/Opendata_Analysis Ch1/tidyverse.html",
-      "/posts/Data_Visualize_Ch7/figure 4.4 ,  figure 4.6.html",
-      "/posts/Data_Visualize_Ch6/figure 4.2, Figure 4.8.html",
-      "/posts/Data_Visualize_Ch5/figure 3.10.html",
-      "/posts/Data_Visualize_Ch4/figure 3.5 ~ 3.6.html",
-      "/posts/Data_Mining_Numpy/numpy 공부2.html",
-      "/posts/Data_Mining_Pandas/pandas.html",
-      "/posts/Data_Visualize_Ch3/figure 3.2.html",
-      "/posts/Data_Visualize_Ch2/CH2.html",
-      "/posts/Data_Visualize_Ch1/데이터시각화 2주차 ggplot2 기초.html",
-      "/posts/Advanced_Python_ch2/파이썬 심화 챕터2 공부.html"
-    ]
-  },
-  {
-    "listing": "/Lab.html",
-    "items": [
-      "/posts_Lab/Data_Mining_penguin/4월 25일 펭귄.html"
-    ]
-  },
-  {
-    "listing": "/Project & Task.html",
-    "items": [
-      "/posts_Task/Data_Mining_exercise1/exercise1-your-first-map.html",
-      "/posts_Task/Data_Mining_penguin/4월 25일 펭귄.html"
-    ]
-  },
-  {
     "listing": "/work.html",
     "items": [
-      "/posts_work/Data_Mining_exercise3/exercise3-interactive-maps.html",
       "/posts_work/Data_Mining_exercise1/exercise1-your-first-map.html",
       "/posts_work/Data_Mining_exercise2/exercise2-coordinate-reference-systems.html",
+      "/posts_work/Data_Mining_exercise3/exercise3-interactive-maps.html",
       "/posts_work/Data_Mining_penguin/4월 25일 펭귄.html"
     ]
   }
