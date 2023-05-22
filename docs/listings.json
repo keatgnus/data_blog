@@ -1,15 +1,5 @@
 [
   {
-    "listing": "/work.html",
-    "items": [
-      "/posts_work/Data_Mining_exercise1/exercise1-your-first-map.html",
-      "/posts_work/Data_Mining_exercise2/exercise2-coordinate-reference-systems.html",
-      "/posts_work/Data_Mining_exercise4/exercise4-manipulating-geospatial-data.html",
-      "/posts_work/Data_Mining_exercise5/exercise5-proximity-analysis.html",
-      "/posts_work/Data_Mining_penguin/4월 25일 펭귄.html"
-    ]
-  },
-  {
     "listing": "/index.html",
     "items": [
       "/posts/Data_Mining_Geopandas/0_install_geopandas.html",
@@ -30,6 +20,17 @@
       "/posts/Data_Visualize_Ch2/CH2.html",
       "/posts/Data_Visualize_Ch1/데이터시각화 2주차 ggplot2 기초.html",
       "/posts/Advanced_Python_ch2/파이썬 심화 챕터2 공부.html"
+    ]
+  },
+  {
+    "listing": "/work.html",
+    "items": [
+      "/posts_work/Data_Mining_exercise1/exercise1-your-first-map.html",
+      "/posts_work/Data_Mining_exercise2/exercise2-coordinate-reference-systems.html",
+      "/posts_work/Data_Mining_exercise4/exercise4-manipulating-geospatial-data.html",
+      "/posts_work/Data_Mining_exercise5/exercise5-proximity-analysis.html",
+      "/posts_work/Data_Mining_exercise3/exercise3-interactive-maps.html",
+      "/posts_work/Data_Mining_penguin/4월 25일 펭귄.html"
     ]
   }
 ]

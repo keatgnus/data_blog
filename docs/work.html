@@ -73,7 +73,8 @@ ul.task-list li input[type="checkbox"] {
 
     const options = {
       valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] }],
-      
+      page: 5,
+    pagination: { item: "<li class='page-item'><a class='page page-link' href='#'></a></li>" },
       searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
     };
 
@@ -174,7 +175,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(5)</span></div><div class="category" data-category="code">code <span class="quarto-category-count">(5)</span></div><div class="category" data-category="data_mining">data_mining <span class="quarto-category-count">(5)</span></div><div class="category" data-category="jupyter">jupyter <span class="quarto-category-count">(5)</span></div><div class="category" data-category="kaggle">kaggle <span class="quarto-category-count">(4)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(6)</span></div><div class="category" data-category="code">code <span class="quarto-category-count">(6)</span></div><div class="category" data-category="data_mining">data_mining <span class="quarto-category-count">(6)</span></div><div class="category" data-category="jupyter">jupyter <span class="quarto-category-count">(6)</span></div><div class="category" data-category="kaggle">kaggle <span class="quarto-category-count">(5)</span></div></div></div>
 <!-- main -->
 <main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
@@ -385,9 +386,53 @@ Seongtaek
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-categories="code,data_mining,jupyter" data-listing-date-sort="1682521200000" data-listing-file-modified-sort="1683030111846" data-listing-reading-time-sort="16.95">
+<div class="quarto-post image-right" data-index="4" data-categories="code,data_mining,jupyter,kaggle" data-listing-date-sort="1682953200000" data-listing-file-modified-sort="1684719047870" data-listing-reading-time-sort="18851.405">
 <div class="thumbnail">
-<p><a href="./posts_work/Data_Mining_penguin/4월 25일 펭귄.html"> <img src="./posts_work/Data_Mining_penguin/penguin.jpg" class="thumnail-image"> </a></p>
+<p><a href="./posts_work/Data_Mining_exercise3/exercise3-interactive-maps.html"> <img src="./posts_work/Data_Mining_exercise3/etq.png" class="thumnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./posts_work/Data_Mining_exercise3/exercise3-interactive-maps.html">
+<h3 class="no-anchor listing-title">
+Data_Mining_Kaggle
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
+code
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('data_mining'); return false;">
+data_mining
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('jupyter'); return false;">
+jupyter
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('kaggle'); return false;">
+kaggle
+</div>
+</div>
+<a href="./posts_work/Data_Mining_exercise3/exercise3-interactive-maps.html">
+<div class="listing-description">
+Exercise 3 - Interactive Maps
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts_work/Data_Mining_exercise3/exercise3-interactive-maps.html">
+<div class="listing-date">
+May 2, 2023
+</div>
+<div class="listing-author">
+Seongtaek
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="5" data-categories="code,data_mining,jupyter" data-listing-date-sort="1682521200000" data-listing-file-modified-sort="1683030111846" data-listing-reading-time-sort="16.95">
+<div class="thumbnail">
+<p><a href="./posts_work/Data_Mining_penguin/4월 25일 펭귄.html"> <img data-src="./posts_work/Data_Mining_penguin/penguin.jpg" class="thumnail-image"> </a></p>
 </div>
 <div class="body">
 <a href="./posts_work/Data_Mining_penguin/4월 25일 펭귄.html">
@@ -430,6 +475,9 @@ Seongtaek
 <div class="listing-no-matching d-none">
 No matching items
 </div>
+<nav id="listing-pagination" class="listing-pagination" aria-label="Page Navigation">
+  <ul class="pagination"></ul>
+</nav>
 </div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
