@@ -2,6 +2,8 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/Advanced_Python_ch3/파이썬 심화 챕터3 공부.html",
+      "/posts/Advanced_Python_ch4/챕터4 공부.html",
       "/posts/Data_Mining_Geopandas/0_install_geopandas.html",
       "/posts/Spatial_Info_Analysis Ch2/공간정보분석 CH3.html",
       "/posts/Spatial_Info_Analysis Ch1/공간정보분석 CH2.html",

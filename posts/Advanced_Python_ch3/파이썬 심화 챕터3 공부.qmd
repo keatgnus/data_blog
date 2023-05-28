@@ -1,0 +1,1934 @@
+---
+title: "advanced_python CH3"
+author: "Seongtaek"
+date: "2023-05-28"
+categories: [code, advanced_python, jupyter]
+image: "jup_image.jpg"
+toc: true
+---
+
+
+<table align="bottom">
+  <td>
+    <a target="_blank" href="http://localhost:8888/notebooks/3-1%20Python_Hard/%ED%8C%8C%EC%9D%B4%EC%8D%AC%20%EC%8B%AC%ED%99%94%20%EC%B1%95%ED%84%B03%20%EA%B3%B5%EB%B6%80.ipynb#"><img
+    src = small_jup_image.jpg />Jupyter에서 실행하기</a>
+  </td>
+</table>
+
+Basic Grammar 2
+
+## Advanced Python CH3
+
+
+## Tuple
+
+불변한 데이터 타입, 변경 삭제 불가
+
+
+```python
+tup = 4,5,6
+tup
+```
+
+
+
+
+    (4, 5, 6)
+
+
+
+
+```python
+nested_tup = (4,5,6),(7,8)
+nested_tup
+```
+
+
+
+
+    ((4, 5, 6), (7, 8))
+
+
+
+
+```python
+tuple([4,0,2])
+```
+
+
+
+
+    (4, 0, 2)
+
+
+
+
+```python
+tup = tuple('study')
+tup
+```
+
+
+
+
+    ('s', 't', 'u', 'd', 'y')
+
+
+
+
+```python
+tup[0]
+```
+
+
+
+
+    's'
+
+
+
+
+```python
+### 잘못된 예시 : 변경 불가
+
+tup = tuple(['foo', [1,2], True])
+tup[2] = False
+```
+
+
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    Cell In[10], line 4
+          1 ### 잘못된 예시 : 변경 불가
+          3 tup = tuple(['foo', [1,2], True])
+    ----> 4 tup[2] = False
+    
+
+    TypeError: 'tuple' object does not support item assignment
+
+
+
+```python
+tup[1].append(3)
+tup
+```
+
+
+
+
+    ('foo', [1, 2, 3], True)
+
+
+
+
+```python
+(4, None, 'foo') + (6, 0) + ('bar',)
+```
+
+
+
+
+    (4, None, 'foo', 6, 0, 'bar')
+
+
+
+
+```python
+('foo','bar') * 4
+```
+
+
+
+
+    ('foo', 'bar', 'foo', 'bar', 'foo', 'bar', 'foo', 'bar')
+
+
+
+## Unpacking tuples 
+
+tuple의 각 요소들을 변수에  할당
+
+
+```python
+tup = (4,5,6)
+a,b,c = tup
+b
+```
+
+
+
+
+    5
+
+
+
+
+```python
+tup = 4,5,(6,7)
+a,b,(c,d) = tup
+a,b,c
+```
+
+
+
+
+    (4, 5, 6)
+
+
+
+
+```python
+tmp = a
+a = b
+b = tmp
+
+a, b =1,2
+a
+```
+
+
+
+
+    1
+
+
+
+
+```python
+b,a = a,b
+a
+```
+
+
+
+
+    2
+
+
+
+
+```python
+b
+```
+
+
+
+
+    1
+
+
+
+
+```python
+seq = [(1,2,3), (4,5,6), (7,8,9)]
+for a,b,c in seq:
+    print('a={0}, b={1}, c={2}'.format(a,b,c))
+```
+
+    a=1, b=2, c=3
+    a=4, b=5, c=6
+    a=7, b=8, c=9
+    
+
+
+```python
+seq2 = [(4,4,4), (7,7,7), (9,9,9)]
+for z,y,x in seq2:
+    print("z={0}, y={1}, x={2}".format(z,y,x))
+```
+
+    z=4, y=4, x=4
+    z=7, y=7, x=7
+    z=9, y=9, x=9
+    
+
+
+```python
+for a in seq:
+    print(a)
+```
+
+    (1, 2, 3)
+    (4, 5, 6)
+    (7, 8, 9)
+    
+
+
+```python
+for c in seq2:
+    print(c)
+```
+
+    (4, 4, 4)
+    (7, 7, 7)
+    (9, 9, 9)
+    
+
+
+```python
+# * 마크 : * 부터 출력X
+
+values = 1,2,3,4,5
+a,b, * rest = values
+a,b
+```
+
+
+
+
+    (1, 2)
+
+
+
+
+```python
+rest
+```
+
+
+
+
+    [3, 4, 5]
+
+
+
+
+```python
+a,b, *_ = values
+_
+```
+
+
+
+
+    [3, 4, 5]
+
+
+
+
+```python
+values2 = 9,9,0,1,1,5
+z,x, * hi = values2
+print(z,x)
+print(hi)
+```
+
+    9 9
+    [0, 1, 1, 5]
+    
+
+## Tuple methods
+
+
+```python
+a = (1,2,2,2,3,4,2)
+a.count(2)
+```
+
+
+
+
+    4
+
+
+
+### Quiz 1
+
+숫자 2가 몇개 있는지 세는 코드를 loop문 이용해 만들기
+
+
+```python
+count = 0
+for i in a:
+    if i ==2:
+        count +=1
+print(count)
+```
+
+    4
+    
+
+## List
+
+
+```python
+a_list = list([2,3,7,None])
+tup = ('foo','bar','baz')
+b_list = list(tup)
+a_list, b_list
+```
+
+
+
+
+    ([2, 3, 7, None], ['foo', 'bar', 'baz'])
+
+
+
+
+```python
+b_list[1] = 'peekaboo'
+b_list
+```
+
+
+
+
+    ['foo', 'peekaboo', 'baz']
+
+
+
+
+```python
+gen = range(10)
+gen
+list(gen)
+```
+
+
+
+
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+
+
+## Adding & Removing elements
+
+
+```python
+b_list.append('dwarf')
+b_list
+```
+
+
+
+
+    ['foo', 'peekaboo', 'baz', 'dwarf']
+
+
+
+
+```python
+# 자리 지정 추가
+
+b_list.insert(1, 'red')
+b_list
+```
+
+
+
+
+    ['foo', 'red', 'peekaboo', 'baz', 'dwarf']
+
+
+
+
+```python
+# pop : 제거
+
+b_list.pop(2)
+b_list
+```
+
+
+
+
+    ['foo', 'red', 'baz', 'dwarf']
+
+
+
+
+```python
+# 추가
+
+b_list.append('foo')
+b_list
+```
+
+
+
+
+    ['foo', 'red', 'baz', 'dwarf', 'foo']
+
+
+
+
+```python
+# 제거 : 앞에서부터 순서대로 삭제
+
+b_list.remove('foo')
+b_list
+```
+
+
+
+
+    ['red', 'baz', 'dwarf', 'foo']
+
+
+
+
+```python
+'dwarf' in b_list, 'dwarf' not in b_list
+```
+
+
+
+
+    (True, False)
+
+
+
+## Concatenating and combining lists
+
+
+```python
+[4, None, 'foo'] + [7,8,(2,3)]
+```
+
+
+
+
+    [4, None, 'foo', 7, 8, (2, 3)]
+
+
+
+
+```python
+# extend : 콘캣 함수
+
+x = [4, None,'foo']
+x.extend([7,8,(2,3)])
+x
+```
+
+
+
+
+    [4, None, 'foo', 7, 8, (2, 3)]
+
+
+
+## Sorting
+
+
+```python
+# 오름 차순
+
+a = [7,2,5,1,3]
+a.sort()
+a
+```
+
+
+
+
+    [1, 2, 3, 5, 7]
+
+
+
+
+```python
+# key : 조건 ex) key=len 길이 순서
+# 길이 같으면 원래 순서 유지
+
+b = ['saw','small','He','foxes','six']
+b.sort(key=len)
+b
+```
+
+
+
+
+    ['He', 'saw', 'six', 'small', 'foxes']
+
+
+
+## Binary search and maintaining a sorted list
+
+
+```python
+# bisect : 특정 값이 들어갈 위치 탐색
+
+import bisect
+c = [1,2,2,2,3,4,7]
+bisect.bisect(c,2), bisect.bisect(c,5)
+```
+
+
+
+
+    (4, 6)
+
+
+
+
+```python
+# insort : 특정 값이 들어갈 위치에 삽입
+
+bisect.insort(c,6)
+c
+```
+
+
+
+
+    [1, 2, 2, 2, 3, 4, 6, 7]
+
+
+
+## Slicing
+
+
+```python
+seq = [7,2,3,7,5,6,0,1]
+seq
+```
+
+
+
+
+    [7, 2, 3, 7, 5, 6, 0, 1]
+
+
+
+
+```python
+# 3번째 부터 4번째 전까지 (3번째) 선택 + 변경
+
+seq[3:4] = [6,3]
+seq
+```
+
+
+
+
+    [7, 2, 3, 6, 3, 5, 6, 0, 1]
+
+
+
+
+```python
+# 5번째 전까지 출력
+
+seq[:5]
+```
+
+
+
+
+    [7, 2, 3, 6, 3]
+
+
+
+
+```python
+# 3번째 부터 출력
+
+seq[3:]
+```
+
+
+
+
+    [6, 3, 5, 6, 0, 1]
+
+
+
+
+```python
+# 뒤에서 4개 출력
+
+seq[-4:]
+```
+
+
+
+
+    [5, 6, 0, 1]
+
+
+
+
+```python
+# 뒤에서 끝 2개 제외 6개 출력
+
+seq[-6:-2]
+```
+
+
+
+
+    [6, 3, 5, 6]
+
+
+
+
+```python
+# 앞에서부터 간격 2로 출력
+
+seq[::2]
+```
+
+
+
+
+    [7, 3, 3, 6, 1]
+
+
+
+
+```python
+# 뒤에서부터 간격 1로 출력
+
+seq[::-1]
+```
+
+
+
+
+    [1, 0, 6, 5, 3, 6, 3, 2, 7]
+
+
+
+### Quiz 2
+- 1,0,6,5 출력
+
+
+```python
+seq
+```
+
+
+
+
+    [7, 2, 3, 6, 3, 5, 6, 0, 1]
+
+
+
+
+```python
+seq[-4:][::-1]
+```
+
+
+
+
+    [1, 0, 6, 5]
+
+
+
+
+```python
+seq[:4:-1]
+```
+
+
+
+
+    [1, 0, 6, 5]
+
+
+
+## do something with value
+
+
+```python
+# enumerate() : 인덱스, 값 순회
+
+some_list = ['foo','bar','baz']
+mapping = {}
+for i, v in enumerate(some_list):
+    mapping[v] = i
+mapping
+```
+
+
+
+
+    {'foo': 0, 'bar': 1, 'baz': 2}
+
+
+
+
+```python
+s = ['asd', 'zxc','qwe']
+m = {}
+for a,b in enumerate(s):
+    m[b] = a
+m   
+```
+
+
+
+
+    {'asd': 0, 'zxc': 1, 'qwe': 2}
+
+
+
+
+```python
+# sorted() : 작은것, 순서대로 정렬
+
+sorted([7,1,2,6,0,3,2]), sorted('horse race')
+```
+
+
+
+
+    ([0, 1, 2, 2, 3, 6, 7], [' ', 'a', 'c', 'e', 'e', 'h', 'o', 'r', 'r', 's'])
+
+
+
+
+```python
+# zip() : 순서쌍으로 묶기
+
+seq1 = ['foo','bar','baz']
+seq2 = ['one','two','three']
+zipped = zip(seq1, seq2)
+list(zipped)
+```
+
+
+
+
+    [('foo', 'one'), ('bar', 'two'), ('baz', 'three')]
+
+
+
+
+```python
+# 개수 안 맞으면 최소 개수 출력
+
+seq3 = [False, True]
+list(zip(seq1, seq2, seq3))
+```
+
+
+
+
+    [('foo', 'one', False), ('bar', 'two', True)]
+
+
+
+
+```python
+# enumerate() + zip() 활용
+
+for i, (a,b) in enumerate(zip(seq1, seq2)):
+    print('{0}: {1}, {2}'.format(i,a,b))
+```
+
+    0: foo, one
+    1: bar, two
+    2: baz, three
+    
+
+
+```python
+for a,(b,c,d) in enumerate(zip(seq1,seq2,seq3)):
+    print("{0}: {1}, {2}".format(a,b,c,d))
+```
+
+    0: foo, one
+    1: bar, two
+    
+
+
+```python
+# reversed() : 거꾸로
+
+list(reversed(range(10)))
+```
+
+
+
+
+    [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+
+
+
+## dict
+
+
+```python
+# key 값 : 'a','b', value 값 : 'some value',[1, 2, 3, 4]
+
+empty_dict = {}
+d1 = {'a' : 'some value', 'b' : [1,2,3,4]}
+d1
+```
+
+
+
+
+    {'a': 'some value', 'b': [1, 2, 3, 4]}
+
+
+
+
+```python
+# 딕셔너리에 새로운 key-value 쌍 추가
+
+d1['an integer'] = 7
+d1
+```
+
+
+
+
+    {'a': 'some value', 'b': [1, 2, 3, 4], 'an integer': 7}
+
+
+
+
+```python
+# key에 대한 value값 반환
+
+d1['b']
+```
+
+
+
+
+    [1, 2, 3, 4]
+
+
+
+
+```python
+d1['an integer']
+```
+
+
+
+
+    7
+
+
+
+
+```python
+'b' in d1
+```
+
+
+
+
+    True
+
+
+
+
+```python
+d1[5] = 'some value'
+d1
+```
+
+
+
+
+    {'a': 'some value', 'b': [1, 2, 3, 4], 'an integer': 7, 5: 'some value'}
+
+
+
+
+```python
+d1['dummy'] = 'another value'
+d1
+```
+
+
+
+
+    {'a': 'some value',
+     'b': [1, 2, 3, 4],
+     'an integer': 7,
+     5: 'some value',
+     'dummy': 'another value'}
+
+
+
+
+```python
+# del : 순서쌍 삭제
+
+del d1[5]
+d1
+```
+
+
+
+
+    {'a': 'some value',
+     'b': [1, 2, 3, 4],
+     'an integer': 7,
+     'dummy': 'another value'}
+
+
+
+
+```python
+# dummy 순서쌍 삭제후, ret에 value값 할당
+
+ret = d1.pop('dummy')
+ret
+```
+
+
+
+
+    'another value'
+
+
+
+
+```python
+d1
+```
+
+
+
+
+    {'a': 'some value', 'b': [1, 2, 3, 4], 7: 'an integer'}
+
+
+
+
+```python
+# key값, value값 확인
+
+list(d1.keys()), list(d1.values())
+```
+
+
+
+
+    (['a', 'b', 'an integer'], ['some value', [1, 2, 3, 4], 7])
+
+
+
+
+```python
+d1.update({'b' : 'foo', 'c' : 12})
+d1
+```
+
+
+
+
+    {'a': 'some value', 'b': 'foo', 'an integer': 7, 'c': 12}
+
+
+
+## Creating dicts from sequences
+
+
+```python
+# dict + zip
+
+mapping = dict(zip(range(5), reversed(range(5))))
+mapping
+```
+
+
+
+
+    {0: 4, 1: 3, 2: 2, 3: 1, 4: 0}
+
+
+
+## Default values
+
+
+```python
+words = ['apple','bat','bar','atom','book']
+by_letter = {}
+for word in words:
+    letter = word[0]
+    if letter not in by_letter:
+        by_letter[letter] = [word]
+    else:
+        by_letter[letter].append(word)
+by_letter
+```
+
+
+
+
+    {'a': ['apple', 'atom'], 'b': ['bat', 'bar', 'book']}
+
+
+
+## Valid dict key types
+
+
+```python
+# 해시값 반환
+
+hash('string'), hash((1,2,(2,3)))
+```
+
+
+
+
+    (-5910375871019062728, -9209053662355515447)
+
+
+
+
+```python
+# list형식은 변경 가능한 객체이므로 해시값 X
+
+hash((1,2,[2,3]))
+```
+
+
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    Cell In[178], line 3
+          1 # list형식은 변경 가능한 객체이므로 해시값 X
+    ----> 3 hash((1,2,[2,3]))
+    
+
+    TypeError: unhashable type: 'list'
+
+
+
+```python
+d = {}
+d[tuple([1,2,3])] = 5
+d
+```
+
+
+
+
+    {(1, 2, 3): 5}
+
+
+
+## set
+
+
+```python
+# 중복값 없이 나열
+
+set([2,2,2,1,3,3])
+```
+
+
+
+
+    {1, 2, 3}
+
+
+
+
+```python
+# 중괄호로 가능
+
+{2,2,2,1,3,3}
+```
+
+
+
+
+    {1, 2, 3}
+
+
+
+
+```python
+{11,22,11,22}
+```
+
+
+
+
+    {11, 22}
+
+
+
+
+```python
+a = {1,2,3,4,5}
+b = {3,4,5,6,7,8}
+```
+
+
+```python
+# union(), | : 합집합 
+
+a.union(b), a | b
+```
+
+
+
+
+    ({1, 2, 3, 4, 5, 6, 7, 8}, {1, 2, 3, 4, 5, 6, 7, 8})
+
+
+
+
+```python
+# intersection, & : 교집합 
+
+a.intersection(b), a & b
+```
+
+
+
+
+    ({3, 4, 5}, {3, 4, 5})
+
+
+
+
+```python
+c = a.copy()
+c |= b
+c
+```
+
+
+
+
+    {1, 2, 3, 4, 5, 6, 7, 8}
+
+
+
+
+```python
+d = a.copy()
+d &= b      # d에 값 다시 할당
+d
+```
+
+
+
+
+    {3, 4, 5}
+
+
+
+
+```python
+my_data = [1,2,3,4]
+my_set = {tuple(my_data)}
+my_set
+```
+
+
+
+
+    {(1, 2, 3, 4)}
+
+
+
+
+```python
+# 부분집합, 상위집합
+a_set = {1,2,3,4,5}
+{1,2,3}.issubset(a_set), a_set.issuperset({1,2,3})
+```
+
+
+
+
+    (True, True)
+
+
+
+
+```python
+{1,2,3} == {3,2,1}
+```
+
+
+
+
+    True
+
+
+
+## List, Set, Dict Comprehensions
+
+
+```python
+strings = ['a','as','bat','car','dove','python']
+[x.upper() for x in strings if len(x) >2]
+```
+
+
+
+
+    ['BAT', 'CAR', 'DOVE', 'PYTHON']
+
+
+
+
+```python
+unique_lengths = {len(x) for x in strings}
+unique_lengths
+```
+
+
+
+
+    {1, 2, 3, 4, 6}
+
+
+
+
+```python
+set(map(len, strings))
+```
+
+
+
+
+    {1, 2, 3, 4, 6}
+
+
+
+### Quiz 3
+- 각 객체가 몇번째에 있는지 출력
+
+
+```python
+loc_mapping = {val : index for index, val in enumerate(strings)}
+loc_mapping
+```
+
+
+
+
+    {'a': 0, 'as': 1, 'bat': 2, 'car': 3, 'dove': 4, 'python': 5}
+
+
+
+
+```python
+### 루프문 써서 만들기
+
+loc_mapping = {}
+for index, val in enumerate(strings):
+    loc_mapping[val] = index
+
+loc_mapping
+```
+
+
+
+
+    {'a': 0, 'as': 1, 'bat': 2, 'car': 3, 'dove': 4, 'python': 5}
+
+
+
+### Quiz 4
+
+
+```python
+def multiply_by_two(x):
+    return x * 2
+
+my_list = [1,2,3,4,5]
+result = list(map(multiply_by_two, my_list))
+
+print(result)
+```
+
+    [2, 4, 6, 8, 10]
+    
+
+
+```python
+### lambda로 간결히 사용
+
+my_list = [1,2,3,4,5]
+result = list(map(lambda x: x*2, my_list))
+print(result)
+```
+
+    [2, 4, 6, 8, 10]
+    
+
+
+```python
+result2 = list(map(lambda x: x*3,a))
+result2
+```
+
+
+
+
+    [3, 6, 9, 12, 15]
+
+
+
+
+## Nested list comprehensions
+
+
+```python
+all_data = [['John','Emily','Michael','Mary','Steven'],
+           ['Maria','Juan','Javier','Natalia','Pilar']]
+```
+
+
+```python
+### e가 한개 이상인것 추출
+names_of_interest = []
+
+for names in all_data:
+    enough_es = [name for name in names if name .count('e')>=1]
+    names_of_interest.extend(enough_es)
+
+names_of_interest
+```
+
+
+
+
+    ['Michael', 'Steven', 'Javier']
+
+
+
+
+```python
+result = [name for names in all_data for name in names
+          if name.count('e') >= 2]
+result
+```
+
+
+
+
+    ['Steven']
+
+
+
+
+```python
+some_tuples = [(1,2,3),(4,5,6),(7,8,9)]
+flattened = [x for tup in some_tuples for x in tup]
+flattened
+```
+
+
+
+
+    [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+
+
+
+```python
+fruits = ['사과','바나나','수박','딸기']
+for i in range(len(fruits)):
+    print(i,fruits[i])
+```
+
+    0 사과
+    1 바나나
+    2 수박
+    3 딸기
+    
+
+
+```python
+for i, fruit in enumerate(fruits):
+    print(i,fruit)
+```
+
+    0 사과
+    1 바나나
+    2 수박
+    3 딸기
+    
+
+
+```python
+
+[[x for x in tup] for tup in some_tuples]
+```
+
+
+
+
+    [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
+
+
+
+
+## Functions
+
+
+```python
+a = None
+
+def bind_a_variable():
+    global a
+    a = []
+    
+bind_a_variable()
+
+print(a)
+```
+
+    []
+    
+
+
+```python
+func()
+```
+
+
+```python
+def func():
+    a = []
+    for i in range(5):
+        a.append(i)
+        
+a
+```
+
+
+
+
+    []
+
+
+
+
+```python
+a = []
+def func():
+    for i in range(5):
+        a.append(i)
+        
+a
+```
+
+
+
+
+    []
+
+
+
+
+```python
+def f():
+    a=5
+    b=6
+    c=7
+    return {'a' : a, 'b' : b, 'c' : c}
+```
+
+## Functions are object
+
+
+```python
+states = ['    Alabama ','Georgia!','Georgia','georgia','FlOrIda',
+         'sounth   carolina##', 'West virginia?']
+states
+```
+
+
+
+
+    ['    Alabama ',
+     'Georgia!',
+     'Georgia',
+     'georgia',
+     'FlOrIda',
+     'sounth   carolina##',
+     'West virginia?']
+
+
+
+
+```python
+import re
+
+def clean_strings(strings):
+    result = []
+    for value in strings:
+        value = value.strip()            # 앞뒤 공백 제거
+        value = re.sub('[!#?]','',value) # !,#,? → 공백 대체
+        value = value.title()            # 문자열을 제목 형태로 (첫 대문자, 나머지 소문자) 
+        result.append(value)             # 정리된 문자열 value를 result 리스트에 추가
+    return result
+
+clean_strings(states)
+```
+
+
+
+
+    ['Alabama',
+     'Georgia',
+     'Georgia',
+     'Georgia',
+     'Florida',
+     'Sounth   Carolina',
+     'West Virginia']
+
+
+
+
+```python
+def remove_punctuation(value):
+    return re.sub('[!#?]','',value)
+
+clean_ops = [str.strip, remove_punctuation, str.title]
+
+def clean_strings(strings, ops):
+    result = []
+    for value in strings:
+        for function in ops:
+            value = function(value)
+        result.append(value)
+    return result
+```
+
+
+```python
+clean_strings(states, clean_ops)
+```
+
+
+
+
+    ['Alabama',
+     'Georgia',
+     'Georgia',
+     'Georgia',
+     'Florida',
+     'Sounth   Carolina',
+     'West Virginia']
+
+
+
+
+```python
+for x in map(remove_punctuation, states):
+    print(x)
+```
+
+        Alabama 
+    Georgia
+    Georgia
+    georgia
+    FlOrIda
+    sounth   carolina
+    West virginia
+    
+
+
+```python
+### 첫 대문자, 나머지 소문자
+'good man'.capitalize()
+```
+
+
+
+
+    'Good man'
+
+
+
+
+```python
+### 각 단어 첫 대문자
+'good man'.title()
+```
+
+
+
+
+    'Good Man'
+
+
+
+## Anonymous (Lambda) Functions
+
+
+```python
+def apply_to_list(some_list, f):
+    return [f(x) for x in some_list]
+
+ints = [4,0,1,5,6]
+
+apply_to_list(ints, lambda x: x*2)
+```
+
+
+
+
+    [8, 0, 2, 10, 12]
+
+
+
+
+```python
+strings = ['foo','card','bar','aaaa','abab']
+strings
+```
+
+
+
+
+    ['foo', 'card', 'bar', 'aaaa', 'abab']
+
+
+
+
+```python
+strings.sort(key=lambda x: len(set(x)))
+strings
+```
+
+
+
+
+    ['aaaa', 'foo', 'abab', 'bar', 'card']
+
+
+
+
+```python
+list(map(lambda x: x+10, [1,2,3,4,5,6]))
+```
+
+
+
+
+    [11, 12, 13, 14, 15, 16]
+
+
+
+## Generators
+
+
+```python
+some_dict = {'a':1, 'b':2, 'c':3}
+for key in some_dict:
+    print(key)
+```
+
+    a
+    b
+    c
+    
+
+
+```python
+dict_iterator = iter(some_dict)
+dict_iterator
+```
+
+
+
+
+    <dict_keyiterator at 0x22ea41bfe50>
+
+
+
+
+```python
+list(dict_iterator)
+```
+
+
+
+
+    ['a', 'b', 'c']
+
+
+
+
+```python
+def squares(n=10):
+    print('Generating squares from 1 to {0}'.format(n**2))
+    for i in range(1, n+1):
+        yield i**2
+```
+
+
+```python
+gen = squares()
+gen
+```
+
+
+
+
+    <generator object squares at 0x0000022EA41D5AC0>
+
+
+
+
+```python
+for x in gen:
+    print(x, end='')
+```
+
+    Generating squares from 1 to 100
+    149162536496481100
+
+## Generator expressions
+
+
+```python
+gen = (x **2 for x in range(100))
+gen
+```
+
+
+
+
+    <generator object <genexpr> at 0x0000022EA41D5EB0>
+
+
+
+
+```python
+sum(x**2 for x in range(100))
+dict((i, i**2) for i in range(5))
+```
+
+
+
+
+    {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
+
+
+
+## itertools module
+
+
+```python
+import itertools
+first_letter = lambda x: x[0]
+names = ['Alan','Adam','Wes','Will','Albert','Steven']
+for letter, names in itertools.groupby(names, first_letter):
+    print(letter, list(names))
+```
+
+    A ['Alan', 'Adam']
+    W ['Wes', 'Will']
+    A ['Albert']
+    S ['Steven']
+    
+
+## Errors & Exception Handling
+
+
+```python
+float('1.2345')
+```
+
+
+
+
+    1.2345
+
+
+
+
+```python
+float('something')
+```
+
+
+    ---------------------------------------------------------------------------
+
+    ValueError                                Traceback (most recent call last)
+
+    Cell In[125], line 1
+    ----> 1 float('something')
+    
+
+    ValueError: could not convert string to float: 'something'
+
+
+
+```python
+def attempt_float(x):
+    try:
+        return float(x)
+    except:
+        return x
+```
+
+
+```python
+attempt_float('1.2345')
+```
+
+
+
+
+    1.2345
+
+
+
+
+```python
+attempt_float('something')
+```
+
+
+
+
+    'something'
+
+
+
+
+```python
+float((1,2))
+```
+
+
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    Cell In[129], line 1
+    ----> 1 float((1,2))
+    
+
+    TypeError: float() argument must be a string or a number, not 'tuple'
+
+
+
+```python
+def attempt_float(x):
+    try:
+        return float(x)
+    except (TypeError, ValueError):
+        return x
+```
+
+
+```python
+attempt_float('1.2345')
+```
+
+
+
+
+    1.2345
+
+
