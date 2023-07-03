@@ -1,7 +1,7 @@
 ---
 title: "advanced_python CH4"
 author: "Seongtaek"
-date: "2023-05-28"
+date: "2023-05-29"
 categories: [code, advanced_python, jupyter]
 image: "jup_image.jpg"
 toc: true
