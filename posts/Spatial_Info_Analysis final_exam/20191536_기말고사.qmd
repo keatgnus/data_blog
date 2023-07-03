@@ -1,0 +1,302 @@
+---
+title: "Spatial_Info_Analysis Final_Exam"
+author: "Seongtaek"
+date: "2023-07-03"
+categories: [code, Spatial_Info_Analysis, rstudio]
+image: "공간 기말고사.png"
+toc: true
+toc-depth: 4
+number-sections: true
+---
+
+<table align="bottom">
+  <td>
+    <a target="_blank" href="20191536_기말고사.html"><img
+    src = r_logo.png />HTML파일로 보기</a>
+  </td>
+</table>
+
+Final Exam
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  comment = "#>",
+  collapse = TRUE # Code와 Output을 분리시키지 않고 하나로 출력시켜 줌
+  )
+```
+
+## 패키지
+
+```{r,warning=FALSE, message=FALSE}
+library(sf)
+library(sp)
+library(maptools)
+library(broom)
+library(ggplot2)
+library(tmap)   
+library(leaflet)
+```
+
+
+## 가
+
+### a
+
+```{r}
+getwd()
+```
+### b
+
+```{r,warning=FALSE, message=FALSE}
+tasu_station <- read.csv("C:/Users/seong taek/Desktop/3-1 Spatial_Info_Analysis/Spatial_Info_Analysis/data/data/tasu_station.csv", fileEncoding = "cp949")
+tasu_2020 <- read.csv("C:/Users/seong taek/Desktop/3-1 Spatial_Info_Analysis/Spatial_Info_Analysis/data/data/tasu_2020.csv", fileEncoding = "cp949")
+
+library(rgdal)
+
+deajeon_area <- readOGR('C:/Users/seong taek/Desktop/3-1 Spatial_Info_Analysis/Spatial_Info_Analysis/LSMD_ADM_SECT_UMD_30.shp', encoding = "euc-kr")
+```
+
+## 나
+
+### a
+
+```{r}
+library(dplyr)
+
+tasu_2020 %>% head()
+tasu_2020 %>% tail()
+
+tasu_station %>% head()
+tasu_station %>% tail()
+
+deajeon_area %>% head()
+deajeon_area %>% tail()
+```
+
+
+### b
+
+```{r}
+tasu_station %>% str()
+
+tasu_2020 %>% str()
+```
+
+### c
+
+```{r}
+tasu_2020 %>% dim()
+
+tasu_station %>% dim()
+
+deajeon_area %>% dim()
+```
+
+### d
+
+```{r}
+names(tasu_station) <- c('번호', '대여소명', '거치대', '주소')
+tasu_station %>% head()
+
+names(tasu_2020) <- c('대여스테이션', '대여일시', '반납스테이션', '반납일시', '이동거리')
+tasu_2020 %>% head()
+```
+
+
+## 다
+
+### a
+
+```{r,warning=FALSE, message=FALSE}
+library(ggmap)
+register_google(key = 'AIzaSyCQhISmZrGYjMTh5J42qmSVytOVgzs6YlQ')
+```
+
+
+### b
+
+```{r,warning=FALSE, message=FALSE}
+tasu_station <- mutate_geocode(data = tasu_station, location = 주소, source = "google")
+
+tasu_station
+```
+
+### c
+
+```{r,warning=FALSE, message=FALSE}
+map <- qmap(location = "대전", zoom = 12, maptype = "roadmap")
+p <- map + geom_point(data = tasu_station, aes(x = lon, y = lat, colour=factor(거치대)),
+                      size = 3, alpha = 0.7)
+p + ggtitle("타슈 대여소별 거치대 수")
+```
+
+
+
+## 라
+
+### a
+
+```{r,warning=FALSE, message=FALSE}
+options(scipen = 100)
+```
+
+### b
+
+```{r,warning=FALSE, message=FALSE}
+tasu_2020$대여년월일 <- substr(tasu_2020$대여일시,1,8)
+tasu_2020 %>% head()
+```
+
+### c
+
+```{r,warning=FALSE, message=FALSE}
+top1_day <- 
+tasu_2020 %>% group_by(대여년월일) %>% 
+  summarise(최대대여반납수 = n())
+
+top1_day <- top1_day %>% arrange(-최대대여반납수)
+top1_day <- top1_day[1,]
+
+top1_day
+```
+
+### d
+
+```{r,warning=FALSE, message=FALSE}
+tasu_top1_day <- 
+  tasu_2020 %>% filter(대여년월일 == 20200913)
+
+tasu_top1_day %>% dim()
+```
+
+### e
+
+```{r,warning=FALSE, message=FALSE}
+tasu_top1_day <- 
+tasu_top1_day %>% filter(대여스테이션 != 262,
+                         반납스테이션 != 262)
+
+tasu_top1_day %>% dim()
+```
+
+### f
+
+```{r,warning=FALSE, message=FALSE}
+borrow_count <- 
+tasu_top1_day %>% group_by(대여스테이션) %>% 
+  summarise(대여스테이션별개수 = n()) %>% na.omit()
+
+borrow_count %>% head()
+```
+
+
+### g
+
+```{r,warning=FALSE, message=FALSE}
+borrow_count
+
+tasu_station <- 
+tasu_station %>% merge(borrow_count, by.x="번호", by.y="대여스테이션",all=T)
+
+tasu_station[is.na(tasu_station)] <- 0
+
+tasu_station
+```
+
+
+### h 
+
+```{r,warning=FALSE, message=FALSE}
+tasu_station %>% class()
+
+tasu_sf <- 
+  tasu_station %>% st_as_sf(coords = c("lon", "lat"),crs=4326)
+
+tasu_sf
+```
+### i
+
+```{r,warning=FALSE, message=FALSE}
+tasu_sf
+
+p2 <- map + geom_sf(data = tasu_sf, inherit.aes=F, aes(size= 대여스테이션별개수), alpha = 0.7)
+p2
+```
+
+
+
+
+
+
+## 마
+
+### a
+
+```{r,warning=FALSE, message=FALSE}
+# 기존 투영에서 경위도로 변환
+deajeon_area %>% head
+deajeon_area %>% class()
+
+to_crs = CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")
+deajeon_area_sp <- spTransform(deajeon_area, to_crs)
+deajeon_area_sp
+
+deajeon_area_sf <- st_as_sf(deajeon_area_sp)
+deajeon_area_sf
+```
+
+### b
+
+```{r,warning=FALSE, message=FALSE}
+deajeon_area_sf <- 
+  deajeon_area_sf %>% st_make_valid()
+
+deajeon_area_sf
+```
+
+### c
+
+```{r,warning=FALSE, message=FALSE}
+deajeon_area_sf %>% head()
+
+tasu_sf %>% head()
+
+join_result <- st_join(deajeon_area_sf,tasu_sf)
+join_result[is.na(join_result)] <- 0
+join_result %>% head()
+```
+
+### d
+
+```{r,warning=FALSE, message=FALSE}
+join_result %>% head()
+
+join_result_count <- 
+join_result %>% group_by(EMD_NM) %>% 
+  summarise(행정동별개수 = n())
+
+join_result_count
+```
+
+### e
+
+```{r,warning=FALSE, message=FALSE}
+join_result_count %>% head()
+deajeon_area_sf %>% head()
+
+HjD_station_cnt <- st_intersection(deajeon_area_sf,join_result_count)
+HjD_station_cnt
+```
+
+### f
+
+```{r,warning=FALSE, message=FALSE}
+map3 <- qmap(location = "대전", zoom = 11, maptype='roadmap', color='bw')
+p3 <- map3 + geom_sf(data = HjD_station_cnt, inherit.aes = F, aes(fill = 행정동별개수), alpha=.9)
+p3
+```
+
+
+
+
