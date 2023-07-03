@@ -1,0 +1,365 @@
+---
+title: "Data_Visualize_Movie_Data"
+author: "Seongtaek"
+date: "2023-07-02"
+categories: [code, data_visualization, rstudio]
+image: "movie.png"
+toc: true
+toc-depth: 4
+number-sections: true
+---
+
+<table align="bottom">
+  <td>
+    <a target="_blank" href="기말발표.html"><img
+    src = r_logo.png />HTML파일로 보기</a>
+  </td>
+</table>
+
+Final Exam
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  comment = "#>",
+  collapse = TRUE # Code와s Output을 분리시키지 않고 하나로 출력시켜 줌
+  )
+```
+
+### 패키지 불러오기
+
+```{r,warning=FALSE,message=FALSE}
+library(ggplot2)
+library(ggrepel)
+library(dplyr)
+library(colorspace)
+library(tidyverse)
+library(readxl)
+library(cowplot) # plot_grid
+library(scales)
+library(corrplot)
+library(ggmosaic) # 모자이크와 트리맵
+```
+
+## 데이터 불러오기
+- 1998년 ~ 2023년 4월 국내에서 개봉한 영화
+- 독립/예술 영화가 아닌 일반영화 (해외+국내영화)
+- 1위 ~ 500위
+
+```{r}
+movie <- read_xlsx('C:/Users/seong taek/Desktop/3-1 DataVisualize/data_visualize/역대 박스오피스2.xlsx')
+movie
+```
+
+### 전처리
+
+```{r}
+movie <- movie %>% select(-c(5,7,10))
+movie %>% head()
+```
+
+```{r}
+movie$국적 %>% unique()
+```
+
+
+## 상위5위 & 하위5위 그래프
+- 전처리
+
+```{r}
+movie_rank <- movie %>%                       # 0값이 아닌것만 필터링
+  select(영화이름, 관객수) %>%         # 열 지정 선택        
+  mutate(popratio = 관객수/median(관객수)) %>% # 새로운 컬럼 'popratio' 
+  arrange(desc(popratio)) %>%                      # 내림차순 정렬
+  mutate(index = 1:n(),
+         label = ifelse(index<=5 | index > n()-5 | index==median(index), 영화이름,''))
+# index값이 5이하, 행의 수에서 5를 뺀 값보다 크거나, index가 중위수인 index이면 '행정구역.시군구.별' 값을 가지고 그렇지 않으면 ''(빈문자열) 값 가짐
+
+movie_rank %>% head()
+```
+
+### 상위5위 & 하위5위 시각화
+
+```{r}
+ggplot(movie_rank, aes(x = index, y =관객수)) +
+  geom_hline(yintercept = 1, linetype = 2, color = 'grey40') +
+  geom_point(size = 1, color = 'royalblue')  +
+  geom_text_repel(aes(label = label),
+                  min.segment.length = 0,
+                  max.overlaps = 100) +
+  scale_y_continuous(name = '관객수',
+                     breaks = seq(1000000, 20000000, by = 2000000),
+                     labels = scales::comma_format()(seq(1000000, 20000000, by = 2000000))) +
+  scale_x_discrete(name = '관객수 상위5위 & 하위5위 ',
+                   breaks = NULL) +
+  theme_light() +
+  theme(panel.border = element_blank())
+
+```
+
+## 매출액 TOP10 영화
+- 전처리
+
+```{r}
+movie_rank_sales_10 <- movie %>% arrange(-매출액) %>% slice_head(n=10)
+movie_rank_sales_10
+```
+
+### 매출액 TOP10 영화 시각화
+
+```{r}
+sales_top10_plot <- 
+ggplot(movie_rank_sales_10, aes(x=매출액, y=fct_reorder(영화이름, 매출액))) +
+  geom_point(color = "#0072B2", size=4) +
+  scale_x_continuous(name = "총 매출액",
+                     limits = c(100000000000,160000000000),
+                     expand = c(0,0),
+                     labels = function(x) paste0(x / 1e+8, "억")) +
+  scale_y_discrete(name=NULL, expand = c(0, 0.5)) +
+  theme_minimal() +
+  theme(plot.margin = margin(18, -15, 3, 1.5))
+
+sales_top10_plot
+```
+
+## 관객수 대비 매출액 TOP10
+- 전처리
+
+```{r}
+movie_rank_sales_10_contr <- movie %>% 
+  mutate(관객수대비매출액 = (매출액/관객수)) %>%
+  arrange(-관객수대비매출액) %>% slice_head(n=10)
+movie_rank_sales_10_contr
+```
+
+
+### 관객수 대비 매출액 TOP10
+- 시각화
+
+```{r}
+sales_top10_cont_plot <- 
+ggplot(movie_rank_sales_10_contr, aes(x=관객수대비매출액, y=fct_reorder(영화이름, 관객수대비매출액))) +
+  geom_point(color = "#0072B2", size=4) +
+  scale_x_continuous(name = "1인당 매출액",
+                     limits = c(10000,14000),
+                     expand = c(0,0),
+                     labels = function(x) paste0(x / 1e+0, "원")) +
+  scale_y_discrete(name=NULL, expand = c(0, 0.5)) +
+  theme_minimal() +
+  theme(plot.margin = margin(18, -20, 3, 1.5))
+
+sales_top10_cont_plot
+
+### 2개의 매출액 통계 그래프
+plot_ab <- plot_grid(sales_top10_plot,
+                     sales_top10_cont_plot,
+                     nrow= 1,            # 행의 개수
+                     rel_widths= c(3,3), # 각각의 너비
+                     labels= c('총 매출액 TOP10 영화',
+                               '관객수 대비 매출액 TOP10 영화')) # 라벨 a,b
+
+plot_ab
+```
+
+
+## 영화 국적별 스크린수 총합
+- 전처리
+
+```{r}
+con_movie <- 
+movie %>% group_by(국적) %>% 
+  summarise(스크린수총합 = sum(스크린수),
+         매출액총합 = sum(매출액, na.rm = T)) 
+  
+
+con_movie$color <- c("#B6494A", "#000000", "#FFED00", "#E30113", "#E7D739","#4E4E4E")
+con_movie
+
+con_movie2 <- con_movie %>% 
+  arrange(스크린수총합) %>% 
+  mutate(party_fac = factor(국적, levels = 국적[order(스크린수총합)]),
+         value = 스크린수총합,
+         ypos = sum(value) - (cumsum(value)-0.5*value),
+         mid_angle = 2*pi*(ypos/sum(value)),
+         hjust = ifelse(mid_angle<pi, 1, 0),
+         vjust = ifelse(mid_angle<pi, mid_angle/pi, 2-mid_angle/pi))
+
+con_movie2
+```
+
+
+### 영화 국적별 스크린수 총합
+- 시각화
+
+```{r}
+ggplot(con_movie2, aes(x="", y=스크린수총합, fill=party_fac)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(x=1, y=ypos, label=스크린수총합), color="white", size=6) +
+  geom_text(aes(x=1.5, y=ypos, label=국적, hjust=hjust, vjust=vjust),
+            color="black", size=0) +
+  geom_text_repel(aes(label = party_fac), size = 6,
+                  nudge_x = ifelse(con_movie2$party_fac == "미국", 1, 1),
+                  nudge_y = ifelse(con_movie2$party_fac == "한국", -2, 1),
+                  segment.color = "black",
+                  force = 20,
+                  segment.size = 0.6) +
+  coord_polar(theta = "y", start = 0, direction = -1, clip = "off") +
+  scale_fill_manual(values = con_movie2$color) +
+  theme_void() +
+  theme(legend.position = "none") +
+  labs(title = "영화 국적별 스크린 수") +
+  theme(plot.title = element_text(size = 18))
+```
+
+
+
+
+
+```{r}
+# date 형식 '개봉일' 생성
+
+movie %>% sapply(class)
+
+movie$개봉일 <- movie$개봉일 %>% as.Date()
+movie
+```
+
+
+
+
+## 연도별 통계 시각화
+
+```{r}
+# 관객수 
+movie_sum <- movie %>%
+  mutate(연도 = lubridate::year(개봉일)) %>%
+  group_by(연도) %>%
+  summarise(총합 = sum(관객수))
+
+movie_sum
+
+sum1_plot <- 
+ggplot(movie_sum, aes(x = 연도, y = 총합)) +
+  geom_line(color = "royalblue", size = 1) +
+  scale_x_continuous(name = "개봉연도") +
+  scale_y_continuous(labels = comma, name = "관객수 총합") +
+  labs(title = "연도별 관객수 총합") +
+  theme_minimal()
+
+
+# 스크린수
+movie_sum2 <- movie %>%
+  mutate(연도 = lubridate::year(개봉일)) %>%
+  group_by(연도) %>%
+  summarise(총합 = sum(스크린수))
+
+movie_sum2
+
+sum2_plot <- 
+ggplot(movie_sum2, aes(x = 연도, y = 총합)) +
+  geom_line(color = "royalblue", size = 1) +
+  scale_x_continuous(name = "개봉연도") +
+  scale_y_continuous(labels = comma, name = "스크린수 총합") +
+  labs(title = "연도별 스크린수 총합") +
+  theme_minimal()
+
+# 매출액
+movie_sum3 <- movie %>%
+  mutate(연도 = lubridate::year(개봉일)) %>%
+  group_by(연도) %>%
+  summarise(총합 = sum(매출액,na.rm = T))
+
+movie_sum3
+
+label_억 <- function(x) {
+  x <- x / 1e8
+  sprintf("%.0f억", x)}  #억
+
+sum3_plot <- 
+ggplot(movie_sum3, aes(x = 연도, y = 총합)) +
+  geom_line(color = "royalblue", size = 1) +
+  scale_x_continuous(name = "개봉연도") +
+  scale_y_continuous(labels = label_억, name = "매출액 총합", expand = c(0, 0)) +
+  labs(title = "연도별 매출액 총합") +
+  theme_minimal()
+
+
+### 2개의 temp_long 그래프
+plot_2 <- plot_grid(sum1_plot,
+                     sum2_plot,
+                     nrow= 1,            # 행의 개수
+                     rel_widths= c(1.5,1.5)) # 각각의 너비
+
+
+
+### plot_ab 그래프 + templong 그래프
+plot_abc <- plot_grid(plot_2,
+                      sum3_plot,
+                      ncol= 1,               # 열의 개수
+                      rel_heights= c(1.5, 1))# 각각의 높이
+
+plot_abc
+```
+
+
+
+
+
+
+```{r}
+movie %>% group_by(국적)
+
+datetime <- as.POSIXct(movie$개봉일, format = "%Y-%m-%d %H:%M:%S")
+datetime_str <- format(datetime, "%Y-%m-%d")
+
+movie$개봉연도 <-  substr(datetime_str,1,4)
+movie
+
+movie_group_year <- 
+movie %>% group_by(개봉연도) %>% 
+  summarise(관객수총합 = sum(관객수),
+            스크린총합 = sum(스크린수))
+
+
+movie_group_year
+
+
+```
+
+
+
+## 국적별 국내 개봉 스크린 수
+
+```{r}
+movie
+
+movie5 <- movie %>%
+  mutate(year = format(개봉일, "%Y")) %>%   # 일시에서 월만 뽑아낸 month 컬럼 생성
+  group_by(국적, year) %>%              # 지점명, month로 그룹화
+  summarise(sum = sum(스크린수)) # 그룹화된 데이터의 집계값 요약                            # 그룹화를 해제하여 일반적인 데이터 프레임 형태로 사용
+             # month값을 factor 형태로 수정해서 원하는 levels 지정가능 # sep='' : 간격없이 붙이기
+
+movie5$year <- movie5$year %>% format()
+movie5$개봉연도 <- substr(movie5$year,3,4)
+movie5$개봉연도 <- movie5$개봉연도 %>% as.factor()
+
+movie5
+
+ggplot(movie5, aes(x = 개봉연도, y = 국적, fill = sum)) +
+  geom_tile(width = 0.95, height = 0.95) +
+  scale_fill_viridis_c(option = 'E', begin = 0.15, end =  0.98,
+                       name = '스크린수 총합') +
+  coord_fixed(expand = FALSE) +
+  ylab(NULL) +
+  labs(title = "영화국적별 스크린수 히트맵") +
+  theme(panel.background = element_rect(fill = "grey80")) +
+  scale_x_discrete(labels = c(98,99,seq(00,23,1)))#ylab('')
+```
+
+
+
+
+
+
+
+
