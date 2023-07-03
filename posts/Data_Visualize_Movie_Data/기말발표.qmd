@@ -1,5 +1,5 @@
 ---
-title: "Data_Visualize_Movie_Data"
+title: "Data_Visualize Movie_Data"
 author: "Seongtaek"
 date: "2023-07-02"
 categories: [code, data_visualization, rstudio]
