@@ -1,0 +1,168 @@
+---
+title: "Data_Visualize_mytown"
+author: "Seongtaek"
+date: "2023-06-15"
+categories: [code, data_visualization, rstudio]
+image: "문흥동.png"
+toc: true
+toc-depth: 4
+number-sections: true
+---
+
+<table align="bottom">
+  <td>
+    <a target="_blank" href="기말고사-제출.html"><img
+    src = r_logo.png />HTML파일로 보기</a>
+  </td>
+</table>
+
+Visualizing My Neighborhood
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  comment = "#>",
+  collapse = TRUE # Code와s Output을 분리시키지 않고 하나로 출력시켜 줌
+  )
+```
+
+
+## 광주 지역정보 시각화
+
+### 패키지
+
+```{r,message=FALSE, warning=FALSE}
+#install.packages("ggtext")
+library(dplyr)
+library(ggtext)
+library(tmap)
+library(rgdal)
+library(sf)
+library(plotly)
+library(ggplot2)
+library(viridis)
+library(dplyr)
+```
+
+
+### 데이터 불러오기
+
+```{r,message=FALSE, warning=FALSE}
+gwang_ju <- readOGR("C:/Users/seong taek/Desktop/3-1 DataVisualize/data_visualize/LSMD_ADM_SECT_UMD_29.shp",encoding = "euc-kr")
+gwang_ju <- gwang_ju %>% st_as_sf()
+gwang_ju %>% head()
+
+gwang_ju_data <- read.csv('C:/Users/seong taek/Desktop/3-1 DataVisualize/data_visualize/소상공인시장진흥공단_상가(상권)정보_광주_202303.csv')
+gwang_ju_data %>% head()
+```
+
+
+### 광주지역 '구' 분류
+
+```{r}
+gwang_ju %>% ggplot(aes(fill = COL_ADM_SE)) +
+  geom_sf() +
+  theme_minimal() +
+  labs(title = "광주") +
+  scale_fill_discrete(name = "구",
+                      labels = c("동구","서구","남구","북구","광산구"))
+```
+
+
+### 광주지역 '동' 분류
+
+
+```{r}
+gwang_ju_dong <- gwang_ju %>% 
+  ggplot(aes(fill=EMD_NM))+
+  geom_sf()+
+  geom_sf_text(mapping = aes(label = EMD_NM))+
+  labs(title = "광주")+
+  theme_minimal()+
+  scale_fill_discrete(name = "동") 
+  
+gwang_ju_dong %>% ggplotly()
+```
+
+
+
+### 광주광역시 북구 문흥동
+
+```{r}
+my_dong <- gwang_ju %>%
+  filter(EMD_NM == "문흥동") %>%
+  ggplot(aes(fill=EMD_NM)) +
+  geom_sf() +
+  geom_sf_text(mapping = aes(label = EMD_NM)) +
+  labs(title = "광주광역시 북구 문흥동") +
+  theme_minimal() +
+  scale_fill_discrete(name = "동")
+
+my_dong %>% ggplotly()
+```
+
+
+### 전처리
+- 각종 편의시설 
+
+```{r}
+library(RColorBrewer)
+# 문흥동 데이터만 추출
+gwang_ju_data_mydong <- gwang_ju_data %>% 
+  filter(gwang_ju_data$법정동명 == "문흥동") %>% 
+   st_as_sf(coords = c("경도", "위도"))
+
+st_crs(gwang_ju_data_mydong) <- 4737
+
+# 문흥동 지도
+gwang_ju_mydong <- gwang_ju %>% 
+  filter(gwang_ju$EMD_NM == "문흥동")
+
+# 문흥동에 있는 상권업종소분류명 추출
+existing_categories <- unique(gwang_ju_data_mydong$상권업종소분류명)
+existing_categories %>% head()
+
+# viridis 색상 팔레트 사용 (146개의 색상)
+colors <- magma(length(existing_categories))
+
+# 상권업종소분류명과 색상을 매칭하는 데이터프레임 생성
+color_mapping <- data.frame(상권업종소분류명 = existing_categories,
+                            색상 = colors)
+
+color_mapping %>% head()
+```
+
+
+
+### 동네 편의시설 시각화
+
+```{r}
+my_dong2 <- ggplot() +
+  geom_sf(data = gwang_ju_mydong, fill = 'grey90') +
+  geom_sf(data = gwang_ju_data_mydong, aes(color = 상권업종소분류명), size = 1.5) +
+  scale_color_manual(values = color_mapping$색상,
+                     breaks = color_mapping$상권업종소분류명,
+                     labels = color_mapping$상권업종소분류명,
+                     drop = TRUE) +
+  theme_minimal() +
+  labs(title = "문흥동 내 편의시설")
+
+my_dong2 %>% ggplotly()
+```
+
+
+
+## tmap 시각화
+- OpenStreetMap
+
+```{r}
+tmap_mode("view")
+
+tmap_options(check.and.fix = TRUE)
+
+tm_shape(gwang_ju_mydong["EMD_NM"])+
+  tm_polygons(col="white",alpha = 0.3)+
+  tm_shape(gwang_ju_data_mydong["상권업종소분류명"])+
+  tm_symbols(shape = 2, col = "royalblue", size = 0.8, alpha = 0.5)
+```
+
