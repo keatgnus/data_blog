@@ -1,0 +1,151 @@
+---
+title: "Data_Visualize mytown2"
+author: "Seongtaek"
+date: "2023-07-04"
+categories: [code, data_visualization, rstudio]
+image: "의류수거함.png"
+toc: true
+toc-depth: 4
+number-sections: true
+---
+
+<table align="bottom">
+  <td>
+    <a target="_blank" href="의류수거함.html"><img
+    src = r_logo.png />HTML파일로 보기</a>
+  </td>
+</table>
+
+Visualization of my local clothing bin
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  comment = "#>",
+  collapse = TRUE # Code와s Output을 분리시키지 않고 하나로 출력시켜 줌
+  )
+```
+
+## 패키지
+
+```{r,warning=FALSE, message=FALSE}
+library(rgdal) # readOGR
+library(dplyr)
+library(sf)
+library(ggmap) # 구글맵 키
+library(ggplot2)
+library(plotly)
+library(RColorBrewer)
+library(viridis)
+```
+
+## 데이터 불러오기
+
+```{r,warning=FALSE, message=FALSE}
+# 광주 지역 shp
+gwang_ju <- readOGR("C:/Users/seong taek/Desktop/3-1 DataVisualize/data_visualize/LSMD_ADM_SECT_UMD_29.shp",encoding = "euc-kr")
+gwang_ju %>% class()
+
+# 의류수거함
+cloth <- read.csv("C:/Users/seong taek/Desktop/3-1 DataVisualize/data_visualize/광주광역시_주택가주변의류수거함 현황_20221209.csv",fileEncoding = "CP949")
+cloth %>% head()
+
+# 구글맵 키
+register_google(key = 'AIzaSyCQhISmZrGYjMTh5J42qmSVytOVgzs6YlQ')
+```
+
+## 전처리
+
+```{r,warning=FALSE, message=FALSE}
+# sp → sf 변환
+gwang_ju <- st_as_sf(gwang_ju)
+gwang_ju %>% head()
+
+# 주소 기반으로 위도/경도 추가
+cloth <- mutate_geocode(data = cloth, location = 설치위치.장소., source = "google")
+cloth %>% head()
+```
+
+
+## 시각화
+
+### 광주지역 '구' 분류
+
+```{r}
+gwang_ju %>% ggplot(aes(fill=COL_ADM_SE)) +
+  geom_sf() +
+  theme_minimal() +
+  labs(title = "광주") +
+  theme(plot.title = element_text(size = 20)) + # 글꼴 크기를 20으로 설정
+  scale_fill_discrete(name = "구",
+                      labels = c("동구","서구","남구","북구","광산구")) # 범례 설정
+```
+
+
+### 광주지역 '동' 분류
+
+```{r}
+gwang_ju_dong <- gwang_ju %>% 
+  ggplot(aes(fill=EMD_NM))+ # '동' 별로 채우기
+  geom_sf()+
+  geom_sf_text(mapping = aes(label = EMD_NM))+
+  labs(title = "광주")+
+  theme_minimal()+
+  scale_fill_discrete(name = "동")
+  
+# 제목 크기 변경
+plotly_gwang_ju <- ggplotly(gwang_ju_dong) %>%
+  layout(title = list(text = "광주", font = list(size = 25)))
+
+plotly_gwang_ju
+```
+
+
+## 전처리2
+
+```{r}
+# 결측값 제거
+cloth <- 
+  cloth %>% na.omit()
+
+# 이상치 제거
+cloth <- cloth %>% 
+    filter(!(`설치지역.동명.` %in% c('건국동','문화동','유덕동','광천동','신안동','임 동','금호2동','상무2동','서창동','금호1동')))
+
+# 데이터프레임 → sf객체
+gwang_ju_cloth <- cloth %>%
+   st_as_sf(coords = c("lon", "lat"))
+
+# 좌표 할당
+st_crs(gwang_ju_cloth) <- 4737
+gwang_ju_cloth %>% head()
+
+# '동' 별 의류수거함
+existing_categories <- unique(gwang_ju_cloth$설치지역.동명.)
+
+# viridis 색상 팔레트 사용
+colors <- magma(length(existing_categories))
+
+# 설치'동'명과 색상을 매칭하는 데이터프레임 생성
+color_mapping <- data.frame(번호 = existing_categories,
+                            색상 = colors)
+
+color_mapping %>% head()
+```
+
+
+## 광주지역 의류수거함 시각화
+
+```{r}
+gwang_ju_all_cloth <- ggplot() +
+  geom_sf(data = gwang_ju, fill = 'grey90') +
+  geom_sf(data = gwang_ju_cloth, aes(color = 설치지역.동명.), size = 0.8) +
+  scale_color_manual(values = color_mapping$색상,
+                     breaks = color_mapping$설치지역.동명.,
+                     labels = color_mapping$설치지역.동명.) +
+  theme_minimal() +
+  labs(title = "광주지역 의류수거함 위치")
+
+gwang_ju_all_cloth %>% ggplotly()
+```
+
