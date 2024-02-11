@@ -1,5 +1,5 @@
 ---
-title: "Data_Visualize mytown 2"
+title: "Data_Visualize mytown_2"
 author: "Seongtaek"
 date: "2023-07-04"
 categories: [code, data_visualization, rstudio]
