@@ -1,6 +1,6 @@
 ---
 title: "Profile"
-image: profile.jpg
+image: profile3.jpg
 about:
   template: jolla
 number-sections: false
