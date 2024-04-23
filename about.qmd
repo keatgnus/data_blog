@@ -15,8 +15,6 @@ Seongtaek Jo
 tjdxor3115@naver.com
 
 ##### certificate
-ADsP (데이터분석 준전문가)
-
-SQLD (SQL개발자)
+ADsP (데이터분석 준전문가)<br>SQLD (SQL 개발자)
 
 ##### started from the Gwangju
