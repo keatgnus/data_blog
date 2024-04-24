@@ -628,5 +628,12 @@
     "title": "Data_Visualize mytown2",
     "section": "6 광주지역 의류수거함 시각화",
     "text": "6 광주지역 의류수거함 시각화\n\ngwang_ju_all_cloth <- ggplot() +\n  geom_sf(data = gwang_ju, fill = 'grey90') +\n  geom_sf(data = gwang_ju_cloth, aes(color = 설치지역.동명.), size = 0.8) +\n  scale_color_manual(values = color_mapping$색상,\n                     breaks = color_mapping$설치지역.동명.,\n                     labels = color_mapping$설치지역.동명.) +\n  theme_minimal() +\n  labs(title = \"광주지역 의류수거함 위치\")\n\ngwang_ju_all_cloth %>% ggplotly()"
+  },
+  {
+    "objectID": "Study.html",
+    "href": "Study.html",
+    "title": "Study",
+    "section": "",
+    "text": "No matching items"
   }
 ]

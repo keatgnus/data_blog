@@ -7,6 +7,7 @@ website:
   navbar:
     left: 
       - Project.qmd
+      - Study.qmd
     right:
       - about.qmd
     tools:
