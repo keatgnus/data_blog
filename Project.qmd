@@ -2,7 +2,7 @@
 title: "Project"
 subtitle: "Work & Task"
 listing:
-  contents: posts_work
+  contents: posts_Project
   sort:  "date desc"
   type: default
   categories: true
