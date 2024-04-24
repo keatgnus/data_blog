@@ -1,6 +1,6 @@
 ---
-title: "Work"
-subtitle: "Project & Task"
+title: "Project"
+subtitle: "Work & Task"
 listing:
   contents: posts_work
   sort:  "date desc"
