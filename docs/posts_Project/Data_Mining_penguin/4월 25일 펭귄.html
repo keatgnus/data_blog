@@ -1,0 +1,1841 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Seongtaek">
+<meta name="dcterms.date" content="2023-04-27">
+
+<title>Taek_Blog - Data_Mining_Penguin</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Taek_Blog</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../Project.html">
+ <span class="menu-text">Project</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">Profile</span></a>
+  </li>  
+  <li class="nav-item dropdown  compact">
+    <a class="nav-link dropdown-toggle" href="#" id="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-envelope" role="img">
+</i> 
+ <span class="menu-text"></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="">    
+        <li>
+    <a class="dropdown-item" href="https://www.instagram.com/keatgnus/"><i class="bi bi-instagram" role="img">
+</i> 
+ <span class="dropdown-text">instagram</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://github.com/keatgnus"><i class="bi bi-github" role="img">
+</i> 
+ <span class="dropdown-text">github</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#load-data" id="toc-load-data" class="nav-link active" data-scroll-target="#load-data"><span class="toc-section-number">1</span>  Load data</a></li>
+  <li><a href="#figure-and-axes" id="toc-figure-and-axes" class="nav-link" data-scroll-target="#figure-and-axes"><span class="toc-section-number">2</span>  Figure and Axes</a></li>
+  <li><a href="#plot-with-matplotlib" id="toc-plot-with-matplotlib" class="nav-link" data-scroll-target="#plot-with-matplotlib"><span class="toc-section-number">3</span>  plot with matplotlib</a></li>
+  <li><a href="#plot-with-seaborn" id="toc-plot-with-seaborn" class="nav-link" data-scroll-target="#plot-with-seaborn"><span class="toc-section-number">4</span>  Plot with seaborn</a></li>
+  <li><a href="#matplotlib-seaborn-seaborn-matplotlib" id="toc-matplotlib-seaborn-seaborn-matplotlib" class="nav-link" data-scroll-target="#matplotlib-seaborn-seaborn-matplotlib"><span class="toc-section-number">5</span>  matplotlib + seaborn &amp; seaborn + matplotlib</a></li>
+  <li><a href="#seaborn-seaborn-matplotlib" id="toc-seaborn-seaborn-matplotlib" class="nav-link" data-scroll-target="#seaborn-seaborn-matplotlib"><span class="toc-section-number">6</span>  seaborn + seaborn + matplotlib</a></li>
+  <li><a href="#quiz" id="toc-quiz" class="nav-link" data-scroll-target="#quiz"><span class="toc-section-number">7</span>  Quiz</a>
+  <ul>
+  <li><a href="#sns.set_style" id="toc-sns.set_style" class="nav-link" data-scroll-target="#sns.set_style"><span class="toc-section-number">7.1</span>  sns.set_style</a></li>
+  <li><a href="#pd.cut-이용" id="toc-pd.cut-이용" class="nav-link" data-scroll-target="#pd.cut-이용"><span class="toc-section-number">7.2</span>  pd.cut 이용</a></li>
+  </ul></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="toc-section-number">8</span>  </a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Data_Mining_Penguin</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">code</div>
+    <div class="quarto-category">data_mining</div>
+    <div class="quarto-category">jupyter</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Seongtaek </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 27, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<p>Penguin Data</p>
+
+<table align="bottom">
+<tbody><tr><td>
+<a target="_blank" href="http://localhost:8888/notebooks/3-1%20Data_Mining/4%EC%9B%94%2025%EC%9D%BC%20%ED%8E%AD%EA%B7%84.ipynb#"><img src="small_jup_image.jpg">Jupyter에서 실행하기</a>
+</td>
+
+</tr></tbody></table>
+<section id="load-data" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="load-data"><span class="header-section-number">1</span> Load data</h2>
+<ul>
+<li>예제로 사용할 펭귄 데이터를 불러옵니다.</li>
+<li>seaborn에 내장되어 있습니다.</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>penguins <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>penguins.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+species
+</th>
+<th>
+island
+</th>
+<th>
+bill_length_mm
+</th>
+<th>
+bill_depth_mm
+</th>
+<th>
+flipper_length_mm
+</th>
+<th>
+body_mass_g
+</th>
+<th>
+sex
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+Adelie
+</td>
+<td>
+Torgersen
+</td>
+<td>
+39.1
+</td>
+<td>
+18.7
+</td>
+<td>
+181.0
+</td>
+<td>
+3750.0
+</td>
+<td>
+Male
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+Adelie
+</td>
+<td>
+Torgersen
+</td>
+<td>
+39.5
+</td>
+<td>
+17.4
+</td>
+<td>
+186.0
+</td>
+<td>
+3800.0
+</td>
+<td>
+Female
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+Adelie
+</td>
+<td>
+Torgersen
+</td>
+<td>
+40.3
+</td>
+<td>
+18.0
+</td>
+<td>
+195.0
+</td>
+<td>
+3250.0
+</td>
+<td>
+Female
+</td>
+</tr>
+<tr>
+<th>
+3
+</th>
+<td>
+Adelie
+</td>
+<td>
+Torgersen
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+</tr>
+<tr>
+<th>
+4
+</th>
+<td>
+Adelie
+</td>
+<td>
+Torgersen
+</td>
+<td>
+36.7
+</td>
+<td>
+19.3
+</td>
+<td>
+193.0
+</td>
+<td>
+3450.0
+</td>
+<td>
+Female
+</td>
+</tr>
+</tbody>
+
+</table>
+</div>
+</section>
+<section id="figure-and-axes" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="figure-and-axes"><span class="header-section-number">2</span> Figure and Axes</h2>
+<ul>
+<li>matplotlib으로 도화지figure를 깔고 축공간axes를 만듭니다.</li>
+<li>1 x 2 축공간을 구성합니다.</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">### 도화지 생성</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(ncols<span class="op">=</span><span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">4</span>))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="output_3_0.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">png</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="plot-with-matplotlib" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="plot-with-matplotlib"><span class="header-section-number">3</span> plot with matplotlib</h2>
+<ul>
+<li><p>matplotlib 기능을 이용해서 산점도를 그립니다.</p>
+<ul>
+<li>x축은 부리 길이 bill length</li>
+<li>y축은 부리 위 아래 두께 bill depth</li>
+<li>색상은 종species로 합니다.</li>
+<li>Adelie, Chinstrap, Gentoo이 있습니다.</li>
+</ul></li>
+<li><p>두 축공간 중 왼쪽에만 그립니다.</p></li>
+<li><p>컬러를 다르게 주기 위해 f-string 포맷을 사용했습니다. f-string 포맷에 대한 설명은 https://blockdmask.tistory.com/429를 참고하세요</p></li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">### 도화지 생성</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(ncols<span class="op">=</span><span class="dv">2</span>,figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">4</span>))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">### 모든 펭귄 종류</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>species_u <span class="op">=</span> penguins[<span class="st">"species"</span>].unique()</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">### 첫 번째 subplot 그리기</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, s <span class="kw">in</span> <span class="bu">enumerate</span>(species_u):</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].scatter(penguins[<span class="st">"bill_length_mm"</span>].loc[penguins[<span class="st">"species"</span>]<span class="op">==</span>s],</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>                    penguins[<span class="st">"bill_depth_mm"</span>].loc[penguins[<span class="st">"species"</span>]<span class="op">==</span>s],</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>                    c<span class="op">=</span><span class="ss">f"C</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">"</span>, label<span class="op">=</span>s, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">### 범례 추가</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].legend(species_u, title<span class="op">=</span><span class="st">"species"</span>, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">### x,y 레이블 지정</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">"Bill Length (mm)"</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">"Bill Depth (mm)"</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">### plt.show()</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="output_5_0.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">png</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li>조금 더 간단히 그리는 방법
+<ul>
+<li>matplotlib는 기본적으로 Categorical 변수를 color로 바로 사용하지 못함</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">### 펭귄 종류를 고유의 숫자코드로 변환</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>penguins[<span class="st">"species_codes"</span>] <span class="op">=</span> pd.Categorical(penguins[<span class="st">"species"</span>]).codes</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">### 도화지 생성</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(ncols<span class="op">=</span><span class="dv">2</span>,figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">4</span>))</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">### 첫 번재 subplot 그리기 </span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> axes[<span class="dv">0</span>].scatter(data<span class="op">=</span>penguins, x<span class="op">=</span><span class="st">"bill_length_mm"</span>, y<span class="op">=</span><span class="st">"bill_depth_mm"</span>, c<span class="op">=</span><span class="st">"species_codes"</span>, alpha<span class="op">=</span><span class="fl">0.3</span>) <span class="co"># 크기:s</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>a</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">### 범례 추가</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].legend(<span class="op">*</span>a.legend_elements(), title<span class="op">=</span><span class="st">"Species"</span>, fontsize<span class="op">=</span><span class="dv">8</span>) <span class="co"># 범례위치 : loc='lower right', 'upper center', etc..</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">### x,y 레이블 지정</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">"Bill Length (mm)"</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">"Bill Depth (mm)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>&lt;__array_function__ internals&gt;:180: UserWarning: Warning: converting a masked element to nan.
+C:\Users\seong taek\anaconda3\lib\site-packages\matplotlib\colors.py:1311: UserWarning: Warning: converting a masked element to nan.
+  data = np.asarray(value)
+C:\Users\seong taek\anaconda3\lib\site-packages\matplotlib\ticker.py:521: UserWarning: Warning: converting a masked element to nan.
+  if self._useLocale else fmt % arg)
+
+
+
+
+
+Text(0, 0.5, 'Bill Depth (mm)')</code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="output_7_2.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">png</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="plot-with-seaborn" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="plot-with-seaborn"><span class="header-section-number">4</span> Plot with seaborn</h2>
+<ul>
+<li>두 번째 plot 그리기</li>
+</ul>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">### 도화지 생성</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(ncols<span class="op">=</span><span class="dv">2</span>,figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">4</span>))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">### 모든 펭귄 종류</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>species_u <span class="op">=</span> penguins[<span class="st">"species"</span>].unique()</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">### 첫 번째 subplot 그리기</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, s <span class="kw">in</span> <span class="bu">enumerate</span>(species_u):</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].scatter(penguins[<span class="st">"bill_length_mm"</span>].loc[penguins[<span class="st">"species"</span>]<span class="op">==</span>s],</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                    penguins[<span class="st">"bill_depth_mm"</span>].loc[penguins[<span class="st">"species"</span>]<span class="op">==</span>s],</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>                    c<span class="op">=</span><span class="ss">f"C</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">"</span>, label<span class="op">=</span>s, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">### 범례 추가    </span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].legend(species_u, title<span class="op">=</span><span class="st">"species"</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">### x,y 레이블 지정</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">"Bill Length (mm)"</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">"Bill Depth (mm)"</span>)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co">### 두 번째 subplot 그리기</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">"bill_length_mm"</span>, y<span class="op">=</span><span class="st">"bill_depth_mm"</span>, hue<span class="op">=</span><span class="st">"species"</span>, data<span class="op">=</span>penguins, alpha<span class="op">=</span><span class="fl">0.3</span>, ax<span class="op">=</span>axes[<span class="dv">1</span>])</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">"Bill Length (mm)"</span>)</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">"Bill Depth (mm)"</span>)</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="output_9_0.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">png</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li>단 세 줄로 거의 동일한 그림이 나왔습니다.
+<ul>
+<li>scatter plot의 점 크기만 살짝 작습니다.</li>
+<li>label의 투명도만 살짝 다릅니다.</li>
+</ul></li>
+<li>seaborn 명령 scatterplot()을 그대로 사용했습니다.</li>
+<li>x축과 y축 label도 바꾸었습니다.
+<ul>
+<li>ax=axes[1] 인자에서 볼 수 있듯, 존재하는 axes에 그림만 얹었습니다.</li>
+<li>matplotlib 틀 + seaborn 그림 이므로, matplotlib 명령이 모두 통합니다.</li>
+</ul></li>
+</ul>
+</section>
+<section id="matplotlib-seaborn-seaborn-matplotlib" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="matplotlib-seaborn-seaborn-matplotlib"><span class="header-section-number">5</span> matplotlib + seaborn &amp; seaborn + matplotlib</h2>
+<ul>
+<li>matplotlib과 seaborn이 자유롭게 섞일 수 있습니다.
+<ul>
+<li>matplotlib 산점도 위에 seaborn 추세선을 얹을 수 있고,</li>
+<li>seaborn 산점도 위에 matplotlib 중심점을 얹을 수 있습니다.</li>
+</ul></li>
+<li>파이썬 코드는 다음과 같습니다.</li>
+</ul>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">### 도화지 생성</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(ncols<span class="op">=</span><span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">### 모든 펭귄 종류</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>species_u <span class="op">=</span> penguins[<span class="st">"species"</span>].unique()</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">### 첫 번째 subplot 그리기 + 추세선</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, s <span class="kw">in</span> <span class="bu">enumerate</span>(species_u):</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].scatter(penguins[<span class="st">"bill_length_mm"</span>].loc[penguins[<span class="st">"species"</span>]<span class="op">==</span>s],</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>                   penguins[<span class="st">"bill_depth_mm"</span>].loc[penguins[<span class="st">"species"</span>]<span class="op">==</span>s],</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>                   c<span class="op">=</span><span class="ss">f"C</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">"</span>, label<span class="op">=</span>s, alpha<span class="op">=</span><span class="fl">0.3</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>                  )                  </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    sns.regplot(x<span class="op">=</span><span class="st">"bill_length_mm"</span>, y<span class="op">=</span><span class="st">"bill_depth_mm"</span>, data<span class="op">=</span>penguins.loc[penguins[<span class="st">"species"</span>]<span class="op">==</span>s], </span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>                scatter<span class="op">=</span><span class="va">False</span>, ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].legend(species_u, title<span class="op">=</span><span class="st">"species"</span>)</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">"Bill Length (mm)"</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">"Bill Depth (mm)"</span>)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="co">### 두 번째 subplot 그리기</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">"bill_length_mm"</span>, y<span class="op">=</span><span class="st">"bill_depth_mm"</span>, hue<span class="op">=</span><span class="st">"species"</span>, data<span class="op">=</span>penguins, alpha<span class="op">=</span><span class="fl">0.3</span>, ax<span class="op">=</span>axes[<span class="dv">1</span>])</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">"Bill Length (mm)"</span>)</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">"Bill Depth (mm)"</span>)</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="co">### 중심점 marker</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, s <span class="kw">in</span> <span class="bu">enumerate</span>(species_u):</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].scatter(penguins[<span class="st">"bill_length_mm"</span>].loc[penguins[<span class="st">"species"</span>]<span class="op">==</span>s].mean(),</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>                   penguins[<span class="st">"bill_depth_mm"</span>].loc[penguins[<span class="st">"species"</span>]<span class="op">==</span>s].mean(),</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>                   c<span class="op">=</span><span class="ss">f"C</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">"</span>, alpha<span class="op">=</span><span class="dv">1</span>, marker<span class="op">=</span><span class="st">"x"</span>, s<span class="op">=</span><span class="dv">100</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>                  )</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="output_12_0.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">png</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="seaborn-seaborn-matplotlib" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="seaborn-seaborn-matplotlib"><span class="header-section-number">6</span> seaborn + seaborn + matplotlib</h2>
+<ul>
+<li>안 될 이유가 없습니다.</li>
+<li>seaborn scatterplot + seaborn kdeplot + matplotlib text입니다</li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">### 도화지 생성</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">5</span>))</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">### plot 0: scatter plot</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">"bill_length_mm"</span>, y<span class="op">=</span><span class="st">"bill_depth_mm"</span>, color<span class="op">=</span><span class="st">"k"</span>, data<span class="op">=</span>penguins, alpha<span class="op">=</span><span class="fl">0.3</span>, ax<span class="op">=</span>ax, legend<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">### plot 1: kde plot (밀도 그래프)</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(x<span class="op">=</span><span class="st">"bill_length_mm"</span>, y<span class="op">=</span><span class="st">"bill_depth_mm"</span>, hue<span class="op">=</span><span class="st">"species"</span>, data<span class="op">=</span>penguins, alpha<span class="op">=</span><span class="fl">0.5</span>, ax<span class="op">=</span>ax, legend<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">### text:</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>species_u <span class="op">=</span> penguins[<span class="st">"species"</span>].unique()</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, s <span class="kw">in</span> <span class="bu">enumerate</span>(species_u):</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    ax.text(penguins[<span class="st">"bill_length_mm"</span>].loc[penguins[<span class="st">"species"</span>]<span class="op">==</span>s].mean(),</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>            penguins[<span class="st">"bill_depth_mm"</span>].loc[penguins[<span class="st">"species"</span>]<span class="op">==</span>s].mean(),</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>            s <span class="op">=</span> s, fontdict<span class="op">=</span>{<span class="st">"fontsize"</span>:<span class="dv">14</span>, <span class="st">"fontweight"</span>:<span class="st">"bold"</span>,<span class="st">"color"</span>:<span class="st">"k"</span>}</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Bill Length (mm)"</span>)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Bill Depth (mm)"</span>)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="output_14_0.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">png</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="quiz" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="quiz"><span class="header-section-number">7</span> Quiz</h2>
+<p>Bill length를 10단위로 나눈 후, Bill length에 따른 Bill depth의 boxplot을 그리시오</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">### bill length를 10단위로 만든 후, 새로운 컬럼 추가</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>penguins[<span class="st">'bill_length_10'</span>] <span class="op">=</span> (penguins[<span class="st">'bill_length_mm'</span>] <span class="op">//</span> <span class="dv">10</span>) <span class="op">*</span> <span class="dv">10</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>penguins</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+species
+</th>
+<th>
+island
+</th>
+<th>
+bill_length_mm
+</th>
+<th>
+bill_depth_mm
+</th>
+<th>
+flipper_length_mm
+</th>
+<th>
+body_mass_g
+</th>
+<th>
+sex
+</th>
+<th>
+species_codes
+</th>
+<th>
+bill_length_10
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+Adelie
+</td>
+<td>
+Torgersen
+</td>
+<td>
+39.1
+</td>
+<td>
+18.7
+</td>
+<td>
+181.0
+</td>
+<td>
+3750.0
+</td>
+<td>
+Male
+</td>
+<td>
+0
+</td>
+<td>
+30.0
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+Adelie
+</td>
+<td>
+Torgersen
+</td>
+<td>
+39.5
+</td>
+<td>
+17.4
+</td>
+<td>
+186.0
+</td>
+<td>
+3800.0
+</td>
+<td>
+Female
+</td>
+<td>
+0
+</td>
+<td>
+30.0
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+Adelie
+</td>
+<td>
+Torgersen
+</td>
+<td>
+40.3
+</td>
+<td>
+18.0
+</td>
+<td>
+195.0
+</td>
+<td>
+3250.0
+</td>
+<td>
+Female
+</td>
+<td>
+0
+</td>
+<td>
+40.0
+</td>
+</tr>
+<tr>
+<th>
+3
+</th>
+<td>
+Adelie
+</td>
+<td>
+Torgersen
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+0
+</td>
+<td>
+NaN
+</td>
+</tr>
+<tr>
+<th>
+4
+</th>
+<td>
+Adelie
+</td>
+<td>
+Torgersen
+</td>
+<td>
+36.7
+</td>
+<td>
+19.3
+</td>
+<td>
+193.0
+</td>
+<td>
+3450.0
+</td>
+<td>
+Female
+</td>
+<td>
+0
+</td>
+<td>
+30.0
+</td>
+</tr>
+<tr>
+<th>
+…
+</th>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+</tr>
+<tr>
+<th>
+339
+</th>
+<td>
+Gentoo
+</td>
+<td>
+Biscoe
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+2
+</td>
+<td>
+NaN
+</td>
+</tr>
+<tr>
+<th>
+340
+</th>
+<td>
+Gentoo
+</td>
+<td>
+Biscoe
+</td>
+<td>
+46.8
+</td>
+<td>
+14.3
+</td>
+<td>
+215.0
+</td>
+<td>
+4850.0
+</td>
+<td>
+Female
+</td>
+<td>
+2
+</td>
+<td>
+40.0
+</td>
+</tr>
+<tr>
+<th>
+341
+</th>
+<td>
+Gentoo
+</td>
+<td>
+Biscoe
+</td>
+<td>
+50.4
+</td>
+<td>
+15.7
+</td>
+<td>
+222.0
+</td>
+<td>
+5750.0
+</td>
+<td>
+Male
+</td>
+<td>
+2
+</td>
+<td>
+50.0
+</td>
+</tr>
+<tr>
+<th>
+342
+</th>
+<td>
+Gentoo
+</td>
+<td>
+Biscoe
+</td>
+<td>
+45.2
+</td>
+<td>
+14.8
+</td>
+<td>
+212.0
+</td>
+<td>
+5200.0
+</td>
+<td>
+Female
+</td>
+<td>
+2
+</td>
+<td>
+40.0
+</td>
+</tr>
+<tr>
+<th>
+343
+</th>
+<td>
+Gentoo
+</td>
+<td>
+Biscoe
+</td>
+<td>
+49.9
+</td>
+<td>
+16.1
+</td>
+<td>
+213.0
+</td>
+<td>
+5400.0
+</td>
+<td>
+Male
+</td>
+<td>
+2
+</td>
+<td>
+40.0
+</td>
+</tr>
+</tbody>
+
+</table>
+<p>
+344 rows × 9 columns
+</p>
+</div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">### 박스 plot</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>sns.boxenplot(x <span class="op">=</span> <span class="st">'bill_length_10'</span>, y <span class="op">=</span> <span class="st">'bill_depth_mm'</span>, data<span class="op">=</span>penguins)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">### 점 표현</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>sns.stripplot(x <span class="op">=</span> <span class="st">'bill_length_10'</span>, y <span class="op">=</span> <span class="st">'bill_depth_mm'</span>, data<span class="op">=</span>penguins, color<span class="op">=</span><span class="st">'black'</span>, size<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">'whitegrid'</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="output_17_0.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">png</figcaption><p></p>
+</figure>
+</div>
+<section id="sns.set_style" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="sns.set_style"><span class="header-section-number">7.1</span> sns.set_style</h3>
+<ul>
+<li>darkgrid: 어두운 배경에 격자 라인이 그려지는 스타일</li>
+<li>whitegrid: 밝은 배경에 격자 라인이 그려지는 스타일</li>
+<li>dark: 어두운 배경에 격자 라인이 없는 스타일</li>
+<li>white: 밝은 배경에 격자 라인이 없는 스타일</li>
+<li>ticks: 격자 라인 대신 축의 눈금 표시가 있는 스타일</li>
+</ul>
+</section>
+<section id="pd.cut-이용" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="pd.cut-이용"><span class="header-section-number">7.2</span> pd.cut 이용</h3>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">### bill length를 구간별로 만든 후, 새로운 컬럼 추가</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>penguins[<span class="st">'bill_length_group'</span>] <span class="op">=</span> pd.cut(penguins[<span class="st">'bill_length_mm'</span>],</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                                      bins<span class="op">=</span>[<span class="dv">0</span>,<span class="dv">40</span>,<span class="dv">50</span>,<span class="dv">60</span>],</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                                      labels<span class="op">=</span>[<span class="st">'0~40'</span>, <span class="st">'40~50'</span>, <span class="st">'50~60'</span>])</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>penguins</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+species
+</th>
+<th>
+island
+</th>
+<th>
+bill_length_mm
+</th>
+<th>
+bill_depth_mm
+</th>
+<th>
+flipper_length_mm
+</th>
+<th>
+body_mass_g
+</th>
+<th>
+sex
+</th>
+<th>
+species_codes
+</th>
+<th>
+bill_length_10
+</th>
+<th>
+bill_length_group
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+Adelie
+</td>
+<td>
+Torgersen
+</td>
+<td>
+39.1
+</td>
+<td>
+18.7
+</td>
+<td>
+181.0
+</td>
+<td>
+3750.0
+</td>
+<td>
+Male
+</td>
+<td>
+0
+</td>
+<td>
+30.0
+</td>
+<td>
+0~40
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+Adelie
+</td>
+<td>
+Torgersen
+</td>
+<td>
+39.5
+</td>
+<td>
+17.4
+</td>
+<td>
+186.0
+</td>
+<td>
+3800.0
+</td>
+<td>
+Female
+</td>
+<td>
+0
+</td>
+<td>
+30.0
+</td>
+<td>
+0~40
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+Adelie
+</td>
+<td>
+Torgersen
+</td>
+<td>
+40.3
+</td>
+<td>
+18.0
+</td>
+<td>
+195.0
+</td>
+<td>
+3250.0
+</td>
+<td>
+Female
+</td>
+<td>
+0
+</td>
+<td>
+40.0
+</td>
+<td>
+40~50
+</td>
+</tr>
+<tr>
+<th>
+3
+</th>
+<td>
+Adelie
+</td>
+<td>
+Torgersen
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+0
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+</tr>
+<tr>
+<th>
+4
+</th>
+<td>
+Adelie
+</td>
+<td>
+Torgersen
+</td>
+<td>
+36.7
+</td>
+<td>
+19.3
+</td>
+<td>
+193.0
+</td>
+<td>
+3450.0
+</td>
+<td>
+Female
+</td>
+<td>
+0
+</td>
+<td>
+30.0
+</td>
+<td>
+0~40
+</td>
+</tr>
+<tr>
+<th>
+…
+</th>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+</tr>
+<tr>
+<th>
+339
+</th>
+<td>
+Gentoo
+</td>
+<td>
+Biscoe
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+2
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+</tr>
+<tr>
+<th>
+340
+</th>
+<td>
+Gentoo
+</td>
+<td>
+Biscoe
+</td>
+<td>
+46.8
+</td>
+<td>
+14.3
+</td>
+<td>
+215.0
+</td>
+<td>
+4850.0
+</td>
+<td>
+Female
+</td>
+<td>
+2
+</td>
+<td>
+40.0
+</td>
+<td>
+40~50
+</td>
+</tr>
+<tr>
+<th>
+341
+</th>
+<td>
+Gentoo
+</td>
+<td>
+Biscoe
+</td>
+<td>
+50.4
+</td>
+<td>
+15.7
+</td>
+<td>
+222.0
+</td>
+<td>
+5750.0
+</td>
+<td>
+Male
+</td>
+<td>
+2
+</td>
+<td>
+50.0
+</td>
+<td>
+50~60
+</td>
+</tr>
+<tr>
+<th>
+342
+</th>
+<td>
+Gentoo
+</td>
+<td>
+Biscoe
+</td>
+<td>
+45.2
+</td>
+<td>
+14.8
+</td>
+<td>
+212.0
+</td>
+<td>
+5200.0
+</td>
+<td>
+Female
+</td>
+<td>
+2
+</td>
+<td>
+40.0
+</td>
+<td>
+40~50
+</td>
+</tr>
+<tr>
+<th>
+343
+</th>
+<td>
+Gentoo
+</td>
+<td>
+Biscoe
+</td>
+<td>
+49.9
+</td>
+<td>
+16.1
+</td>
+<td>
+213.0
+</td>
+<td>
+5400.0
+</td>
+<td>
+Male
+</td>
+<td>
+2
+</td>
+<td>
+40.0
+</td>
+<td>
+40~50
+</td>
+</tr>
+</tbody>
+
+</table>
+<p>
+344 rows × 10 columns
+</p>
+</div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sns.boxenplot(x <span class="op">=</span> <span class="st">'bill_length_group'</span>, y <span class="op">=</span> <span class="st">'bill_depth_mm'</span>, data<span class="op">=</span>penguins)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>sns.stripplot(x <span class="op">=</span> <span class="st">'bill_length_group'</span>, y <span class="op">=</span> <span class="st">'bill_depth_mm'</span>, data<span class="op">=</span>penguins, color<span class="op">=</span><span class="st">'black'</span>, size<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">'whitegrid'</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="output_21_0.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">png</figcaption><p></p>
+</figure>
+</div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'bill_length_mm'</span>, y<span class="op">=</span><span class="st">'bill_depth_mm'</span>, data<span class="op">=</span>penguins, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="output_22_0.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">png</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li>열 기준 : species</li>
+<li>색상 : species별</li>
+<li>한 행의 subplot 개수</li>
+<li>map : x축, y축 지정</li>
+<li>sns.despine : 상단, 우측 축 제거</li>
+</ul>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> sns.FacetGrid(penguins, col<span class="op">=</span><span class="st">'species'</span>,hue<span class="op">=</span><span class="st">'species'</span>,col_wrap<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>g.<span class="bu">map</span>(sns.scatterplot, <span class="st">'bill_length_mm'</span>, <span class="st">'bill_depth_mm'</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">'whitegrid'</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="output_24_0.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">png</figcaption><p></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="section" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="section"><span class="header-section-number">8</span> </h2>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Copyright 2023, Seongtaek</div>   
+  </div>
+</footer>
+
+
+
+</body></html>

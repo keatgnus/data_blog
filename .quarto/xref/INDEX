@@ -175,5 +175,26 @@
   },
   "posts/Data_Visualize_mytown2/의류수거함 공간정보 시각화.qmd": {
     "의류수거함 공간정보 시각화.html": "1516c7a7"
+  },
+  "Project.qmd": {
+    "Project.html": "f1ce647e"
+  },
+  "posts_Project/Data_Mining_penguin/4월 25일 펭귄.qmd": {
+    "4월 25일 펭귄.html": "cf80f8eb"
+  },
+  "posts_Project/Data_Mining_exercise1/exercise1-your-first-map.qmd": {
+    "exercise1-your-first-map.html": "48e429e1"
+  },
+  "posts_Project/Data_Mining_exercise2/exercise2-coordinate-reference-systems.md": {
+    "exercise2-coordinate-reference-systems.html": "984965c0"
+  },
+  "posts_Project/Data_Mining_exercise4/exercise4-manipulating-geospatial-data.md": {
+    "exercise4-manipulating-geospatial-data.html": "b4007a18"
+  },
+  "posts_Project/Data_Mining_exercise5/exercise5-proximity-analysis.md": {
+    "exercise5-proximity-analysis.html": "556cb09a"
+  },
+  "posts_Project/Data_Mining_exercise3/exercise3-interactive-maps.md": {
+    "exercise3-interactive-maps.html": "b8dc0e1b"
   }
 }
